@@ -1,0 +1,4320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentry24x7 | Smart Society Security & Gate Monitoring Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.0/lucide.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0F172A',
+                            blue: '#2563EB',
+                            lightBg: '#F8FAFC',
+                            cardBg: '#FFFFFF',
+                            muted: '#64748B',
+                            border: '#E2E8F0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap');
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y proximity;
+        }
+        body {
+            overflow-x: hidden;
+        }
+        /* Each main section snaps to fill the screen when it comfortably fits.
+           Nothing is ever clipped — if a section has more content than one screen,
+           it simply scrolls naturally and the next section snaps in after it. */
+        .snap-section {
+            scroll-snap-align: start;
+            min-height: calc(100vh - 6rem);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        @supports (height: 100dvh) {
+            .snap-section {
+                min-height: calc(100dvh - 6rem);
+            }
+        }
+        .snap-hero {
+            scroll-snap-align: start;
+        }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .nav-item-link {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        .nav-item-link.active-nav {
+            color: #2563EB !important;
+        }
+        .nav-item-link::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #2563EB;
+            transition: width 0.25s ease;
+        }
+        .nav-item-link.active-nav::after {
+            width: 100%;
+        }
+
+        /* Home gate animation replacement - larger full-shape hero panel */
+        .sentry-gate-hero-wrap {
+            width: 100%;
+            max-width: 860px;
+            height: 620px;
+            padding: 18px;
+            border-radius: 40px;
+            background:
+                radial-gradient(circle at 75% 20%, rgba(2, 80, 248, 0.18), transparent 28%),
+                linear-gradient(135deg, rgba(255,255,255,0.92), rgba(219,234,254,0.72));
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.12);
+        }
+
+        #home .sentry-gate-animation {
+            transform: scale(1.15);
+            transform-origin: center center;
+        }
+        .sentry-gate-animation::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 18%;
+            background: linear-gradient(180deg, #263449, #111827);
+            z-index: 1;
+        }
+
+        .sentry-gate-animation::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(90deg, rgba(255,255,255,0.22) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(255,255,255,0.20) 1px, transparent 1px);
+            background-size: 54px 54px;
+            opacity: 0.24;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .sga-building {
+            position: absolute;
+            right: 44px;
+            bottom: 105px;
+            width: 245px;
+            height: 350px;
+            background: linear-gradient(135deg, #0d05fb, #0f172a);
+            border-radius: 32px 32px 10px 10px;
+            z-index: 4;
+            box-shadow: -28px 34px 70px rgba(15,23,42,0.22);
+        }
+
+        .sga-camera {
+            position: absolute;
+            left: -50px;
+            top: 60px;
+            width: 68px;
+            height: 36px;
+            border-radius: 18px;
+            background: #0f172a;
+            box-shadow: 0 0 0 8px rgba(255,255,255,0.28);
+        }
+
+        .sga-camera::after {
+            content: "";
+            position: absolute;
+            inset: 9px 13px;
+            border-radius: 999px;
+            background: #38bdf8;
+            box-shadow: 0 0 22px #38bdf8;
+            animation: sgaGlow 2s infinite;
+        }
+
+        .sga-panel {
+            position: absolute;
+            left: 68px;
+            top: 165px;
+            width: 98px;
+            height: 148px;
+            border-radius: 22px;
+            background: #020617;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .sga-panel::before {
+            content: "";
+            position: absolute;
+            left: 30px;
+            top: 53px;
+            width: 38px;
+            height: 38px;
+            border: 3px solid #38bdf8;
+            border-radius: 999px;
+            animation: sgaPanelPulse 2s infinite;
+        }
+
+        .sga-panel::after {
+            content: "ACCESS";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 22px;
+            text-align: center;
+            color: #e2e8f0;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .08em;
+        }
+
+        .sga-gate {
+            position: absolute;
+            right: 285px;
+            bottom: 105px;
+            width: 410px;
+            height: 260px;
+            border: 10px solid #2563eb;
+            box-shadow: 0 0 40px rgba(37,99,235,.25);
+            border-bottom: none;
+            z-index: 3;
+            transform-origin: right center;
+            animation: sgaGateSlide 8s infinite ease-in-out;
+        }
+
+        .sga-gate-bars {
+            height: 100%;
+            background: repeating-linear-gradient(90deg, transparent 0 26px, #172033 26px 36px);
+        }
+
+        .sga-barrier {
+            position: absolute;
+            right: 292px;
+            bottom: 106px;
+            width: 165px;
+            height: 240px;
+            z-index: 7;
+        }
+
+        .sga-barrier-base {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 58px;
+            height: 142px;
+            border-radius: 18px;
+            background: #111827;
+            box-shadow: inset 0 0 20px rgba(56,189,248,0.55);
+        }
+
+        .sga-barrier-arm {
+            position: absolute;
+            right: 25px;
+            bottom: 130px;
+            width: 310px;
+            height: 24px;
+            border-radius: 999px;
+            background: repeating-linear-gradient(90deg, #fff 0 52px, #ef4444 52px 84px);
+            transform-origin: right center;
+            animation: sgaBarrierOpen 8s infinite ease-in-out;
+            box-shadow: 0 8px 24px rgba(15,23,42,0.18);
+        }
+
+        .sga-car {
+            position: absolute;
+            bottom: 90px;
+            left: -310px;
+            width: 300px;
+            height: 126px;
+            border-radius: 65px 80px 30px 30px;
+            background: linear-gradient(180deg, #475569, #111827);
+            z-index: 6;
+            animation: sgaCarMove 8s infinite ease-in-out;
+        }
+
+        .sga-car-window {
+            position: absolute;
+            left: 82px;
+            top: 22px;
+            width: 122px;
+            height: 42px;
+            border-radius: 26px 30px 8px 8px;
+            background: linear-gradient(135deg, #dbeafe, #64748b);
+        }
+
+        .sga-car-light {
+            position: absolute;
+            bottom: 36px;
+            width: 30px;
+            height: 13px;
+            border-radius: 999px;
+            background: #ef4444;
+            box-shadow: 0 0 16px #ef4444;
+        }
+
+        .sga-car-light.left { left: 16px; }
+        .sga-car-light.right { right: 16px; }
+
+        .sga-wheel {
+            position: absolute;
+            bottom: -19px;
+            width: 54px;
+            height: 54px;
+            border-radius: 999px;
+            background: #020617;
+            border: 9px solid #475569;
+        }
+
+        .sga-wheel.w1 { left: 56px; }
+        .sga-wheel.w2 { right: 56px; }
+
+        .sga-signal {
+            position: absolute;
+            left: 48%;
+            bottom: 260px;
+            width: 30px;
+            height: 30px;
+            border-radius: 999px;
+            border: 2px solid #2563eb;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            z-index: 5;
+            animation: sgaSignalPulse 8s infinite;
+        }
+
+        .sga-signal.two { animation-delay: .4s; }
+        .sga-signal.three { animation-delay: .8s; }
+
+        .sga-status {
+            position: absolute;
+            padding: 14px 20px;
+            border-radius: 18px;
+            background: rgba(255,255,255,.84);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 18px 40px rgba(15,23,42,.12);
+            color: #0f172a;
+            font-size: 13px;
+            font-weight: 900;
+            z-index: 8;
+            opacity: 0;
+            animation: sgaStatusLoop 8s infinite;
+        }
+
+        .sga-status.s1 { left: 70px; top: 80px; animation-delay: 0s; }
+        .sga-status.s2 { right: 330px; top: 105px; animation-delay: 1.7s; }
+        .sga-status.s3 { right: 310px; top: 235px; animation-delay: 3s; }
+        .sga-status.s4 { right: 70px; bottom: 60px; animation-delay: 4.6s; color: #15803d; }
+
+        @keyframes sgaCarMove {
+            0% { left: -320px; }
+            28% { left: 38%; }
+            58% { left: 38%; }
+            82% { left: 78%; opacity: 1; }
+            100% { left: 105%; opacity: 0; }
+        }
+
+        @keyframes sgaBarrierOpen {
+            0%, 32% {
+                transform: rotate(0deg);
+            }
+
+            48%, 76% {
+                transform: rotate(90deg);
+            }
+
+            92%, 100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes sgaGateSlide {
+            0%, 35% { transform: translateX(0); opacity: 1; }
+            55%, 75% { transform: translateX(145px); opacity: .65; }
+            95%, 100% { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes sgaSignalPulse {
+            22%, 48% { width: 30px; height: 30px; opacity: .82; }
+            62% { width: 210px; height: 210px; opacity: 0; }
+        }
+
+        @keyframes sgaPanelPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,.5); }
+            50% { box-shadow: 0 0 0 18px rgba(56,189,248,0); }
+        }
+
+        @keyframes sgaStatusLoop {
+            0%, 12% { opacity: 0; transform: translateY(14px); }
+            18%, 34% { opacity: 1; transform: translateY(0); }
+            42%, 100% { opacity: 0; transform: translateY(-10px); }
+        }
+
+        @keyframes sgaGlow {
+            0%, 100% { opacity: .75; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 1279px) {
+            .sentry-gate-hero-wrap {
+                height: 560px;
+            }
+            .sentry-gate-animation {
+                transform: scale(.92);
+                transform-origin: center;
+            }
+        }
+
+        #home .sentry-gate-hero-wrap {
+            height: 100%;
+        }
+
+        #home .sentry-gate-animation {
+            transform: scale(1.02) translateY(22px);
+            transform-origin: center center;
+        }
+
+        #home .sga-building,
+        #home .sga-gate {
+            bottom: 70px;
+        }
+
+        #home .sga-barrier {
+            bottom: 72px;
+        }
+
+        #home .sga-car {
+            bottom: 58px;
+        }
+
+        @media (max-width: 768px) {
+            #home .sentry-gate-animation {
+                transform: scale(0.9) translateY(35px);
+            }
+
+            #home .sga-status {
+                display: none;
+            }
+        }
+        .features-showcase {
+            position: relative;
+            width: 100%;
+        }
+
+        .feature-orbit-area {
+            position: relative;
+            width: 100%;
+            max-width: 1120px;
+            height: 540px;
+            margin: 0 auto;
+        }
+
+        .orbit-ring {
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            transform: translate(-50%, -50%);
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        .orbit-ring-one {
+            width: 430px;
+            height: 430px;
+            border: 1px dashed rgba(37,99,235,.35);
+        }
+
+        .orbit-ring-two {
+            width: 300px;
+            height: 300px;
+            border: 1px solid rgba(37,99,235,.18);
+        }
+
+        .orbit-ring-three {
+            width: 220px;
+            height: 220px;
+            border: 1px solid rgba(37,99,235,.45);
+            box-shadow: 0 30px 80px rgba(37,99,235,.12);
+        }
+
+        .feature-center-card {
+            position: absolute;
+            left: 50%;
+            top: 52%;
+            transform: translate(-50%, -50%);
+            width: 210px;
+            height: 210px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #ffffff, #eff6ff);
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 26px 70px rgba(37,99,235,.20);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            text-align: center;
+        }
+
+        .feature-center-card img {
+            width: 64px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .feature-center-card h3 {
+            font-size: 25px;
+            font-weight: 950;
+            color: #0F172A;
+            letter-spacing: -.04em;
+            line-height: 1;
+        }
+
+        .feature-center-card h3 span {
+            color: #2563EB;
+        }
+
+        .feature-center-card p {
+            margin-top: 10px;
+            font-size: 10px;
+            font-weight: 900;
+            color: #64748B;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+        }
+
+        .center-blue-line {
+            width: 36px;
+            height: 4px;
+            border-radius: 999px;
+            background: #2563EB;
+            margin-top: 14px;
+        }
+
+        .feature-card {
+            position: absolute;
+            width: 310px;
+            min-height: 104px;
+            background: rgba(255,255,255,.92);
+            border: 1px solid #dbeafe;
+            border-radius: 22px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 18px 50px rgba(37,99,235,.10);
+            backdrop-filter: blur(18px);
+            z-index: 4;
+            transition: all .35s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(37,99,235,.45);
+            box-shadow: 0 28px 70px rgba(37,99,235,.18);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            flex: 0 0 56px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #eff6ff, #ffffff);
+            border: 1px solid #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-icon img {
+            width: 31px;
+            height: 31px;
+            object-fit: contain;
+        }
+
+        .feature-card h3 {
+            font-size: 15px;
+            font-weight: 950;
+            color: #0F172A;
+            line-height: 1.2;
+        }
+
+        .feature-card p {
+            margin-top: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #334155;
+            line-height: 1.55;
+        }
+
+        .card-1 { left: 40px; top: 0; }
+        .card-2 { left: 10px; top: 130px; }
+        .card-3 { left: 20px; top: 260px; }
+        .card-4 { left: 60px; top: 390px; }
+
+        .card-5 { right: 40px; top: 0; }
+        .card-6 { right: 10px; top: 130px; }
+        .card-7 { right: 20px; top: 260px; }
+        .card-8 { right: 60px; top: 390px; }
+
+        .card-9 {
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+        }
+
+        .card-9:hover {
+            transform: translateX(-50%) translateY(-8px);
+        }
+
+        .patrol-title {
+            max-width: 1120px;
+            margin: 40px auto 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+        }
+
+        .patrol-title span {
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, transparent, rgba(37,99,235,.35), transparent);
+        }
+
+        .patrol-title h3 {
+            font-size: 14px;
+            font-weight: 950;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: #2563EB;
+            white-space: nowrap;
+        }
+
+        .patrol-grid {
+            max-width: 1120px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+        }
+
+        .patrol-feature {
+            min-height: 190px;
+            background: rgba(255,255,255,.9);
+            border: 1px solid #dbeafe;
+            border-radius: 22px;
+            padding: 22px 16px;
+            text-align: center;
+            box-shadow: 0 18px 50px rgba(37,99,235,.09);
+            transition: all .35s ease;
+        }
+
+        .patrol-feature:hover {
+            transform: translateY(-8px);
+            border-color: rgba(37,99,235,.45);
+            box-shadow: 0 28px 70px rgba(37,99,235,.16);
+        }
+
+        .patrol-icon {
+            width: 58px;
+            height: 58px;
+            margin: 0 auto 16px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #eff6ff, #ffffff);
+            border: 1px solid #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .patrol-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .patrol-feature h3 {
+            font-size: 15px;
+            font-weight: 950;
+            color: #0F172A;
+            line-height: 1.25;
+        }
+
+        .patrol-feature p {
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #334155;
+            line-height: 1.55;
+        }
+
+        @media (max-width: 1279px) {
+            .feature-orbit-area {
+                height: auto;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 18px;
+            }
+
+            .orbit-ring,
+            .feature-center-card {
+                display: none;
+            }
+
+            .feature-card,
+            .card-9 {
+                position: relative;
+                left: auto;
+                right: auto;
+                top: auto;
+                bottom: auto;
+                width: 100%;
+                transform: none;
+            }
+
+            .card-9:hover {
+                transform: translateY(-8px);
+            }
+
+            .patrol-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .feature-orbit-area {
+                grid-template-columns: 1fr;
+            }
+
+            .patrol-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .patrol-title h3 {
+                font-size: 12px;
+                letter-spacing: .14em;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .patrol-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                align-items: flex-start;
+            }
+        }
+       .problem-premium-map {
+            max-width: 1180px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 390px 360px 390px;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .problem-side {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .problem-card {
+            position: relative;
+            min-height: 130px;
+            display: grid;
+            grid-template-columns: 90px 48px 1fr;
+            align-items: center;
+            gap: 14px;
+            padding: 18px;
+            border-radius: 24px;
+            background: rgba(255,255,255,.92);
+            border: 1px solid #dbeafe;
+            box-shadow: 0 20px 55px rgba(37,99,235,.11);
+            backdrop-filter: blur(18px);
+            transition: all .35s ease;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 22px;
+            bottom: 22px;
+            width: 4px;
+            border-radius: 999px;
+            background: #2563EB;
+            opacity: .95;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(37,99,235,.45);
+            box-shadow: 0 30px 75px rgba(37,99,235,.18);
+        }
+
+        .problem-img {
+            position: relative;
+            width: 78px;
+            height: 78px;
+            border-radius: 22px;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .problem-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 22px;
+        }
+
+        .problem-img span {
+            position: absolute;
+            right: -8px;
+            bottom: -8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            background: #ef4444;
+            color: white;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 25px;
+            text-align: center;
+            box-shadow: 0 8px 18px rgba(239,68,68,.30);
+        }
+
+        .problem-number {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: #eff6ff;
+            color: #2563EB;
+            font-size: 18px;
+            font-weight: 950;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .problem-card h3 {
+            font-size: 16px;
+            font-weight: 950;
+            color: #0F172A;
+            line-height: 1.2;
+        }
+
+        .problem-card p {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+            line-height: 1.55;
+        }
+
+        .problem-center-area {
+            position: relative;
+            height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .problem-connector-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            pointer-events: none;
+        }
+
+        .problem-connector-svg path {
+            fill: none;
+            stroke: rgba(37,99,235,.48);
+            stroke-width: 1.7;
+            stroke-dasharray: 7 8;
+            animation: problemDash 7s linear infinite;
+        }
+
+        .problem-connector-svg circle {
+            fill: #2563EB;
+            stroke: white;
+            stroke-width: 5;
+            filter: drop-shadow(0 8px 14px rgba(37,99,235,.28));
+        }
+
+        .problem-center-ring {
+            position: absolute;
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        .ring-one {
+            width: 250px;
+            height: 250px;
+            border: 1px dashed rgba(37,99,235,.32);
+        }
+
+        .ring-two {
+            width: 190px;
+            height: 190px;
+            border: 1px solid rgba(37,99,235,.18);
+            background: rgba(37,99,235,.025);
+        }
+
+        .ring-three {
+            width: 140px;
+            height: 140px;
+            border: 1px solid rgba(37,99,235,.35);
+            box-shadow: 0 24px 70px rgba(37,99,235,.12);
+        }
+
+        .problem-center-core {
+            position: relative;
+            z-index: 4;
+            width: 118px;
+            height: 118px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #ffffff, #eff6ff);
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 28px 75px rgba(37,99,235,.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .problem-lock {
+            width: 74px;
+            height: 74px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #2563EB, #60a5fa);
+            color: white;
+            font-size: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+            box-shadow: 0 20px 45px rgba(37,99,235,.32);
+        }
+
+        .problem-lock span,
+        .problem-lock {
+            line-height: 1;
+        }
+
+        .problem-lock {
+            text-shadow: 0 2px 8px rgba(15,23,42,.25);
+        }
+
+        .problem-bottom-card {
+            max-width: 980px;
+            margin: 44px auto 0;
+            padding: 26px;
+            border-radius: 28px;
+            background: rgba(255,255,255,.82);
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 24px 70px rgba(37,99,235,.12);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            backdrop-filter: blur(18px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-bottom-card::after {
+            content: "✓";
+            position: absolute;
+            right: 54px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 130px;
+            font-weight: 950;
+            color: rgba(37,99,235,.055);
+            line-height: 1;
+        }
+
+        .problem-bottom-icon {
+            width: 96px;
+            height: 96px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, #2563EB, #60a5fa);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 44px;
+            box-shadow: 0 22px 50px rgba(37,99,235,.28);
+            flex: 0 0 96px;
+        }
+
+        .problem-bottom-card h3 {
+            font-size: 22px;
+            font-weight: 950;
+            color: #0F172A;
+            line-height: 1.25;
+            position: relative;
+            z-index: 2;
+        }
+
+        .problem-bottom-card h3 span {
+            color: #2563EB;
+        }
+
+        .problem-bottom-card p {
+            margin-top: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #64748B;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes problemDash {
+            to {
+                stroke-dashoffset: -90;
+            }
+        }
+
+        @media (max-width: 1279px) {
+            .problem-premium-map {
+                grid-template-columns: 1fr;
+                max-width: 760px;
+                gap: 20px;
+            }
+
+            .problem-side {
+                gap: 20px;
+            }
+
+            .problem-center-area {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .problem-card {
+                grid-template-columns: 74px 42px 1fr;
+                padding: 16px;
+            }
+
+            .problem-img {
+                width: 68px;
+                height: 68px;
+            }
+
+            .problem-bottom-card {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .problem-bottom-card::after {
+                display: none;
+            }
+        }
+
+        @keyframes sentryRotateGlow {
+            to { transform: rotate(360deg); }
+        }
+        .faq-card {
+            background: #ffffff;
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.08);
+            transition: all .25s ease;
+        }
+
+        .faq-card:hover {
+            border-color: #93c5fd;
+            box-shadow: 0 16px 40px rgba(37, 99, 235, 0.14);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 800;
+            color: #0F172A;
+            background: white;
+        }
+
+        .faq-question span:first-child {
+            flex: 1;
+        }
+
+        .faq-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #2563EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0;
+            transition: transform .25s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 22px;
+            color: #64748B;
+            font-size: 14px;
+            line-height: 1.7;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            transition: max-height .3s ease, padding .3s ease;
+        }
+
+        .faq-card.active .faq-answer {
+            max-height: 260px;
+            padding: 0 22px 18px 22px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .faq-card.active .faq-icon {
+            transform: rotate(180deg);
+            background: #2563EB;
+            color: white;
+        }
+        .problem-core-card {
+            height: 100%;
+            min-height: 500px;
+            border-radius: 32px;
+            background:
+                radial-gradient(circle at 50% 35%, rgba(37,99,235,0.18), transparent 34%),
+                linear-gradient(180deg, #ffffff, #eff6ff);
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 28px 70px rgba(37,99,235,0.16);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .problem-core-inner {
+            position: relative;
+            z-index: 2;
+            padding: 34px;
+            text-align: center;
+        }
+
+        .problem-radar {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 999px;
+            border: 1px solid rgba(37,99,235,0.18);
+            animation: radarPulse 3s infinite ease-out;
+        }
+
+        .problem-radar::before,
+        .problem-radar::after {
+            content: "";
+            position: absolute;
+            inset: 55px;
+            border-radius: inherit;
+            border: 1px solid rgba(37,99,235,0.18);
+        }
+
+        .problem-radar::after {
+            inset: 110px;
+        }
+
+        .problem-mini-stat {
+            background: rgba(255,255,255,0.82);
+            border: 1px solid #dbeafe;
+            border-radius: 18px;
+            padding: 14px;
+        }
+
+        .problem-mini-stat span {
+            display: block;
+            font-size: 24px;
+            font-weight: 900;
+            color: #2563EB;
+        }
+
+        .problem-mini-stat p {
+            margin-top: 2px;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #64748B;
+        }
+
+        .problem-card {
+            position: relative;
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            min-height: 155px;
+            background: rgba(255,255,255,0.96);
+            border: 1px solid #dbeafe;
+            border-radius: 26px;
+            padding: 22px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(37,99,235,0.09);
+            transition: all .35s ease;
+            animation: problemFloat 4.5s ease-in-out infinite;
+        }
+
+        .problem-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(37,99,235,.10), transparent 58%);
+            opacity: 0;
+            transition: opacity .35s ease;
+        }
+
+        .problem-card::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 22px;
+            bottom: 22px;
+            width: 5px;
+            border-radius: 999px;
+            background: #2563EB;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            border-color: #2563EB;
+            box-shadow: 0 28px 65px rgba(37,99,235,0.18);
+        }
+
+        .problem-card:hover::before {
+            opacity: 1;
+        }
+
+        .problem-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 20px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all .35s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .problem-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 9px;
+        }
+
+        .problem-card:hover .problem-icon {
+            background: #2563EB;
+            transform: rotate(-4deg) scale(1.08);
+        }
+
+        .problem-card:hover .problem-icon img {
+            filter: brightness(0) invert(1);
+        }
+
+        .problem-card span,
+        .problem-card h3,
+        .problem-card p {
+            position: relative;
+            z-index: 2;
+        }
+
+        .problem-card span {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #2563EB;
+            margin-bottom: 5px;
+        }
+
+        .problem-card h3 {
+            font-size: 18px;
+            font-weight: 900;
+            color: #0F172A;
+            margin-bottom: 7px;
+        }
+
+        .problem-card p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #64748B;
+        }
+
+        .problem-delay-1 { animation-delay: 0s; }
+        .problem-delay-2 { animation-delay: .25s; }
+        .problem-delay-3 { animation-delay: .5s; }
+        .problem-delay-4 { animation-delay: .75s; }
+        .problem-delay-5 { animation-delay: 1s; }
+        .problem-delay-6 { animation-delay: 1.25s; }
+
+        @keyframes problemFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes radarPulse {
+            0% {
+                transform: scale(.82);
+                opacity: .75;
+            }
+            70% {
+                transform: scale(1.14);
+                opacity: .16;
+            }
+            100% {
+                transform: scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .problem-core-card {
+                min-height: 360px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .problem-card {
+                flex-direction: column;
+            }
+        }
+        .problem-map {
+            position: relative;
+            min-height: 780px;
+        }
+
+        .problem-lines {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .problem-lines line {
+            stroke: #3b82f6;
+            stroke-width: 2;
+            stroke-dasharray: 8 8;
+            opacity: .55;
+            animation: dashMove 6s linear infinite;
+        }
+
+        .problem-lines circle {
+            fill: #2563eb;
+            filter: drop-shadow(0 0 8px rgba(37,99,235,.6));
+        }
+
+        .problem-hub {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 180px;
+            height: 180px;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .problem-orbit {
+            position: absolute;
+            inset: -100px;
+            border-radius: 999px;
+            border: 1px solid rgba(37,99,235,.22);
+            box-shadow:
+                0 0 0 40px rgba(37,99,235,.04),
+                0 0 0 80px rgba(37,99,235,.025);
+            animation: orbitPulse 3.2s ease-in-out infinite;
+        }
+
+        .problem-hub-core {
+            position: absolute;
+            inset: 28px;
+            border-radius: 32px;
+            background: linear-gradient(180deg, #ffffff, #dbeafe);
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 30px 70px rgba(37,99,235,.22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg);
+        }
+
+        .problem-shield {
+            width: 82px;
+            height: 82px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            transform: rotate(-45deg);
+            box-shadow: 0 18px 40px rgba(37,99,235,.35);
+        }
+
+        .problem-node {
+            position: absolute;
+            z-index: 3;
+            width: 280px;
+            min-height: 145px;
+            background: rgba(255,255,255,.96);
+            border: 1px solid #dbeafe;
+            border-radius: 28px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 22px 55px rgba(37,99,235,.12);
+            cursor: pointer;
+            transition: all .35s ease;
+            overflow: hidden;
+        }
+
+        .problem-node:hover,
+        .problem-node.active {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #2563eb;
+            box-shadow: 0 32px 75px rgba(37,99,235,.22);
+        }
+
+        .problem-node.active::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border: 2px solid #2563eb;
+            border-radius: 28px;
+            pointer-events: none;
+        }
+
+        .problem-node b {
+            color: #2563eb;
+            font-size: 15px;
+            font-weight: 900;
+        }
+
+        .problem-node h3 {
+            margin-top: 7px;
+            color: #0f172a;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .problem-node p {
+            margin-top: 9px;
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.65;
+        }
+
+        .problem-img {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            border-radius: 999px;
+            background: radial-gradient(circle, #ffffff, #dbeafe);
+            border: 1px solid #bfdbfe;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 25px rgba(37,99,235,.12), 0 14px 30px rgba(37,99,235,.16);
+        }
+
+        .problem-img img {
+            width: 72px;
+            height: 72px;
+            object-fit: contain;
+            padding: 6px;
+        }
+
+        .problem-img span {
+            position: absolute;
+            right: -4px;
+            bottom: -4px;
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: #ef4444;
+            color: white;
+            font-size: 22px;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 22px rgba(239,68,68,.35);
+        }
+
+        .problem-node-1 { left: 0px; top: 40px; }
+        .problem-node-2 { left: 50%; top: -20px; transform: translateX(-50%); }
+        .problem-node-3 { right: 0; top: 40px; }
+        .problem-node-4 { right: -20px; top: 300px; }
+        .problem-node-5 { right: 120px; bottom: 20px; }
+        .problem-node-6 { left: 120px; bottom: 20px; }
+
+        .problem-detail-panel {
+            position: absolute;
+            left: 0;
+            top: 245px;
+            z-index: 4;
+            width: 360px;
+            background: rgba(255,255,255,.98);
+            border: 1px solid #dbeafe;
+            border-radius: 24px;
+            padding: 22px;
+            box-shadow: 0 26px 65px rgba(37,99,235,.16);
+            animation: detailIn .35s ease;
+        }
+
+        .problem-detail-panel::before {
+            content: "";
+            position: absolute;
+            top: -16px;
+            left: 170px;
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-left: 1px solid #dbeafe;
+            border-top: 1px solid #dbeafe;
+            transform: rotate(45deg);
+        }
+
+        .problem-detail-panel h4 {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: .09em;
+            margin-bottom: 12px;
+        }
+
+        .problem-detail-panel ul {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .problem-detail-panel li {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+            color: #334155;
+        }
+
+        .problem-detail-panel li::before {
+            content: "×";
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            background: #dbeafe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .problem-warning {
+            margin-top: 18px;
+            background: linear-gradient(90deg, #eff6ff, #dbeafe);
+            border-radius: 16px;
+            padding: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .problem-warning span {
+            font-size: 24px;
+        }
+
+        .problem-warning p {
+            font-size: 13px;
+            color: #1d4ed8;
+            font-weight: 700;
+            line-height: 1.55;
+        }
+
+        @keyframes dashMove {
+            to { stroke-dashoffset: -80; }
+        }
+
+        @keyframes orbitPulse {
+            0%, 100% { transform: scale(.96); opacity: .9; }
+            50% { transform: scale(1.06); opacity: .55; }
+        }
+
+        @keyframes detailIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .problem-map {
+                min-height: auto;
+                display: grid;
+                gap: 18px;
+            }
+
+            .problem-lines,
+            .problem-hub {
+                display: none;
+            }
+
+            .problem-node,
+            .problem-detail-panel {
+                position: relative;
+                left: auto;
+                right: auto;
+                top: auto;
+                bottom: auto;
+                width: 100%;
+                transform: none !important;
+            }
+
+            .problem-detail-panel::before {
+                display: none;
+            }
+        }
+        .sayvm-footer {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, #f8fbff 0%, #eff6ff 100%);
+            color: #0F172A;
+            border-top: 1px solid #DBEAFE;
+        }
+
+        .sayvm-footer-inner {
+            position: relative;
+            z-index: 5;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 40px 20px;
+        }
+
+        .footer-main {
+            display: grid;
+            grid-template-columns: 260px 1px 1fr 1px 320px;
+            align-items: center;
+            gap: 38px;
+        }
+
+        .footer-brand img {
+            width: 145px;
+            height: auto;
+        }
+
+        .footer-brand p {
+            margin-top: 6px;
+            font-size: 10px;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        .footer-divider {
+            width: 1px;
+            height: 70px;
+            background: linear-gradient(180deg, transparent, rgba(37,99,235,.45), transparent);
+        }
+
+        .footer-center {
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+            text-decoration: none;
+            transition: .3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #2563EB;
+        }
+
+        .footer-links span {
+            width: 1px;
+            height: 18px;
+            background: rgba(37,99,235,.5);
+        }
+
+        .footer-socials {
+            margin-top: 18px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .footer-socials a {
+            width: 19px;
+            height: 19px;
+            border-radius: 999px;
+            border: 1px solid rgba(37,99,235,.38);
+            background: rgba(255,255,255,.72);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563EB;
+            box-shadow: 0 10px 28px rgba(37,99,235,.08);
+            backdrop-filter: blur(12px);
+            transition: .3s ease;
+        }
+
+        .footer-socials a:hover {
+            background: #2563EB;
+            color: white;
+            transform: translateY(-4px);
+        }
+
+        .footer-socials i,
+        .footer-contact i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .footer-contact {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-contact div {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .footer-contact span {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            background: rgba(219,234,254,.9);
+            color: #2563EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-contact p {
+            font-size: 14px;
+            font-weight: 500;
+            color: #111827;
+        }
+
+        .footer-bg-dots {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background-image: radial-gradient(circle, rgba(37,99,235,.18) 2px, transparent 2px);
+            background-size: 15px 15px;
+            z-index: 1;
+        }
+
+        .footer-dots-left {
+            top: 0;
+            left: 0;
+        }
+
+        .footer-dots-right {
+            top: 0;
+            right: 0;
+        }
+
+        .footer-waves {
+            display: none;
+        }
+
+        .footer-bottom {
+            position: relative;
+            z-index: 6;
+            min-height: 40px;
+            background: linear-gradient(90deg, #1E40AF, #2563EB, #1E3A8A);
+            border-top: 1px solid rgba(255,255,255,.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            color: white;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .footer-bottom span {
+            width: 1px;
+            height: 20px;
+            background: rgba(255,255,255,.6);
+        }
+
+        .footer-bottom b {
+            color: #BFDBFE;
+            font-size: 18px;
+        }
+
+        @media (max-width: 1024px) {
+            .sayvm-footer-inner {
+                padding: 32px 24px;
+            }
+
+            .footer-main {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 26px;
+            }
+
+            .footer-divider {
+                width: 100%;
+                height: 1px;
+            }
+
+            .footer-brand img {
+                margin: 0 auto;
+            }
+
+            .footer-contact {
+                align-items: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 4px;
+                padding: 12px;
+                text-align: center;
+            }
+
+            .footer-bottom span {
+                display: none;
+            }
+        }
+        .workflow-title-line {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+        }
+
+        .workflow-title-line span {
+            width: 110px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2563EB);
+            position: relative;
+        }
+
+        .workflow-title-line span:last-child {
+            background: linear-gradient(90deg, #2563EB, transparent);
+        }
+
+        .workflow-title-line span::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            width: 7px;
+            height: 7px;
+            border-radius: 999px;
+            background: #2563EB;
+            transform: translateY(-50%);
+        }
+
+        .workflow-title-line span:last-child::after {
+            left: 0;
+            right: auto;
+        }
+
+        .workflow-title-line b {
+            font-size: 22px;
+            font-weight: 900;
+            color: #0F172A;
+        }
+
+        .workflow-panel {
+            background: rgba(255,255,255,.72);
+            border: 1px solid #dbeafe;
+            border-radius: 30px;
+            padding: 22px;
+            box-shadow: 0 28px 80px rgba(37,99,235,.12);
+            backdrop-filter: blur(18px);
+        }
+
+        .workflow-row {
+            position: relative;
+            background: rgba(255,255,255,.86);
+            border: 1px solid #dbeafe;
+            border-radius: 24px;
+            padding: 52px 18px 18px;
+            box-shadow: 0 18px 50px rgba(37,99,235,.08);
+        }
+
+        .workflow-row + .workflow-row {
+            margin-top: 16px;
+        }
+
+        .workflow-badge {
+            position: absolute;
+            top: 14px;
+            left: 18px;
+            height: 36px;
+            padding: 0 18px 0 9px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #1D4ED8, #2563EB);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 950;
+            text-transform: uppercase;
+            letter-spacing: .02em;
+            box-shadow: 0 14px 28px rgba(37,99,235,.25);
+        }
+
+        .workflow-badge span {
+            width: 25px;
+            height: 25px;
+            border-radius: 999px;
+            background: white;
+            color: #2563EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 950;
+        }
+
+        .workflow-main {
+            display: grid;
+            grid-template-columns: 1.35fr 28px 1fr 28px 1fr 28px 1fr 48px .85fr;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .workflow-step {
+            min-width: 0;
+        }
+
+        .workflow-step img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 18px;
+            border: 1px solid #dbeafe;
+            background: #eff6ff;
+            box-shadow: 0 14px 34px rgba(37,99,235,.12);
+            transition: .35s ease;
+        }
+
+        .large-step img {
+            height: 170px;
+        }
+
+        .phone-step img {
+            object-fit: contain;
+            background: linear-gradient(180deg, #eff6ff, #ffffff);
+        }
+
+        .workflow-step:hover img {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 54px rgba(37,99,235,.18);
+        }
+
+        .workflow-caption {
+            margin-top: 12px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 8px;
+            text-align: left;
+        }
+
+        .workflow-caption span {
+            width: 22px;
+            height: 22px;
+            border-radius: 999px;
+            background: #2563EB;
+            color: white;
+            font-size: 12px;
+            font-weight: 950;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 22px;
+        }
+
+        .workflow-caption p {
+            font-size: 13px;
+            font-weight: 900;
+            color: #0F172A;
+            line-height: 1.25;
+        }
+
+        .workflow-arrow {
+            font-size: 34px;
+            font-weight: 950;
+            color: #2563EB;
+            text-align: center;
+            animation: arrowMove 1.6s ease-in-out infinite;
+        }
+
+        .workflow-decision {
+            height: 150px;
+            position: relative;
+        }
+
+        .decision-line {
+            position: absolute;
+            left: 4px;
+            width: 42px;
+            height: 56px;
+            border-left: 4px solid;
+            border-radius: 999px 0 0 999px;
+        }
+
+        .decision-line.green {
+            top: 26px;
+            border-color: #16a34a;
+            border-top: 4px solid #16a34a;
+        }
+
+        .decision-line.red {
+            bottom: 26px;
+            border-color: #dc2626;
+            border-bottom: 4px solid #dc2626;
+        }
+
+        .workflow-results {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .result-card {
+            position: relative;
+            min-height: 104px;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1.5px solid;
+            background: white;
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            align-items: center;
+            gap: 10px;
+            padding: 26px 12px 12px;
+        }
+
+        .result-card.success {
+            border-color: #16a34a;
+        }
+
+        .result-card.danger {
+            border-color: #ef4444;
+        }
+
+        .result-tag {
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 24px;
+            color: white;
+            font-size: 13px;
+            font-weight: 950;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success .result-tag {
+            background: #16a34a;
+        }
+
+        .danger .result-tag {
+            background: #ef4444;
+        }
+
+        .result-card img {
+            width: 90px;
+            height: 62px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #eff6ff;
+        }
+
+        .result-card h4 {
+            font-size: 12.5px;
+            font-weight: 950;
+            line-height: 1.25;
+        }
+
+        .success h4 {
+            color: #15803d;
+        }
+
+        .danger h4 {
+            color: #dc2626;
+        }
+
+        .result-icon {
+            position: absolute;
+            top: -10px;
+            right: -8px;
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            color: white;
+            font-size: 24px;
+            font-weight: 950;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 22px rgba(15,23,42,.16);
+        }
+
+        .success .result-icon {
+            background: #16a34a;
+        }
+
+        .danger .result-icon {
+            background: #ef4444;
+        }
+
+        .workflow-trust-strip {
+            margin-top: 16px;
+            border: 1px solid #bfdbfe;
+            border-radius: 24px;
+            padding: 18px 30px;
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr 1px 1fr;
+            align-items: center;
+            background: rgba(255,255,255,.88);
+            box-shadow: 0 18px 50px rgba(37,99,235,.09);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+        }
+
+        .trust-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #2563EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trust-icon i {
+            width: 28px;
+            height: 28px;
+        }
+
+        .red-icon {
+            color: #dc2626;
+        }
+
+        .trust-item h3 {
+            font-size: 22px;
+            font-weight: 950;
+            color: #2563EB;
+            line-height: 1;
+        }
+
+        .trust-item p {
+            margin-top: 5px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #0F172A;
+        }
+
+        .trust-divider {
+            height: 60px;
+            background: linear-gradient(180deg, transparent, #bfdbfe, transparent);
+        }
+
+        @keyframes arrowMove {
+            0%, 100% {
+                transform: translateX(0);
+                opacity: .8;
+            }
+            50% {
+                transform: translateX(5px);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1279px) {
+            .workflow-main {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .workflow-arrow {
+                transform: rotate(90deg);
+                animation: none;
+                line-height: 1;
+            }
+
+            .workflow-decision {
+                display: none;
+            }
+
+            .workflow-results {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .workflow-step img,
+            .large-step img {
+                height: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .workflow-panel {
+                padding: 14px;
+                border-radius: 24px;
+            }
+
+            .workflow-row {
+                padding: 58px 14px 14px;
+            }
+
+            .workflow-badge {
+                font-size: 11px;
+                max-width: calc(100% - 28px);
+            }
+
+            .workflow-title-line b {
+                font-size: 16px;
+            }
+
+            .workflow-title-line span {
+                width: 54px;
+            }
+
+            .workflow-step img,
+            .large-step img {
+                height: 185px;
+            }
+
+            .workflow-results {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow-trust-strip {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                text-align: center;
+            }
+
+            .trust-divider {
+                width: 100%;
+                height: 1px;
+            }
+
+            .trust-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+<body class="bg-brand-lightBg text-brand-navy font-sans antialiased selection:bg-brand-blue/10">
+
+    <div id="mobile-sidebar" class="fixed top-0 bottom-0 left-0 w-[300px] max-w-[85vw] bg-white z-50 p-6 shadow-2xl border-r border-brand-border transform -translate-x-full transition-transform duration-300 ease-out xl:hidden flex flex-col justify-between">
+        <div class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="images/sentry_logo.png"
+                        alt="Sentry24x7 Logo"
+                        class="h-12 w-auto object-contain" />
+                </div>
+                
+                <button id="close-menu-btn" class="p-2 text-brand-navy hover:bg-slate-100 rounded-lg transition">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-4 text-base font-semibold text-brand-muted mt-6">
+                <a href="#home" class="mobile-nav-link hover:text-brand-blue py-2 transition duration-200">Home</a>
+                <a href="#features" class="mobile-nav-link hover:text-brand-blue py-2 transition duration-200">Features</a>
+                <a href="#about" class="mobile-nav-link hover:text-brand-blue py-2 transition duration-200">About Us</a>
+                <a href="#faq" class="mobile-nav-link hover:text-brand-blue py-2 transition duration-200">FAQ</a>
+                <a href="#contact" class="mobile-nav-link hover:text-brand-blue py-2 transition duration-200">Contact</a>
+            </nav>
+        </div>     
+        <div>
+            <a href="#book-demo" class="mobile-nav-link block bg-brand-blue text-white text-center px-5 py-3 rounded-xl font-bold shadow-lg shadow-brand-blue/15 hover:bg-blue-700 transition duration-200">Book Demo</a>
+        </div>
+    </div>
+
+    <header class="glass-header fixed top-0 left-0 right-0 w-full z-50">
+        <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center">
+            
+           <div class="flex items-center gap-1 shrink-0 select-none -ml-1 sm:-ml-2">
+                <img src="images/sentry_logo.png"
+                    alt="Sentry24x7 Logo"
+                    class="h-12 sm:h-14 md:h-16 w-auto object-contain block" />
+            </div>
+            <nav id="main-nav-bar"
+                class="hidden lg:flex items-center gap-5 text-sm font-semibold text-brand-muted whitespace-nowrap ml-auto">
+                <a href="#home" class="nav-item-link hover:text-brand-blue h-full flex items-center transition duration-200">Home</a>
+                <a href="#features" class="nav-item-link hover:text-brand-blue h-full flex items-center transition duration-200">Features</a>
+                <a href="#about" class="nav-item-link hover:text-brand-blue h-full flex items-center transition duration-200">About Us</a>
+                <a href="#faq" class="mobile-nav-link hover:text-brand-blue py-2 transition duration-200">FAQ</a>
+                <a href="#contact" class="nav-item-link hover:text-brand-blue h-full flex items-center transition duration-200">Contact</a>
+                
+                <span class="h-5 w-[1px] bg-slate-200 block self-center"></span>
+
+                <div onclick="toggleUiModal(true); switchUiFormView('login');" 
+                     class="w-4 h-6 cursor-default select-none opacity-0 hover:opacity-5 transition-opacity duration-300 rounded bg-slate-400 self-center" 
+                     title="">
+                </div>
+
+                <a href="#book-demo" class="bg-brand-blue text-white px-5 py-2.5 rounded-xl font-bold shadow-lg shadow-brand-blue/15 hover:bg-blue-700 transition duration-200 transform hover:-translate-y-0.5 flex items-center justify-center self-center">
+                    Book Demo
+                </a>
+            </nav>
+
+            <button id="hamburger-menu-btn" class="xl:hidden p-2 text-brand-navy hover:bg-slate-100 rounded-lg transition focus:outline-none shrink-0 flex items-center justify-center self-center">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+        </div>
+    </header>
+    
+    <section id="home" class="snap-hero scroll-mt-24 min-h-screen flex items-center px-4 md:px-6 bg-brand-darkBg border-t border-brand-border relative z-10">
+    <!-- Premium hero image background -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+
+            <video
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                class="w-full h-full object-cover"
+            >
+                <source src="images/hero.mp4" type="video/mp4">
+            </video>
+
+            <!-- Dark overlay for text readability -->
+            <div class="absolute inset-0 bg-gradient-to-r from-white/78 via-white/35 to-transparent"></div></div>
+
+        </div>
+
+            <!-- Content -->
+            <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto w-full relative z-10 pt-10 px-4 lg:px-0">
+            <div class="max-w-xl text-center lg:text-left lg:ml-14 rounded-3xl p-7 md:p-9 -mt-16">
+
+                    <div class="space-y-4">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-brand-navy leading-none drop-shadow-[0_2px_8px_rgba(255,255,255,0.85)]">
+                            Sentry <span class="text-blue-800">24x7</span>
+                        </h1>
+
+                        <h2 class="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-800 leading-tight drop-shadow-[0_2px_8px_rgba(255,255,255,0.85)]">
+                            Smart Society Security & <span class="text-blue-800">Monitoring Platform</span>
+                        </h2>
+
+                        <p class="text-sm md:text-base text-slate-900 font-medium leading-relaxed max-w-xl drop-shadow-[0_2px_8px_rgba(255,255,255,0.8)]">
+                            RFID-based vehicle access, visitor monitoring, gate control and real-time society security automation.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start pt-6">
+                        <a href="#book-demo" class="bg-brand-blue text-white text-sm font-bold px-6 py-3 rounded-xl shadow-lg shadow-brand-navy/10 hover:bg-slate-800 transition duration-200 text-center tracking-wide flex items-center justify-center">
+                            Book  Demo
+                        </a>
+
+                        <button onclick="toggleDemoVideo(true)" class="flex items-center justify-center gap-2 bg-brand-cardBg text-brand-navy text-sm font-bold px-4 py-3 rounded-xl border border-brand-border shadow-sm hover:border-brand-blue transition duration-200 group text-center cursor-pointer">
+                            <i data-lucide="play" class="w-3.2 h-3.5 fill-brand-navy text-brand-navy group-hover:scale-110 transition-transform"></i>
+                            Watch Demo Video
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <div id="video-demo-modal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-md z-[9999] flex flex-col items-center justify-center p-4 md:p-6 hidden opacity-0 transition-opacity duration-300 pointer-events-auto">
+            <div class="relative w-full max-w-4xl bg-black rounded-2xl overflow-hidden shadow-2xl border border-slate-800 flex flex-col">
+                
+                <div class="w-full bg-slate-900/80 border-b border-slate-800 px-5 py-3.5 flex items-center justify-between text-white">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 bg-brand-blue rounded-full animate-pulse"></span>
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Sentry24x7 System Demo Video</span>
+                    </div>
+                    
+                    <button onclick="window.toggleDemoVideo(false)" class="bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white rounded-lg px-3 py-1.5 text-xs font-bold transition-all duration-200 cursor-pointer flex items-center gap-1.5 active:scale-95 border border-white/5">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Close
+                    </button>
+                </div>
+
+                <div class="w-full aspect-video bg-black flex items-center justify-center">
+                    <video id="demo-video-player" class="w-full h-full object-contain" controls playsinline preload="metadata">
+                        <source src="dash/AGCS.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+    <section id="problems" class="snap-section scroll-mt-24 py-16 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-8 left-0 w-52 h-52 bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)] bg-[length:14px_14px] opacity-30"></div>
+            <div class="absolute bottom-20 right-0 w-52 h-52 bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)] bg-[length:14px_14px] opacity-25"></div>
+            <div class="absolute -top-28 -right-24 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-28 -left-24 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center max-w-4xl mx-auto mb-12">
+                <h2 class="mt-2 mb-2 text-2xl md:text-4xl font-black tracking-tight text-brand-navy">
+                    Why Traditional Gate Management <span class="text-brand-blue">Fails</span>
+                </h2>
+            </div>
+
+            <div class="problem-premium-map">
+
+                <div class="problem-side problem-left">
+
+                    <div class="problem-card">
+                        <div class="problem-img">
+                            <img src="images/manual.png" alt="Manual Registers">
+                            <span>×</span>
+                        </div>
+                        <div class="problem-number">01</div>
+                        <div>
+                            <h3>Manual Registers</h3>
+                            <p>Guards rely on paper logs — prone to errors and hard to audit.</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-img">
+                            <img src="images/slow.png" alt="Slow Visitor Approval">
+                            <span>×</span>
+                        </div>
+                        <div class="problem-number">02</div>
+                        <div>
+                            <h3>Slow Visitor Approval</h3>
+                            <p>Long queues due to manual checks and approvals.</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-img">
+                            <img src="images/hardware.png" alt="No Hardware Integration">
+                            <span>×</span>
+                        </div>
+                        <div class="problem-number">03</div>
+                        <div>
+                            <h3>No Hardware Integration</h3>
+                            <p>No RFID, no boom barrier — everything is manual.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="problem-center-area">
+
+                    <svg class="problem-connector-svg" viewBox="0 0 360 520" preserveAspectRatio="none">
+                        <path d="M0 95 C85 95 85 205 175 220"></path>
+                        <path d="M0 260 C90 260 90 260 175 260"></path>
+                        <path d="M0 425 C85 425 85 315 175 300"></path>
+
+                        <path d="M360 95 C275 95 275 205 185 220"></path>
+                        <path d="M360 260 C270 260 270 260 185 260"></path>
+                        <path d="M360 425 C275 425 275 315 185 300"></path>
+
+                        <circle cx="0" cy="95" r="7"></circle>
+                        <circle cx="0" cy="260" r="7"></circle>
+                        <circle cx="0" cy="425" r="7"></circle>
+                        <circle cx="360" cy="95" r="7"></circle>
+                        <circle cx="360" cy="260" r="7"></circle>
+                        <circle cx="360" cy="425" r="7"></circle>
+                        <circle cx="180" cy="260" r="8"></circle>
+                    </svg>
+
+                    <div class="problem-center-ring ring-one"></div>
+                    <div class="problem-center-ring ring-two"></div>
+                    <div class="problem-center-ring ring-three"></div>
+
+                    <div class="problem-center-core">
+                        <div class="problem-lock">🔒</div>
+                    </div>
+                </div>
+                <div class="problem-side problem-right">
+
+                    <div class="problem-card">
+                        <div class="problem-img">
+                            <img src="images/Unauthorized.png" alt="Unauthorized Entry">
+                            <span>×</span>
+                        </div>
+                        <div class="problem-number">04</div>
+                        <div>
+                            <h3>Unauthorized Entry</h3>
+                            <p>Weak guard checks — easy to mislead and bypass.</p>
+                        </div>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-img">
+                            <img src="images/activity.png" alt="No Activity Records">
+                            <span>×</span>
+                        </div>
+                        <div class="problem-number">05</div>
+                        <div>
+                            <h3>No Activity Records</h3>
+                            <p>No digital logs — visitor and vehicle tracking is impossible.</p>
+                        </div>
+                    </div>
+
+                    <div class="problem-card">
+                        <div class="problem-img">
+                            <img src="images/alert.png" alt="No Emergency Alerts">
+                            <span>×</span>
+                        </div>
+                        <div class="problem-number">06</div>
+                        <div>
+                            <h3>No Emergency Alerts</h3>
+                            <p>No way to notify residents or guards instantly in emergencies.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="problem-bottom-card">
+                <div class="problem-bottom-icon">🛡️</div>
+                <div>
+                    <h3>
+                        Traditional systems are not just slow — they are <span>risky.</span>
+                    </h3>
+                    <p>
+                        It’s time to switch to a smarter, automated and secure society solution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="snap-section scroll-mt-24 py-16 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+
+        <div class="absolute -top-28 -right-24 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-28 -left-24 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto relative z-10">
+
+            <!-- <div class="text-center max-w-3xl mx-auto mb-12"> -->
+                <!-- <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-brand-blue text-xs font-black uppercase tracking-widest shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+                    Smart Gate Management
+                </span> -->
+
+                <h2 class="mt-2 mb-16 text-2xl md:text-4xl font-black tracking-tight text-brand-navy">
+                    Key Features of <span class="text-brand-blue">Sentry24x7</span>
+                </h2>
+              
+            </div>
+
+            <div class="features-showcase">
+
+                <div class="feature-orbit-area">
+
+                    <div class="orbit-ring orbit-ring-one"></div>
+                    <div class="orbit-ring orbit-ring-two"></div>
+                    <div class="orbit-ring orbit-ring-three"></div>
+
+                    <div class="feature-center-card">
+                        <img src="images/sentry_logo.png" alt="Sentry24x7 Logo">
+                        <h3>Sentry<span>24x7</span></h3>
+                        
+                        <div class="center-blue-line"></div>
+                    </div>
+
+                    <div class="feature-card feature-card-left card-1">
+                        <div class="feature-icon"><img src="images/authentication.png" alt=""></div>
+                        <div>
+                            <h3>Authentication</h3>
+                            <p>Secure login and registration for all system roles.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-left card-2">
+                        <div class="feature-icon"><img src="images/role.png" alt=""></div>
+                        <div>
+                            <h3>Role Based Access</h3>
+                            <p>Permissions for Secretary, Supervisor, Guard and Resident.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-left card-3">
+                        <div class="feature-icon"><img src="images/time.png" alt=""></div>
+                        <div>
+                            <h3>Time-Based Blocking</h3>
+                            <p>Schedule gate restrictions automatically.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-left card-4">
+                        <div class="feature-icon"><img src="images/launguage.png" alt=""></div>
+                        <div>
+                            <h3>Multi-Language</h3>
+                            <p>Guard interface available in English and Marathi.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-right card-5">
+                        <div class="feature-icon"><img src="images/vehicle.png" alt=""></div>
+                        <div>
+                            <h3>Vehicle Access</h3>
+                            <p>RFID-based vehicle verification and approval.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-right card-6">
+                        <div class="feature-icon"><img src="images/gate.png" alt=""></div>
+                        <div>
+                            <h3>Gate Control</h3>
+                            <p>Block or unblock gates with authorized rights.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-right card-7">
+                        <div class="feature-icon"><img src="images/sos.png" alt=""></div>
+                        <div>
+                            <h3>SOS Alerts</h3>
+                            <p>Emergency notifications delivered instantly.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-right card-8">
+                        <div class="feature-icon"><img src="images/reporting.png" alt=""></div>
+                        <div>
+                            <h3>Reporting</h3>
+                            <p>Export logs of vehicles, visitors and activity.</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-card feature-card-bottom card-9">
+                        <div class="feature-icon"><img src="images/offline.png" alt=""></div>
+                        <div>
+                            <h3>Offline Mode</h3>
+                            <p>Works without internet and syncs when online.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="patrol-title">
+                    <span></span>
+                    <h3>Patrol Management Features</h3>
+                    <span></span>
+                </div>
+
+                <div class="patrol-grid">
+
+                    <div class="patrol-feature">
+                        <div class="patrol-icon"><img src="images/guardtrack.png" alt=""></div>
+                        <h3>Guard Tracking</h3>
+                        <p>Track guard location and patrol progress in real time.</p>
+                    </div>
+
+                    <div class="patrol-feature">
+                        <div class="patrol-icon"><img src="images/checkpoint.png" alt=""></div>
+                        <h3>Checkpoint Verification</h3>
+                        <p>Verify every checkpoint is visited on schedule.</p>
+                    </div>
+
+                    <div class="patrol-feature">
+                        <div class="patrol-icon"><img src="images/monitor.png" alt=""></div>
+                        <h3>Route Monitoring</h3>
+                        <p>Ensure guards follow assigned patrol routes.</p>
+                    </div>
+
+                    <div class="patrol-feature">
+                        <div class="patrol-icon"><img src="images/deviation.png" alt=""></div>
+                        <h3>Deviation Alerts</h3>
+                        <p>Instant alerts for missed checkpoints or deviations.</p>
+                    </div>
+
+                    <div class="patrol-feature">
+                        <div class="patrol-icon"><img src="images/patrol.png" alt=""></div>
+                        <h3>Patrol Scheduling</h3>
+                        <p>Create patrol rounds and frequency settings.</p>
+                    </div>
+
+                    <div class="patrol-feature">
+                        <div class="patrol-icon"><img src="images/report.png" alt=""></div>
+                        <h3>Patrol Reports</h3>
+                        <p>View completion analytics and guard performance.</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="how-it-works" class="snap-section scroll-mt-24 py-16 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+
+        <div class="absolute -top-28 -right-28 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-28 -left-28 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto relative z-10">
+
+            <div class="text-center max-w-4xl mx-auto mb-10">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-brand-blue text-xs font-black uppercase tracking-widest shadow-sm">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    How Sentry24x7 Works
+                </span>
+
+                <h2 class="mt-4 text-3xl md:text-5xl font-black tracking-tight text-brand-navy">
+                    Secure Every Entry. <span class="text-brand-blue">Automate Every Gate.</span>
+                </h2>
+
+                <div class="workflow-title-line">
+                    <span></span>
+                    <b>Smart. Secure. Seamless.</b>
+                    <span></span>
+                </div>
+
+                <p class="mt-4 text-sm md:text-base text-brand-muted leading-relaxed">
+                    Sentry24x7 connects residents, guards, supervisors and gate hardware into one smart security workflow.
+                </p>
+            </div>
+
+            <div class="workflow-panel">
+
+                <!-- REGISTERED VEHICLE FLOW -->
+                <div class="workflow-row">
+
+                    <div class="workflow-badge">
+                        <span>1</span>
+                        Registered Vehicle Flow
+                    </div>
+
+                    <div class="workflow-main">
+
+                        <div class="workflow-step large-step">
+                            <img src="images/register_car.png" alt="Vehicle Arrives at Gate">
+                            <div class="workflow-caption">
+                                <span>1</span>
+                                <p>Vehicle Arrives<br>at Gate</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-arrow">→</div>
+
+                        <div class="workflow-step">
+                            <img src="images/rfid-reader.png" alt="RFID Reader Detects Vehicle">
+                            <div class="workflow-caption">
+                                <span>2</span>
+                                <p>RF Reader / FASTag<br>Detects Vehicle</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-arrow">→</div>
+
+                        <div class="workflow-step">
+                            <img src="images/server-check.png" alt="Server Checks Registration">
+                            <div class="workflow-caption">
+                                <span>3</span>
+                                <p>Server Checks<br>Registration</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-arrow">→</div>
+
+                        <div class="workflow-step">
+                            <img src="images/registered-check.png" alt="Already Registered">
+                            <div class="workflow-caption">
+                                <span>4</span>
+                                <p>Already Registered<br>by Secretary?</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-decision">
+                            <div class="decision-line green"></div>
+                            <div class="decision-line red"></div>
+                        </div>
+
+                        <div class="workflow-results">
+                            <div class="result-card success">
+                                <div class="result-tag">YES</div>
+                                <img src="images/gate-open.png" alt="Gate Opens Automatically">
+                                <h4>Gate Opens<br>Automatically</h4>
+                                <span class="result-icon">✓</span>
+                            </div>
+
+                            <div class="result-card danger">
+                                <div class="result-tag">NO</div>
+                                <img src="images/guard-action.png" alt="Access Denied">
+                                <h4>Access Denied /<br>Guard Action Required</h4>
+                                <span class="result-icon">×</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- VISITOR VEHICLE FLOW -->
+                <div class="workflow-row">
+
+                    <div class="workflow-badge">
+                        <span>2</span>
+                        Visitor Vehicle Flow
+                    </div>
+
+                    <div class="workflow-main">
+
+                        <div class="workflow-step large-step">
+                            <img src="images/visitor-car-gate.png" alt="Visitor Arrives at Gate">
+                            <div class="workflow-caption">
+                                <span>1</span>
+                                <p>Visitor Arrives<br>at Gate</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-arrow">→</div>
+
+                        <div class="workflow-step">
+                            <img src="images/guard-entry.png" alt="Guard Enters Visitor Details">
+                            <div class="workflow-caption">
+                                <span>2</span>
+                                <p>Guard Enters<br>Visitor Details</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-arrow">→</div>
+
+                        <div class="workflow-step phone-step">
+                            <img src="images/visitor-request-phone.png" alt="Request Sent to Resident">
+                            <div class="workflow-caption">
+                                <span>3</span>
+                                <p>Request Sent to<br>Resident</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-arrow">→</div>
+
+                        <div class="workflow-step">
+                            <img src="images/resident-approval.png" alt="Resident Approves or Rejects">
+                            <div class="workflow-caption">
+                                <span>4</span>
+                                <p>Resident Approves<br>or Rejects</p>
+                            </div>
+                        </div>
+
+                        <div class="workflow-decision">
+                            <div class="decision-line green"></div>
+                            <div class="decision-line red"></div>
+                        </div>
+
+                        <div class="workflow-results">
+                            <div class="result-card success">
+                                <div class="result-tag">APPROVED</div>
+                                <img src="images/visitor-approved.png" alt="Gate Opens">
+                                <h4>Gate Opens</h4>
+                                <span class="result-icon">✓</span>
+                            </div>
+
+                            <div class="result-card danger">
+                                <div class="result-tag">REJECTED</div>
+                                <img src="images/visitor-rejected.png" alt="Entry Denied">
+                                <h4>Entry Denied</h4>
+                                <span class="result-icon">×</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- BOTTOM STRIP -->
+                <div class="workflow-trust-strip">
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <i data-lucide="radio-tower"></i>
+                        </div>
+                        <div>
+                            <h3>RFID</h3>
+                            <p>Vehicle Automation</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-divider"></div>
+
+                    <div class="trust-item">
+                        <div class="trust-icon red-icon">
+                            <i data-lucide="bell-ring"></i>
+                        </div>
+                        <div>
+                            <h3>SOS</h3>
+                            <p>Emergency Alerts</p>
+                        </div>
+                    </div>
+
+                    <div class="trust-divider"></div>
+
+                    <div class="trust-item">
+                        <div class="trust-icon">
+                            <i data-lucide="cloud-upload"></i>
+                        </div>
+                        <div>
+                            <h3>Offline</h3>
+                            <p>Auto Sync Support</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- COMPARISON SECTION -->
+    <section id="comparison" class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+
+        <div class="absolute -top-28 -right-20 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-28 -left-20 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
+
+        <div class="max-w-6xl 2xl:max-w-[1600px] mx-auto relative z-10 space-y-10">
+            
+
+                <h2 class="text-3xl md:text-4xl font-black tracking-tight">
+                    <span class="text-brand-navy">Why</span>
+                    <span class="text-brand-blue">Sentry24x7</span>
+                    <span class="text-brand-navy">Beats Other Apps</span>
+                </h2>
+
+                <p class="text-sm text-brand-muted">
+                    More automation, stronger security controls, offline resilience and role-based management.
+                </p>
+            </div>
+
+            <div class="bg-white rounded-[2rem] border border-blue-100 shadow-2xl shadow-blue-100/40 overflow-hidden">
+
+                <!-- Header -->
+                <div class="grid grid-cols-3 bg-gradient-to-r from-blue-700 via-brand-blue to-blue-500 text-white overflow-hidden">
+
+                    <div class="py-6 p-5 font-black uppercase tracking-wider text-m md:text-sm text-center">
+                        Feature
+                    </div>
+
+                    <div class="py-6 p-5 font-black uppercase tracking-wider text-m md:text-sm text-center border-x border-blue-400/30">
+                        Other Apps
+                    </div>
+
+                    <div class="py-6 p-5 font-black uppercase tracking-wider text-m md:text-sm text-center bg-blue-700">
+                        Sentry24x7
+                    </div>
+
+                </div>
+
+                <!-- Rows -->
+                <div class="divide-y divide-slate-200 text-lg">
+
+                    <!-- Alarm -->
+                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
+                        <div class="py-6 p-5 font-bold text-brand-navy">
+                            Alarm System
+                        </div>
+
+                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
+                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
+                                ✕
+                            </span>
+                            Not Available
+                        </div>
+
+                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
+                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
+                                ✓
+                            </span>
+                            Instant Alerts
+                        </div>
+                    </div>
+
+                    <!-- Visitor -->
+                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
+                        <div class="py-6 p-5 font-bold text-brand-navy">
+                            Pre-Approved Visitor Entry
+                        </div>
+
+                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
+                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
+                                ✓
+                            </span>
+                            Basic Visitor Pass
+                        </div>
+
+                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
+                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
+                                ✓
+                            </span>
+                            App Streamlined Entry
+                        </div>
+                    </div>
+
+                    <!-- Role -->
+                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
+                        <div class="py-6 p-5 font-bold text-brand-navy">
+                            Role-Based Access
+                        </div>
+
+                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
+                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
+                                ✕
+                            </span>
+                            Not Available
+                        </div>
+
+                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
+                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
+                                ✓
+                            </span>
+                            Guard / Resident / Admin Roles
+                        </div>
+                    </div>
+
+                    <!-- Gate Blocking -->
+                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
+                        <div class="py-6 p-5 font-bold text-brand-navy">
+                            Time-Based Gate Blocking
+                        </div>
+
+                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
+                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
+                                ✕
+                            </span>
+                            Not Available
+                        </div>
+
+                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
+                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
+                                ✓
+                            </span>
+                            Scheduled Gate Blocking
+                        </div>
+                    </div>
+
+                    <!-- Offline -->
+                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
+                        <div class="py-6 p-5 font-bold text-brand-navy">
+                            Offline Mode
+                        </div>
+
+                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
+                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
+                                ✕
+                            </span>
+                            Not Available
+                        </div>
+
+                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
+                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
+                                ✓
+                            </span>
+                            Works Without Internet
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+    <!-- FAQ SECTION -->
+    <section id="faq"  class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+
+        <div class="absolute -top-28 -right-20 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-28 -left-20 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
+
+        <div class="max-w-6xl 2xl:max-w-[1600px] mx-auto relative z-10 space-y-10">
+        <div class="text-center max-w-2xl mx-auto space-y-3">
+            <h2 class="text-3xl font-extrabold tracking-tight text-brand-navy">Frequently Asked Queries</h2>
+            <p class="text-brand-muted text-sm">Everything you need to know about the Sentry24x7 smart gate security ecosystem.</p>
+        </div>
+
+        <div class="w-full max-w-5xl mx-auto space-y-4">
+            
+            <div class="faq-card bg-brand-cardBg border border-brand-border rounded-2xl overflow-hidden transition">
+                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                    <span>1. How does vehicle access control work?</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                </button>
+                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                    Sentry24x7 uses RFID-based vehicle identification to automate entry and exit. Authorized vehicles are verified instantly, while unauthorized or blacklisted vehicles can be blocked automatically.
+                </div>
+            </div>
+
+            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                    <span>2. Can administrators block vehicles remotely?</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                </button>
+                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                    Yes. Authorized administrators can instantly block or unblock vehicles from the web dashboard. Blocked vehicles will be denied access at all connected gates.
+                </div>
+            </div>
+
+            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                    <span>3. What is Role-Based Access Control (RBAC)?</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                </button>
+                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                    Role-Based Access Control ensures that each user only sees and accesses features relevant to their responsibilities. Different permissions can be assigned to Secretaries, Supervisors, Security Guards, and Residents.
+                </div>
+            </div>
+
+            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                    <span>4. How secure is the login system?</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                </button>
+                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                    Sentry24x7 provides secure authentication and user registration for all roles, ensuring only authorized users can access the platform and its data.
+                </div>
+            </div>
+
+            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                    <span>5. Can gate operations be managed remotely?</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                </button>
+                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                    Yes. Secretaries and Supervisors can remotely control gates, including blocking, unblocking, and managing access permissions directly from the dashboard.
+                </div>
+            </div>
+
+            <div id="extended-faq-panel" class="hidden space-y-4">
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>6. What is Time-Based Blocking?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Time-Based Blocking allows administrators to automatically restrict gate access during specific hours, days, or schedules without requiring manual intervention.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>7. How do SOS alerts work?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Residents and security personnel can trigger an SOS alert through the mobile application. Emergency notifications are immediately sent to security staff and authorized users for quick response.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>8. Who receives emergency alerts?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        SOS notifications are instantly delivered to security guards, supervisors, administrators, and other designated users based on the configured alert settings.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>9. Does Sentry24x7 work without internet connectivity?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Yes. The system continues to operate in Offline Mode using local controllers. Once the internet connection is restored, all activity logs and records are automatically synchronized.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>10. What reports can be generated?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        <p class="mb-2 font-medium">Administrators can generate detailed reports for:</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Visitor entries and exits</li>
+                            <li>Vehicle movement history</li>
+                            <li>Security activities</li>
+                            <li>Gate operations</li>
+                            <li>SOS incidents</li>
+                            <li>User activity logs</li>
+                        </ul>
+                        <p class="mt-2">Reports can be exported for auditing and record-keeping purposes.</p>
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>11. Is activity tracking available in real time?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Yes. The platform provides real-time monitoring of vehicles, visitors, gate status, user actions, and security events through a centralized dashboard.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>12. Does the system support multiple languages?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Yes. Sentry24x7 supports multilingual interfaces. Currently, guard operations can be managed in English and Marathi, making the system easy to use for local security staff.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>13. Can multiple user roles access the platform simultaneously?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Yes. Residents, Guards, Supervisors, and Secretaries can access the system simultaneously according to their assigned permissions.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>14. Can access permissions be customized?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Absolutely. Administrators can configure custom permissions and visibility settings for different user roles to match the community's security requirements.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>15. What are the key security features of Sentry24x7?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        <p class="mb-2 font-medium">Key security features include:</p>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li>Secure Authentication</li>
+                            <li>Role-Based Access Control</li>
+                            <li>RFID Vehicle Verification</li>
+                            <li>Gate Control Management</li>
+                            <li>Time-Based Access Restrictions</li>
+                            <li>SOS Emergency Alerts</li>
+                            <li>Offline Operations</li>
+                            <li>Detailed Audit Reporting</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>16. Is Sentry24x7 suitable for residential societies and gated communities?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Yes. Sentry24x7 is specifically designed for residential societies, apartment complexes, gated communities, townships, and commercial premises that require advanced security and access automation.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>17. Can the system maintain a complete audit trail?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Yes. Every important action—including gate operations, vehicle entries, user activities, and emergency alerts—is logged and available for review through detailed reports.
+                    </div>
+                </div>
+
+                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
+                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
+                        <span>18. What benefits does Sentry24x7 provide over manual gate management?</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
+                    </button>
+                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
+                        Sentry24x7 improves security, reduces manual errors, speeds up vehicle entry, enables real-time monitoring, automates gate operations, and provides complete visibility across the community.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="text-center pt-2">
+            <button id="faq-expand-button" onclick="revealExtraFaqs()" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-brand-blue font-bold text-xs px-6 py-3 rounded-xl border border-brand-border shadow-sm transition duration-200">
+                <span>See More Questions</span>
+                <i data-lucide="chevrons-down" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- ABOUT US / PREMIUM SPLIT IDENTITY SECTION WITH LARGE LOGO -->
+    <section id="about" class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white to-blue-50/30 border-t border-brand-border relative z-10 overflow-hidden">
+
+        <div class="absolute -top-28 -right-28 w-80 h-80 bg-blue-100/60 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-28 -left-28 w-80 h-80 bg-cyan-100/50 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto relative z-10 space-y-10">
+
+            <div class="text-center max-w-3xl mx-auto">
+                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-brand-blue text-xs font-black uppercase tracking-widest shadow-sm">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    About Sentry24x7
+                </span>
+
+                <h2 class="mt-4 text-3xl md:text-5xl font-black tracking-tight text-brand-navy">
+                    Smart Society Security &
+                    <span class="text-brand-blue">Monitoring Platform</span>
+                </h2>
+
+                <p class="mt-4 text-sm md:text-base text-brand-muted leading-relaxed max-w-3xl mx-auto">
+                    Sentry24x7 automates society gate operations, visitor entry, RFID vehicle access,
+                    guard patrols and emergency alerts through one secure and easy-to-use platform.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-7 items-stretch">
+
+                <div class="lg:col-span-5 bg-white border border-blue-100 rounded-3xl shadow-xl shadow-blue-100/50 p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                    <div class="absolute top-0 left-0 right-0 h-1.5 bg-brand-blue"></div>
+
+                    <div class="w-56 h-56 md:w-64 md:h-64 rounded-[2rem] bg-gradient-to-br from-blue-50 to-white border border-blue-100 flex items-center justify-center shadow-inner">
+                        <img src="images/sentry_logo.png" alt="Sentry24x7 Logo" class="w-44 md:w-52 h-auto object-contain">
+                    </div>
+
+                    <h3 class="mt-6 text-3xl font-black text-brand-navy">
+                        Sentry<span class="text-brand-blue">24x7</span>
+                    </h3>
+
+                    <p class="mt-3 text-sm text-brand-muted leading-relaxed max-w-sm">
+                        Built for residential societies, gated communities, apartments and commercial premises
+                        that need faster entry, stronger monitoring and smarter access control.
+                    </p>
+                </div>
+
+                <div class="lg:col-span-7 bg-white border border-slate-200 rounded-3xl shadow-lg shadow-slate-200/60 p-6 md:p-8">
+
+                    <div class="grid sm:grid-cols-2 gap-5">
+
+                        <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-blue-50/40 transition">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+                                🚗
+                            </div>
+                            <div>
+                                <h4 class="font-black text-brand-navy text-sm">RFID Vehicle Access</h4>
+                                <p class="text-xs text-brand-muted mt-1 leading-relaxed">
+                                    Automates vehicle verification, entry control and gate movement.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-blue-50/40 transition">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+                                👥
+                            </div>
+                            <div>
+                                <h4 class="font-black text-brand-navy text-sm">Visitor Management</h4>
+                                <p class="text-xs text-brand-muted mt-1 leading-relaxed">
+                                    Supports digital visitor entry, approvals and pre-approved passes.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-blue-50/40 transition">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+                                🛡️
+                            </div>
+                            <div>
+                                <h4 class="font-black text-brand-navy text-sm">Role-Based Access</h4>
+                                <p class="text-xs text-brand-muted mt-1 leading-relaxed">
+                                    Permissions tailored for Secretary, Supervisor, Guard and Residents.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-blue-50/40 transition">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+                                🚨
+                            </div>
+                            <div>
+                                <h4 class="font-black text-brand-navy text-sm">SOS Alerts</h4>
+                                <p class="text-xs text-brand-muted mt-1 leading-relaxed">
+                                    Emergency notifications are sent instantly to configured users.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-blue-50/40 transition">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+                                📶
+                            </div>
+                            <div>
+                                <h4 class="font-black text-brand-navy text-sm">Offline Mode</h4>
+                                <p class="text-xs text-brand-muted mt-1 leading-relaxed">
+                                    Gate operations continue without internet and sync automatically later.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-blue-200 hover:bg-blue-50/40 transition">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-2xl">
+                                📊
+                            </div>
+                            <div>
+                                <h4 class="font-black text-brand-navy text-sm">Reports & Logs</h4>
+                                <p class="text-xs text-brand-muted mt-1 leading-relaxed">
+                                    Detailed logs, visitor history, vehicle records and activity reports.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                        <div class="bg-blue-50 rounded-2xl p-4 text-center border border-blue-100">
+                            <div class="text-xl font-black text-brand-blue">24x7</div>
+                            <div class="text-[10px] text-brand-muted font-bold uppercase mt-1">Monitoring</div>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-2xl p-4 text-center border border-blue-100">
+                            <div class="text-xl font-black text-brand-blue">RFID</div>
+                            <div class="text-[10px] text-brand-muted font-bold uppercase mt-1">Automation</div>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-2xl p-4 text-center border border-blue-100">
+                            <div class="text-xl font-black text-brand-blue">SOS</div>
+                            <div class="text-[10px] text-brand-muted font-bold uppercase mt-1">Alerts</div>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-2xl p-4 text-center border border-blue-100">
+                            <div class="text-xl font-black text-brand-blue">RBAC</div>
+                            <div class="text-[10px] text-brand-muted font-bold uppercase mt-1">Access</div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CONTACT / ENTERPRISE COLLABORATION HUB WITH DIRECT MAP VIEW -->
+    <section id="contact" class="snap-section scroll-mt-24 py-12 px-6 bg-slate-50/50 relative z-10 ">
+        <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto space-y-6">
+            
+            <div class="text-center space-y-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-blue-50 border border-blue-100 text-blue-600 uppercase tracking-widest">
+                    Contact
+                </span>
+                <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+                    Need Help? <span class="text-blue-600">Contact Us</span>
+                </h2>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-5 items-stretch max-w-6xl mx-auto">
+                
+                <div class="lg:col-span-5 bg-white border border-slate-200 p-5 rounded-2xl shadow-sm flex flex-col justify-between space-y-6 w-full">
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center shrink-0 text-blue-600">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="text-base font-bold text-slate-900 tracking-tight">Address</h4>
+                                <p class="text-xs text-slate-600 font-medium leading-relaxed">
+                                    Office no. 401, 4th Floor, Prestige Point, Sinhgad College Highway, near RMD, AtulNagar Phase I, Atul Nagar, Warje, Pune, Maharashtra 411058
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center shrink-0 text-blue-600">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="text-base font-bold text-slate-900 tracking-tight">Call Us</h4>
+                                <p class="text-xs text-slate-600 font-semibold tracking-wide">
+                                    +91-20-25360470
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center shrink-0 text-blue-600">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                                </svg>
+                            </div>
+                            <div class="space-y-1">
+                                <h4 class="text-base font-bold text-slate-900 tracking-tight">Email Us</h4>
+                                <a href="mailto:contact@sayvm.com" class="text-xs text-blue-600 font-bold transition-colors hover:text-blue-700">
+                                    contact@sayvm.com
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full h-[190px] bg-slate-100 border border-slate-200 rounded-xl overflow-hidden relative shadow-sm mt-4">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.881502161217!2d73.78992867599214!3d18.48902597013552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf220b8bc5b1%3A0x6fd105e36a255acc!2sSayVM%20technologies%20private%20limited!5e0!3m2!1sen!2sus!4v1780662934564!5m2!1sen!2sus2"
+                            class="w-full h-full border-0 grayscale opacity-85 hover:grayscale-0 hover:opacity-100 transition-all duration-500" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-7 bg-white border border-slate-200 p-5 rounded-2xl shadow-sm w-full flex flex-col justify-between">
+                    <form action="https://script.google.com/macros/s/AKfycbyPdtBGNKf0Nojy0QB0NPQ27byJHsDDuRQMmDYp7iVW0SR91fUOhHZwpNHYSIoEWJlzYA/exec"
+                        method="POST"
+                        id="contact-form" class="space-y-5 flex-grow flex flex-col justify-between">
+                        <input type="hidden" name="form_type" value="contact">
+                        
+                        <div class="grid sm:grid-cols-2 gap-5">
+                            <div class="space-y-1.5">
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Full Name</label>
+                                <input type="text" name="Full_Name" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
+                            </div>
+                            <div class="space-y-1.5">
+                                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Email Address</label>
+                                <input type="email" name="Email" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Mobile Number</label>
+                            <input type="text" name="Mobile_Number" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
+                        </div>
+                        
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Message</label>
+                            <textarea name="Message" rows="4" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 resize-none shadow-sm"></textarea>
+                        </div>
+                        
+                        <div class="flex justify-center pt-4">
+                            <button type="submit" id="contact-submit-btn" class="px-10 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full text-[11px] tracking-widest uppercase transition-all duration-200 active:scale-[0.98] shadow-sm hover:shadow flex items-center justify-center gap-2">
+                                <span>Send Message</span>
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="contact-success" class="hidden text-center py-12 space-y-4 my-auto">
+                        <div class="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto border border-emerald-200 shadow-sm">
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <div class="space-y-1.5">
+                            <h4 class="font-bold text-base text-slate-900 tracking-tight">Message Sent Successfully</h4>
+                            <p class="text-slate-500 text-xs max-w-xs mx-auto leading-relaxed">Thank you! Our integration planners will reach out shortly.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- DEMO BOOKING SECTION -->
+    <section id="book-demo" class="snap-section scroll-mt-24 py-12 px-4 md:px-6 bg-gradient-to-br from-blue-50 via-white to-slate-50 border-t border-brand-border relative z-10 overflow-hidden">
+
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-blue-200/30 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-cyan-200/20 rounded-full blur-3xl"></div>
+
+        <div class="max-w-5xl 2xl:max-w-[1200px] mx-auto w-full relative z-10">
+
+            <div id="demo-form-header" class="text-center mb-8">
+                <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-50 text-brand-blue text-[11px] font-black uppercase tracking-widest border border-blue-100">
+                    Live Demo
+                </span>
+
+                <h2 class="mt-4 text-3xl md:text-4xl font-black text-brand-navy tracking-tight">
+                    Book Your Demo
+                </h2>
+
+                <p class="mt-3 text-sm text-brand-muted max-w-2xl mx-auto leading-relaxed">
+                    Schedule a personalized Sentry24x7 walkthrough for RFID access, visitor management, gate control and society monitoring.
+                </p>
+            </div>
+
+            <div class="bg-white/95 backdrop-blur-xl rounded-[2rem] border border-blue-100 shadow-2xl shadow-blue-100/50 overflow-hidden">
+
+                <div class="h-1.5 bg-gradient-to-r from-brand-blue via-blue-500 to-cyan-400"></div>
+
+                <form action="https://script.google.com/macros/s/AKfycbzXO106IBlb4DCPAxhoD6pTFie-VMTR30b5E-lBOPVbhpRJv-Hk9l6_3eSuQ40hz95YXw/exec"
+                    method="POST"
+                    id="demo-form"
+                    class="p-6 md:p-8 lg:p-10 space-y-6">
+
+                    <input type="hidden" name="_subject" value="New Live System Demo Sandbox Booking Request">
+
+                    <div class="grid md:grid-cols-2 gap-5">
+
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-700 uppercase tracking-wider mb-2">
+                                Full Name
+                            </label>
+                            <input
+                                type="text"
+                                name="Contact_Name"
+                                required
+                                placeholder="Enter your full name"
+                                class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-700 uppercase tracking-wider mb-2">
+                                Mobile Number
+                            </label>
+                            <input
+                                type="tel"
+                                name="Mobile_Number"
+                                required
+                                placeholder="Enter mobile number"
+                                class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
+                        </div>
+
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-5">
+
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-700 uppercase tracking-wider mb-2">
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                name="Email_ID"
+                                required
+                                placeholder="Enter email address"
+                                class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-700 uppercase tracking-wider mb-2">
+                                Society / Complex Name
+                            </label>
+                            <input
+                                type="text"
+                                name="Society_Complex_Name"
+                                required
+                                placeholder="Enter society name"
+                                class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
+                        </div>
+
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-5">
+
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-700 uppercase tracking-wider mb-2">
+                                Address
+                            </label>
+                            <input
+                                type="text"
+                                name="Target_City_Location"
+                                required
+                                placeholder="Enter Address"
+                                class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-black text-slate-700 uppercase tracking-wider mb-2">
+                                Preferred Demo Date
+                            </label>
+                            <input
+                                type="date"
+                                name="Requested_Booking_Date"
+                                required
+                                class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        id="demo-submit-btn"
+                        class="w-full h-13 bg-brand-blue text-white font-black py-4 rounded-xl hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-200 tracking-wide">
+                        Confirm Demo Booking
+                    </button>
+
+                </form>
+
+                <div id="demo-success-panel" class="hidden text-center py-14 px-6">
+                    <div class="w-16 h-16 mx-auto rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center">
+                        <i data-lucide="calendar-check" class="w-8 h-8 text-brand-blue"></i>
+                    </div>
+
+                    <h4 class="mt-5 text-xl font-black text-brand-navy">
+                        Demo Reserved Successfully
+                    </h4>
+
+                    <p class="mt-2 text-sm text-brand-muted max-w-sm mx-auto">
+                        A calendar invitation and system verification guide have been sent to your email.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+<!-- PROFESSIONAL FOOTER -->
+<!-- <footer class="relative overflow-hidden bg-gradient-to-br from-[#1E3A8A] via-[#2563EB] to-[#60A5FA] border-t border-blue-700 text-white">     -->
+    
+<footer class="sayvm-footer">
+    <div class="footer-bg-dots footer-dots-left"></div>
+    <div class="footer-bg-dots footer-dots-right"></div>
+
+    <div class="footer-waves">
+        <div class="wave wave-one"></div>
+        <div class="wave wave-two"></div>
+        <div class="wave wave-three"></div>
+    </div>
+
+    <div class="sayvm-footer-inner">
+
+        <div class="footer-main">
+
+            <div class="footer-brand">
+                <img src="images/logo_.png" alt="SayVM Technologies">
+                <p>Sayvm Technologies Private Limited</p>
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-center">
+                <nav class="footer-links">
+                    <a href="#home">Home</a>
+                    <span></span>
+                    <a href="#features">Features</a>
+                    <span></span>
+                    <a href="#about">About</a>
+                    <span></span>
+                    <a href="#comparison">Comparison</a>
+                    <span></span>
+                    <a href="#book-demo">Book Demo</a>
+                </nav>
+
+               
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <div class="footer-contact">
+                <div>
+                    <span>✉️</span>
+                    <p>contact@sayvm.com</p>
+                </div>
+
+                <div>
+                    <span>📍</span>
+                    <p>Pune, Maharashtra</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 SayVM Technologies Private Limited. All Rights Reserved.</p>
+        <span></span>
+        <p>Designed with <b>♥</b> in India</p>
+    </div>
+</footer>
+<!-- ================= END FOOTER ================= -->
+
+<!-- AUTHENTICATION DIALOG (OPTIMIZED HEIGHT HEIGHT-STRAINED OVERLAY) -->
+<div id="custom-auth-modal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-[1000] hidden items-center justify-center p-4 transition-all duration-300">
+    
+    <div class="bg-white w-full max-w-sm rounded-xl shadow-xl border border-slate-200 relative transform scale-95 transition-transform duration-300 flex flex-col overflow-hidden" id="auth-modal-card">
+        
+        <!-- Close button alignment inside box container grid context -->
+        <button onclick="toggleUiModal(false)" class="absolute top-3 right-3 p-1.5 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all focus:outline-none z-30" aria-label="Close modal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+
+        <div class="p-5 sm:p-6 w-full flex flex-col">
+            
+            <!-- Compact Header -->
+            <div class="flex items-center justify-center mb-4 w-full shrink-0">
+                <img src="images/sentry_logo.png" alt="Sentry24x7 Logo" class="h-8 w-auto max-w-[70%] object-contain block" />
+            </div>
+
+            <div id="view-login-form" class="space-y-3.5">
+                <div class="text-center">
+                    <h4 class="text-base font-extrabold text-slate-900 tracking-tight">Admin  Access</h4>
+                    <p class="text-[11px] text-slate-500 mt-0.5">Authorization required. This session terminal is restricted.</p>
+                </div>
+                
+                <form onsubmit="event.preventDefault(); window.location.href='dashboard.html';" class="space-y-3">
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-800 tracking-tight">System Email Address</label>
+                        <input type="email" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-600 transition appearance-none" placeholder="name@sentry24x7.com" required />
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-[11px] font-bold text-slate-800 tracking-tight">Administrative Password</label>
+                        <input type="password" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-600 transition appearance-none" placeholder="••••••••" required />
+                    </div>
+                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 rounded-lg shadow-sm hover:bg-blue-700 transition duration-200 text-xs mt-1 flex items-center justify-center gap-1.5 active:scale-[0.99]">
+                        Unlock Secure Dashboard 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="module">
+    // 1. Firebase Framework Engine Core Imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    // 2. Firebase Configuration Credentials Matrix
+    const firebaseConfig = {
+        apiKey: "AIzaSyDJWpWD-p-WFZzyya-qCqHRSk4Cb8OAfuQ",
+        authDomain: "sentry24x7.firebaseapp.com",
+        databaseURL: "https://sentry24x7-default-rtdb.firebaseio.com", 
+        projectId: "sentry24x7",
+        storageBucket: "sentry24x7.firebasestorage.app",
+        messagingSenderId: "706247628932",
+        appId: "1:706247628932:web:7445708abdbe6761528ad1",
+        measurementId: "G-ZZ9CXZZTKF"
+    };
+
+    // 3. Initialize Firebase & Authentication Services Instance
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // FIXED: Fail-safe rendering function that executes immediately inside the module context
+    function forceRenderIcons() {
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    }
+
+    // FIXED: Switched "dash/" paths to "images/" to align with your asset directory setup
+    const showcaseDataMatrix = {
+        secretary: [
+            [
+                { src: "dash/sec_1.png", alt: "Secretary Main Console Dashboard Overview" },
+                { src: "dash/sec_2.png", alt: "Financial Ledger Auditing Module" },
+                { src: "dash/d5.png", alt: "Society Announcement Broadcast Tool" },
+            ],
+            [
+                { src: "dash/d4.png", alt: "Role Permissions & Staff Provisioning" },
+                { src: "dash/d5.png", alt: "Society Maintenance Tracker Board" },
+                { src: "dash/d6.png", alt: "Vendor Approvals Management Window" }
+            ],
+            [
+                { src: "dash/d7.png", alt: "Complaints & Redressal Monitoring Hub" },
+                { src: "dash/d8.png", alt: "System Setup Configuration Panel" },
+                { src: "dash/d9.png", alt: "Community Meeting Schedule Planner" }
+            ],
+        ],
+        supervisor: [
+             [
+                { src: "dash/sup_1.png", alt: "Secretary Main Console Dashboard Overview" },
+                { src: "dash/sup_2.png", alt: "Financial Ledger Auditing Module" },
+                { src: "dash/sup_3.png", alt: "Society Announcement Broadcast Tool" },
+            ],
+            [
+                { src: "dash/sup_4.png", alt: "Role Permissions & Staff Provisioning" },
+                { src: "dash/sup_5.png", alt: "Society Maintenance Tracker Board" },
+                { src: "dash/sup_3.png", alt: "Vendor Approvals Management Window" }
+            ],
+            
+        ],
+        residents_vehicles: [
+             [
+                { src: "dash/veh_1.png", alt: "Secretary Main Console Dashboard Overview" },
+                { src: "dash/R2.png", alt: "Financial Ledger Auditing Module" },
+                { src: "dash/R3.png", alt: "Society Announcement Broadcast Tool" },
+            ],
+            [
+                { src: "dash/R1.png", alt: "Role Permissions & Staff Provisioning" },
+                { src: "dash/veh_1.png", alt: "Society Maintenance Tracker Board" },
+                { src: "dash/d6.png", alt: "Vendor Approvals Management Window" }
+            ],
+           
+        ],
+        security_guard: [
+             [
+                { src: "dash/guard_1.png", alt: "Secretary Main Console Dashboard Overview" },
+                { src: "dash/guard_2.png", alt: "Financial Ledger Auditing Module" },
+                { src: "dash/guard_3.png", alt: "Society Announcement Broadcast Tool" },
+            ],
+            [
+                { src: "dash/guard_4.png", alt: "Role Permissions & Staff Provisioning" },
+                { src: "dash/guard_5.png", alt: "Society Maintenance Tracker Board" },
+                { src: "dash/d6.png", alt: "Vendor Approvals Management Window" }
+            ],
+            
+        ]
+    };
+
+    let currentActiveTabKey = "secretary";
+    let activeImageSliderIndex = 0; 
+
+    // Responsive Hamburger Toggle Mechanics
+    const menuBtn = document.getElementById('hamburger-menu-btn');
+    const closeBtn = document.getElementById('close-menu-btn');
+    const sidebar = document.getElementById('mobile-sidebar');
+    const backdrop = document.getElementById('mobile-sidebar-backdrop');
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function openSidebar() {
+        sidebar?.classList.remove('-translate-x-full');
+        backdrop?.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeSidebar() {
+        sidebar?.classList.add('-translate-x-full');
+        backdrop?.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    menuBtn?.addEventListener('click', openSidebar);
+    closeBtn?.addEventListener('click', closeSidebar);
+    backdrop?.addEventListener('click', closeSidebar);
+    mobileLinks.forEach(link => link.addEventListener('click', closeSidebar));
+
+    // Switch Tab Routing Mechanics
+    window.switchScreenshotTab = function(tabKey) {
+        if (!showcaseDataMatrix[tabKey]) return; 
+        currentActiveTabKey = tabKey;
+        activeImageSliderIndex = 0; 
+
+        document.querySelectorAll('.ss-tab').forEach(btn => {
+            btn.classList.remove('text-brand-blue', 'border-b-2', 'border-brand-blue');
+            btn.classList.add('text-brand-muted', 'hover:text-brand-navy');
+        });
+        
+        const targetBtn = document.getElementById(`ss-btn-${tabKey}`);
+        if (targetBtn) {
+            targetBtn.classList.remove('text-brand-muted', 'hover:text-brand-navy');
+            targetBtn.classList.add('text-brand-blue', 'border-b-2', 'border-brand-blue');
+        }
+        renderActiveSlideState();
+    }
+
+    window.revealExtraFaqs = function() {
+        const extraPanel = document.getElementById('extended-faq-panel');
+        const toggleButton = document.getElementById('faq-expand-button');
+
+        extraPanel.classList.remove('hidden');
+        toggleButton.closest('div').classList.add('hidden');
+
+        forceRenderIcons();
+    }
+    // Formats layout to dynamically render 3 portrait items symmetrically in a row 
+    function renderActiveSlideState() {
+        const activeTabGroups = showcaseDataMatrix[currentActiveTabKey];
+        const currentImageRowList = activeTabGroups[activeImageSliderIndex];
+        const gridContainer = document.getElementById('slider-images-grid');
+        const dotsContainer = document.getElementById('slider-dots-container');
+        
+        if (!gridContainer || !currentImageRowList) return;
+
+        gridContainer.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 items-stretch justify-center w-full";
+
+        let generatedHtml = "";
+        currentImageRowList.forEach((imgMeta) => {
+            generatedHtml += `
+                <div class="bg-white border border-brand-border shadow-md rounded-2xl p-3 md:p-4 flex flex-col items-center justify-between group/card w-full max-w-[230px] mx-auto transition-transform duration-300 hover:-translate-y-1">
+                    <div class="w-full flex items-center justify-center bg-slate-950 border-4 border-slate-900 rounded-2xl overflow-hidden aspect-[9/16] shadow-inner relative group-hover/card:border-brand-blue transition-colors duration-300">
+                        <img 
+                            src="${imgMeta.src}" 
+                            alt="${imgMeta.alt}" 
+                            class="w-full h-full object-cover select-none"
+                            onerror="this.src='https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&q=80';"
+                        />
+                    </div>
+                    <p class="text-brand-navy font-bold text-[11px] mt-3 text-center tracking-tight w-full px-1 truncate" title="${imgMeta.alt}">${imgMeta.alt}</p>
+                </div>
+            `;
+        });
+        gridContainer.innerHTML = generatedHtml;
+
+        let dotsHtml = "";
+        for (let i = 0; i < activeTabGroups.length; i++) {
+            if (i === activeImageSliderIndex) {
+                dotsHtml += `<button onclick="jumpToSlidePage(${i})" class="w-6 h-1.5 rounded-full bg-brand-blue transition-all duration-300" aria-label="Slide page ${i+1}"></button>`;
+            } else {
+                dotsHtml += `<button onclick="jumpToSlidePage(${i})" class="w-2 h-1.5 rounded-full bg-slate-300 hover:bg-slate-400 transition-all duration-300" aria-label="Slide page ${i+1}"></button>`;
+            }
+        }
+        if (dotsContainer) dotsContainer.innerHTML = dotsHtml;
+        forceRenderIcons();
+    }
+
+    window.jumpToSlidePage = function(index) {
+        activeImageSliderIndex = index;
+        renderActiveSlideState();
+    }
+
+    window.activateLiveMap = function() {
+        const frame = document.getElementById('live-map-frame');
+        const wrapper = document.getElementById('live-map-wrapper');
+        const shield = document.getElementById('map-placeholder-shield');
+        
+        if (frame) { frame.src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.881502161217!2d73.78992867599214!3d18.48902597013552!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf220b8bc5b1%3A0x6fd105e36a255acc!2sSayVM%20technologies%20private%20limited!5e0!3m2!1sen!2sus!4v1780662934564!5m2!1sen!2sus"; }
+        if (shield) { shield.classList.add('opacity-0', 'pointer-events-none', 'scale-105'); }
+        if (wrapper) { wrapper.classList.remove('opacity-0', 'pointer-events-none', 'scale-95'); }
+    }
+
+    window.slideNext = function() {
+        const totalPages = showcaseDataMatrix[currentActiveTabKey].length;
+        activeImageSliderIndex = (activeImageSliderIndex + 1) % totalPages;
+        renderActiveSlideState();
+    }
+
+    window.slidePrev = function() {
+        const totalPages = showcaseDataMatrix[currentActiveTabKey].length;
+        activeImageSliderIndex = (activeImageSliderIndex - 1 + totalPages) % totalPages;
+        renderActiveSlideState();
+    }
+
+    // Expose toggle controller directly into global window execution environment
+    window.toggleDemoVideo = function(shouldOpen) {
+        const modal = document.getElementById('video-demo-modal');
+        const video = document.getElementById('demo-video-player');
+
+        if (!modal) return;
+
+        if (shouldOpen) {
+            modal.classList.remove('hidden');
+            // Let rendering engine catch class change before starting the animation fade
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+            
+            if (video) {
+                video.currentTime = 0; 
+                video.play().catch(err => console.log("Autoplay buffer system log:", err));
+            }
+        } else {
+            modal.classList.add('opacity-0');
+            if (video) video.pause(); 
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // Wait for opacity transition animation to finish before hiding
+        }
+    };
+
+    // Dismiss modal if background shade backdrop itself is clicked outside the inner panel box
+    document.getElementById('video-demo-modal')?.addEventListener('click', function(e) {
+        if (e.target === this) window.toggleDemoVideo(false);
+    });
+        
+
+    window.toggleAccordion = function(buttonElement) {
+        const layoutPanel = buttonElement.nextElementSibling;
+        const chevronVector = buttonElement.querySelector('[data-lucide="chevron-down"]');
+        const toggleState = layoutPanel.classList.contains('hidden');
+
+        document.querySelectorAll('.faq-accordion-panel').forEach(p => p.classList.add('hidden'));
+        document.querySelectorAll('#faq [data-lucide="chevron-down"]').forEach(chv => chv.style.transform = 'rotate(0deg)');
+        
+        if (toggleState) {
+            layoutPanel.classList.remove('hidden');
+            if (chevronVector) chevronVector.style.transform = 'rotate(180deg)';
+        } else {
+            if (chevronVector) chevronVector.style.transform = 'rotate(0deg)';
+        }
+    }
+
+    window.toggleUiModal = function(show) {
+        const modal = document.getElementById('custom-auth-modal');
+        const card = document.getElementById('auth-modal-card');
+        
+        if (show) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => { card.classList.remove('scale-95'); }, 10);
+            forceRenderIcons();
+        } else {
+            card.classList.add('scale-95');
+            setTimeout(() => { 
+                modal.classList.remove('flex');
+                modal.classList.add('hidden'); 
+            }, 150);
+        }
+    }
+    document.getElementById("contact-form").addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const form = this;
+        const submitBtn = document.getElementById("contact-submit-btn");
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = "Sending...";
+
+        try {
+            const response = await fetch(form.action, {
+                method: "POST",
+                body: new FormData(form)
+            });
+
+            if (response.ok) {
+                form.classList.add("hidden");
+                document.getElementById("contact-success").classList.remove("hidden");
+                form.reset();
+            } else {
+                alert("Something went wrong. Please try again.");
+            }
+        } catch (err) {
+            alert("Unable to send your message.");
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = "Send Message";
+    });
+
+    document.getElementById("demo-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const form = this;
+        const submitBtn = document.getElementById("demo-submit-btn");
+
+        submitBtn.disabled = true;
+        submitBtn.innerText = "Submitting...";
+
+        fetch(form.action, {
+            method: "POST",
+            body: new FormData(form),
+            mode: "no-cors"
+        })
+        .then(() => {
+            form.reset();
+            form.classList.add("hidden");
+            document.getElementById("demo-form-header").classList.add("hidden");
+            document.getElementById("demo-success-panel").classList.remove("hidden");
+        })
+        .catch(() => {
+            alert("Something went wrong. Please try again.");
+            submitBtn.disabled = false;
+            submitBtn.innerText = "Confirm";
+        });
+    });
+    
+    window.switchUiFormView = function(view) {
+        const loginForm = document.getElementById('view-login-form');
+        const registerForm = document.getElementById('view-register-form');
+        
+        if (view === 'register') {
+            loginForm.classList.add('hidden');
+            registerForm.classList.remove('hidden');
+        } else {
+            registerForm.classList.add('hidden');
+            loginForm.classList.remove('hidden');
+        }
+        forceRenderIcons();
+    }
+   
+    // Secure Submission Form Interceptor Event Loop 
+    // FIXED: Run setup functions immediately without waiting for DOMContentLoaded (since we are already loading late via module)
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll("#main-nav-bar .nav-item-link");
+    const observerOptions = { root: null, rootMargin: "-25% 0px -60% 0px", threshold: 0 };
+
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const activeSectionId = entry.target.getAttribute("id");
+                navLinks.forEach(link => {
+                    if (link.getAttribute("href") === `#${activeSectionId}`) {
+                        link.classList.add("active-nav");
+                    } else {
+                        link.classList.remove("active-nav");
+                    }
+                });
+            }
+        });
+    };
+
+    const sectionObserver = new IntersectionObserver(observerCallback, observerOptions);
+    sections.forEach(section => sectionObserver.observe(section));
+    
+    switchScreenshotTab('secretary');
+    forceRenderIcons(); // Initializing all your contact section icons immediately!
+
+    // Bind secure cloud processing mechanism to the Login layout container
+    const targetLoginForm = document.querySelector("#view-login-form form");
+    if (targetLoginForm) {
+        targetLoginForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            const emailField = targetLoginForm.querySelector('input[type="email"]');
+            const passwordField = targetLoginForm.querySelector('input[type="password"]');
+            const actionButton = targetLoginForm.querySelector('button[type="submit"]');
+
+            if (!emailField || !passwordField) return;
+
+            const email = emailField.value.trim();
+            const password = passwordField.value;
+
+            if (actionButton) {
+                actionButton.disabled = true;
+                actionButton.innerText = "Verifying Admin Account...";
+            }
+
+            // Query Firebase Authentication cloud servers over SSL
+            signInWithEmailAndPassword(auth, email, password)
+                .then(() => {
+                    window.location.href = "dashboard.html";
+                })
+                .catch((error) => {
+                    passwordField.value = "";
+                    alert("Access Denied: Invalid Administrative Credentials.");
+                    if (actionButton) {
+                        actionButton.disabled = false;
+                        actionButton.innerText = "Sign In";
+                    }
+                });
+        });
+    }
+    const problemDetails = {
+        manual: {
+            reality: ["Illegible handwriting", "Missing entries", "Tampering possible", "No real-time visibility"],
+            impact: ["Security risks", "Audit failure", "Disputes", "Time wasted"],
+            warning: "A single missing entry can create big security loopholes."
+        },
+        slow: {
+            reality: ["Manual visitor calls", "Long gate queues", "Delayed resident approval", "No instant pass validation"],
+            impact: ["Resident frustration", "Visitor delays", "Guard overload", "Poor entry experience"],
+            warning: "Slow approval reduces security efficiency and creates unnecessary gate congestion."
+        },
+        hardware: {
+            reality: ["No RFID reader", "No boom barrier control", "No sensor integration", "No automatic verification"],
+            impact: ["Fully manual entry", "Unauthorized movement", "Human dependency", "No automation"],
+            warning: "Without hardware integration, gate security cannot become truly automated."
+        },
+        unauthorized: {
+            reality: ["Weak guard verification", "Fake visitor details", "No instant blacklist check", "No vehicle validation"],
+            impact: ["Security breach", "Resident risk", "Untracked access", "Manual failure"],
+            warning: "Unauthorized entry is one of the biggest risks in manual gate systems."
+        },
+        activity: {
+            reality: ["No digital visitor logs", "No vehicle movement history", "No audit trail", "No dashboard visibility"],
+            impact: ["No accountability", "Difficult investigations", "Poor reporting", "Lost records"],
+            warning: "Without digital records, societies cannot track what happened and when."
+        },
+        alert: {
+            reality: ["No SOS button", "No instant notifications", "No emergency escalation", "No live alert tracking"],
+            impact: ["Delayed response", "Higher safety risk", "Poor coordination", "No emergency visibility"],
+            warning: "In emergencies, delayed communication can create serious security consequences."
+        }
+    };
+
+    function showProblemDetail(type) {
+        const data = problemDetails[type];
+
+        document.querySelectorAll(".problem-node").forEach(card => {
+            card.classList.remove("active");
+        });
+
+        event.currentTarget.classList.add("active");
+
+        const realityList = document.getElementById("problem-reality-list");
+        const impactList = document.getElementById("problem-impact-list");
+        const warningText = document.getElementById("problem-warning-text");
+
+        realityList.innerHTML = data.reality.map(item => `<li>${item}</li>`).join("");
+        impactList.innerHTML = data.impact.map(item => `<li>${item}</li>`).join("");
+        warningText.textContent = data.warning;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        showProblemDetail("manual");
+    });
+    lucide.createIcons();
+    
+   
+</script>
