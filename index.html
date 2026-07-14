@@ -2284,6 +2284,7 @@
         }
 
     </style>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-brand-lightBg text-brand-navy font-sans antialiased selection:bg-brand-blue/10">
 
@@ -2724,20 +2725,20 @@
         </div>
     </section>
 
-    <section id="how-it-works" class="snap-section scroll-mt-24 py-16 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+    <section id="how-it-works" class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
 
-        <div class="absolute -top-28 -right-28 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-28 -left-28 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
+        <div class="absolute -top-28 -right-20 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-28 -left-20 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
 
-        <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto relative z-10">
+        <div class="max-w-6xl 2xl:max-w-[1600px] mx-auto relative z-10">
 
-            <div class="text-center max-w-4xl mx-auto mb-10">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-brand-blue text-xs font-black uppercase tracking-widest shadow-sm">
+             <div class="text-center max-w-4xl mx-auto mb-10">
+                <!-- <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-brand-blue text-xs font-black uppercase tracking-widest shadow-sm">
                     <i data-lucide="shield-check" class="w-4 h-4"></i>
                     How Sentry24x7 Works
-                </span>
+                </span>  -->
 
-                <h2 class="mt-4 text-3xl md:text-5xl font-black tracking-tight text-brand-navy">
+                <h2 class="mt-4 text-3xl md:text-4xl font-black tracking-tight text-brand-navy">
                     Secure Every Entry. <span class="text-brand-blue">Automate Every Gate.</span>
                 </h2>
 
@@ -2747,9 +2748,7 @@
                     <span></span>
                 </div>
 
-                <p class="mt-4 text-sm md:text-base text-brand-muted leading-relaxed">
-                    Sentry24x7 connects residents, guards, supervisors and gate hardware into one smart security workflow.
-                </p>
+               
             </div>
 
             <div class="workflow-panel">
@@ -2775,7 +2774,7 @@
                         <div class="workflow-arrow">→</div>
 
                         <div class="workflow-step">
-                            <img src="images/rfid-reader.png" alt="RFID Reader Detects Vehicle">
+                            <img src="images/rfid.png" alt="RFID Reader Detects Vehicle">
                             <div class="workflow-caption">
                                 <span>2</span>
                                 <p>RF Reader / FASTag<br>Detects Vehicle</p>
@@ -2785,7 +2784,7 @@
                         <div class="workflow-arrow">→</div>
 
                         <div class="workflow-step">
-                            <img src="images/server-check.png" alt="Server Checks Registration">
+                            <img src="images/server_check.png" alt="Server Checks Registration">
                             <div class="workflow-caption">
                                 <span>3</span>
                                 <p>Server Checks<br>Registration</p>
@@ -2795,7 +2794,7 @@
                         <div class="workflow-arrow">→</div>
 
                         <div class="workflow-step">
-                            <img src="images/registered-check.png" alt="Already Registered">
+                            <img src="images/already_reg.png" alt="Already Registered">
                             <div class="workflow-caption">
                                 <span>4</span>
                                 <p>Already Registered<br>by Secretary?</p>
@@ -2810,14 +2809,14 @@
                         <div class="workflow-results">
                             <div class="result-card success">
                                 <div class="result-tag">YES</div>
-                                <img src="images/gate-open.png" alt="Gate Opens Automatically">
+                                <img src="images/gate_auto.png" alt="Gate Opens Automatically">
                                 <h4>Gate Opens<br>Automatically</h4>
                                 <span class="result-icon">✓</span>
                             </div>
 
                             <div class="result-card danger">
                                 <div class="result-tag">NO</div>
-                                <img src="images/guard-action.png" alt="Access Denied">
+                                <img src="images/access_denied.png" alt="Access Denied">
                                 <h4>Access Denied /<br>Guard Action Required</h4>
                                 <span class="result-icon">×</span>
                             </div>
@@ -2837,7 +2836,7 @@
                     <div class="workflow-main">
 
                         <div class="workflow-step large-step">
-                            <img src="images/visitor-car-gate.png" alt="Visitor Arrives at Gate">
+                            <img src="images/visitor_.png" alt="Visitor Arrives at Gate">
                             <div class="workflow-caption">
                                 <span>1</span>
                                 <p>Visitor Arrives<br>at Gate</p>
@@ -2847,7 +2846,7 @@
                         <div class="workflow-arrow">→</div>
 
                         <div class="workflow-step">
-                            <img src="images/guard-entry.png" alt="Guard Enters Visitor Details">
+                            <img src="images/guard_enters.png" alt="Guard Enters Visitor Details">
                             <div class="workflow-caption">
                                 <span>2</span>
                                 <p>Guard Enters<br>Visitor Details</p>
@@ -2857,7 +2856,7 @@
                         <div class="workflow-arrow">→</div>
 
                         <div class="workflow-step phone-step">
-                            <img src="images/visitor-request-phone.png" alt="Request Sent to Resident">
+                            <img src="images/sent.png" alt="Request Sent to Resident">
                             <div class="workflow-caption">
                                 <span>3</span>
                                 <p>Request Sent to<br>Resident</p>
@@ -2866,8 +2865,8 @@
 
                         <div class="workflow-arrow">→</div>
 
-                        <div class="workflow-step">
-                            <img src="images/resident-approval.png" alt="Resident Approves or Rejects">
+                        <div class="workflow-step resident-step">
+                            <img src="images/approves.png" alt="Resident Approves or Rejects">
                             <div class="workflow-caption">
                                 <span>4</span>
                                 <p>Resident Approves<br>or Rejects</p>
@@ -2882,14 +2881,14 @@
                         <div class="workflow-results">
                             <div class="result-card success">
                                 <div class="result-tag">APPROVED</div>
-                                <img src="images/visitor-approved.png" alt="Gate Opens">
+                                <img src="images/approves.png" alt="Gate Opens">
                                 <h4>Gate Opens</h4>
                                 <span class="result-icon">✓</span>
                             </div>
 
                             <div class="result-card danger">
                                 <div class="result-tag">REJECTED</div>
-                                <img src="images/visitor-rejected.png" alt="Entry Denied">
+                                <img src="images/denied_.png" alt="Entry Denied">
                                 <h4>Entry Denied</h4>
                                 <span class="result-icon">×</span>
                             </div>
@@ -2901,9 +2900,9 @@
                 <!-- BOTTOM STRIP -->
                 <div class="workflow-trust-strip">
                     <div class="trust-item">
-                        <div class="trust-icon">
+                        <!-- <div class="trust-icon">
                             <i data-lucide="radio-tower"></i>
-                        </div>
+                        </div> -->
                         <div>
                             <h3>RFID</h3>
                             <p>Vehicle Automation</p>
@@ -2913,9 +2912,9 @@
                     <div class="trust-divider"></div>
 
                     <div class="trust-item">
-                        <div class="trust-icon red-icon">
+                        <!-- <div class="trust-icon red-icon">
                             <i data-lucide="bell-ring"></i>
-                        </div>
+                        </div> -->
                         <div>
                             <h3>SOS</h3>
                             <p>Emergency Alerts</p>
@@ -2925,9 +2924,9 @@
                     <div class="trust-divider"></div>
 
                     <div class="trust-item">
-                        <div class="trust-icon">
+                        <!-- <div class="trust-icon">
                             <i data-lucide="cloud-upload"></i>
-                        </div>
+                        </div> -->
                         <div>
                             <h3>Offline</h3>
                             <p>Auto Sync Support</p>
@@ -3329,10 +3328,10 @@
         <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto relative z-10 space-y-10">
 
             <div class="text-center max-w-3xl mx-auto">
-                <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-brand-blue text-xs font-black uppercase tracking-widest shadow-sm">
+                <!-- <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-blue-100 text-brand-blue text-xs font-black uppercase tracking-widest shadow-sm">
                     <i data-lucide="shield-check" class="w-4 h-4"></i>
                     About Sentry24x7
-                </span>
+                </span> -->
 
                 <h2 class="mt-4 text-3xl md:text-5xl font-black tracking-tight text-brand-navy">
                     Smart Society Security &
@@ -3853,7 +3852,7 @@
     </div>
 </div>
 
-<script type="module">
+<script type="module" src="https://unpkg.com/lucide@latest">
     // 1. Firebase Framework Engine Core Imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -4314,7 +4313,6 @@
     document.addEventListener("DOMContentLoaded", function () {
         showProblemDetail("manual");
     });
-    lucide.createIcons();
     
    
 </script>

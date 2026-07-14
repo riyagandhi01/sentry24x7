@@ -19,6 +19,131 @@
             }
         }
     </script>
+    <style>
+        .ad-format-option {
+            display: block;
+            cursor: pointer;
+        }
+
+        .ad-format-card {
+            min-height: 104px;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition:
+                border-color .25s ease,
+                background-color .25s ease,
+                box-shadow .25s ease,
+                transform .25s ease;
+        }
+
+        .ad-format-card:hover {
+            border-color: #93c5fd;
+            background: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .ad-format-preview {
+            width: 52px;
+            height: 58px;
+            flex: 0 0 52px;
+            border-radius: 10px;
+            background: #ffffff;
+            border: 1px solid #bfdbfe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, .08);
+        }
+
+        .ad-format-preview span {
+            display: block;
+            border-radius: 4px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+        }
+
+        .ad-banner-preview span {
+            width: 40px;
+            height: 22px;
+        }
+
+        .ad-fullscreen-preview span {
+            width: 23px;
+            height: 44px;
+        }
+
+        .ad-preview-shell {
+            border: 1px solid #dbeafe;
+            background:
+                radial-gradient(circle at top right, rgba(59, 130, 246, .12), transparent 38%),
+                linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+            border-radius: 16px;
+            padding: 14px;
+        }
+
+        .ad-preview-frame {
+            width: 100%;
+            min-height: 180px;
+            max-height: 360px;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-preview-frame.banner {
+            aspect-ratio: 16 / 9;
+        }
+
+        .ad-preview-frame.fullscreen {
+            max-width: 220px;
+            margin-inline: auto;
+            aspect-ratio: 9 / 16;
+        }
+
+        .ad-preview-frame img,
+        .ad-preview-frame video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .ad-progress-track {
+            height: 8px;
+            overflow: hidden;
+            border-radius: 999px;
+            background: #e2e8f0;
+        }
+
+        .ad-progress-bar {
+            width: 0%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #2563eb, #60a5fa);
+            transition: width .2s ease;
+        }
+
+        .ad-meta-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 8px;
+            border-radius: 999px;
+            border: 1px solid #dbeafe;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+</style>
 </head>
 <body class="bg-brand-bg text-slate-700 h-screen w-screen flex flex-col overflow-hidden antialiased selection:bg-blue-500 selection:text-white">
 
@@ -177,9 +302,109 @@
                             </div>
 
                             <div>
-                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">Upload Image or Video</label>
-                                <input id="ad-file-input" type="file" accept="image/*,video/*" class="w-full mt-2 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium">
-                                <p class="text-[11px] text-slate-400 mt-2">File uploads to Firebase Storage. Download URL is saved in Realtime Database.</p>
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                    Advertisement Display Type
+                                </label>
+
+                                <div class="grid grid-cols-2 gap-3 mt-2">
+
+                                    <label class="ad-format-option">
+                                        <input
+                                            type="radio"
+                                            name="ad-display-type"
+                                            value="banner"
+                                            checked
+                                            class="sr-only peer"
+                                        >
+
+                                        <div class="ad-format-card peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:ring-4 peer-checked:ring-blue-500/10">
+                                            <div class="ad-format-preview ad-banner-preview">
+                                                <span></span>
+                                            </div>
+
+                                            <div>
+                                                <p class="text-sm font-bold text-slate-800">Banner</p>
+                                                <p class="text-[10px] text-slate-400 mt-0.5">
+                                                    Recommended 16:9
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                    <label class="ad-format-option">
+                                        <input
+                                            type="radio"
+                                            name="ad-display-type"
+                                            value="fullscreen"
+                                            class="sr-only peer"
+                                        >
+
+                                        <div class="ad-format-card peer-checked:border-blue-500 peer-checked:bg-blue-50 peer-checked:ring-4 peer-checked:ring-blue-500/10">
+                                            <div class="ad-format-preview ad-fullscreen-preview">
+                                                <span></span>
+                                            </div>
+
+                                            <div>
+                                                <p class="text-sm font-bold text-slate-800">Full Screen</p>
+                                                <p class="text-[10px] text-slate-400 mt-0.5">
+                                                    Recommended 9:16
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </label>
+
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                    Upload Image or Video
+                                </label>
+
+                                <input
+                                    id="ad-file-input"
+                                    type="file"
+                                    accept="image/jpeg,image/png,image/webp,video/mp4,video/webm"
+                                    class="w-full mt-2 px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium"
+                                >
+
+                                <div id="ad-file-information" class="hidden mt-3 rounded-xl border border-blue-100 bg-blue-50/70 p-3">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="image" class="w-4 h-4 text-blue-600 mt-0.5 shrink-0"></i>
+
+                                        <div class="min-w-0">
+                                            <p id="ad-file-name" class="text-xs font-bold text-slate-700 truncate"></p>
+                                            <p id="ad-file-details" class="text-[11px] text-slate-500 mt-1"></p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                                    Images are automatically resized, converted to WebP and compressed before upload.
+                                    Videos are uploaded without browser compression.
+                                </p>
+
+                                <div id="ad-preview-shell" class="ad-preview-shell hidden mt-4">
+                                    <div id="ad-preview-frame" class="ad-preview-frame banner">
+                                        <div class="text-center text-slate-400 px-4">
+                                            <i data-lucide="image" class="w-7 h-7 mx-auto mb-2"></i>
+                                            <p class="text-xs font-semibold">Preview will appear here</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-3 flex flex-wrap gap-2" id="ad-preview-meta"></div>
+                                    <p id="ad-aspect-warning" class="hidden mt-3 text-[11px] font-semibold text-amber-600 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2"></p>
+                                </div>
+
+                                <div id="ad-upload-progress-wrap" class="hidden mt-4">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Upload Progress</span>
+                                        <span id="ad-upload-progress-text" class="text-xs font-black text-blue-600">0%</span>
+                                    </div>
+                                    <div class="ad-progress-track">
+                                        <div id="ad-upload-progress-bar" class="ad-progress-bar"></div>
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- <div>
@@ -439,90 +664,415 @@
 
         function detectMediaType(file) {
             if (!file) return "image";
-            return file.type.startsWith('video') ? 'video' : 'image';
+            return file.type.startsWith("video/") ? "video" : "image";
         }
 
+        function formatFileSize(bytes) {
+            if (!Number.isFinite(bytes) || bytes <= 0) return "0 KB";
+            const units = ["B", "KB", "MB", "GB"];
+            const index = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+            const value = bytes / Math.pow(1024, index);
+            return `${value.toFixed(index === 0 ? 0 : 2)} ${units[index]}`;
+        }
+
+        function escapeHtml(value = "") {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function normalizeWebsiteUrl(value) {
+            const cleanValue = value.trim();
+            if (!cleanValue) return "";
+            try {
+                return new URL(cleanValue).href;
+            } catch {
+                throw new Error("Please enter a complete website URL such as https://example.com");
+            }
+        }
+
+        function getSelectedAdvertisementType() {
+            const selected = document.querySelector('input[name="ad-display-type"]:checked');
+            return selected ? selected.value : "banner";
+        }
+
+        function setSelectedAdvertisementType(value) {
+            const option = document.querySelector(`input[name="ad-display-type"][value="${value || "banner"}"]`);
+            if (option) option.checked = true;
+            updatePreviewFrameType();
+        }
+
+        function updatePreviewFrameType() {
+            const previewFrame = document.getElementById("ad-preview-frame");
+            if (!previewFrame) return;
+            const type = getSelectedAdvertisementType();
+            previewFrame.classList.toggle("banner", type === "banner");
+            previewFrame.classList.toggle("fullscreen", type === "fullscreen");
+        }
+
+        function loadImageFromFile(file) {
+            return new Promise((resolve, reject) => {
+                const image = new Image();
+                const objectUrl = URL.createObjectURL(file);
+
+                image.onload = () => {
+                    URL.revokeObjectURL(objectUrl);
+                    resolve(image);
+                };
+
+                image.onerror = () => {
+                    URL.revokeObjectURL(objectUrl);
+                    reject(new Error("Unable to read the selected image."));
+                };
+
+                image.src = objectUrl;
+            });
+        }
+
+        function canvasToBlob(canvas, mimeType, quality) {
+            return new Promise((resolve, reject) => {
+                canvas.toBlob(
+                    (blob) => blob ? resolve(blob) : reject(new Error("Image compression failed.")),
+                    mimeType,
+                    quality
+                );
+            });
+        }
+
+        function validateAdvertisementAspectRatio(width, height, displayType) {
+            if (!width || !height) return "";
+            const ratio = width / height;
+            const targetRatio = displayType === "fullscreen" ? 9 / 16 : 16 / 9;
+            const difference = Math.abs(ratio - targetRatio) / targetRatio;
+
+            if (difference <= 0.12) return "";
+
+            return displayType === "fullscreen"
+                ? "This image is not close to 9:16. It will be fitted inside a 1080 × 1920 full-screen frame."
+                : "This image is not close to 16:9. It will be fitted inside a 1920 × 1080 banner frame.";
+        }
+
+        async function compressAdvertisementImage(file, displayType) {
+            const image = await loadImageFromFile(file);
+            const originalWidth = image.naturalWidth;
+            const originalHeight = image.naturalHeight;
+
+            const outputWidth = displayType === "fullscreen" ? 1080 : 1920;
+            const outputHeight = displayType === "fullscreen" ? 1920 : 1080;
+
+            const canvas = document.createElement("canvas");
+            canvas.width = outputWidth;
+            canvas.height = outputHeight;
+
+            const context = canvas.getContext("2d", { alpha: false });
+            if (!context) throw new Error("Your browser does not support image compression.");
+
+            context.imageSmoothingEnabled = true;
+            context.imageSmoothingQuality = "high";
+            context.fillStyle = "#ffffff";
+            context.fillRect(0, 0, outputWidth, outputHeight);
+
+            const sourceRatio = originalWidth / originalHeight;
+            const targetRatio = outputWidth / outputHeight;
+
+            let drawWidth;
+            let drawHeight;
+            let drawX;
+            let drawY;
+
+            if (sourceRatio > targetRatio) {
+                drawWidth = outputWidth;
+                drawHeight = outputWidth / sourceRatio;
+                drawX = 0;
+                drawY = (outputHeight - drawHeight) / 2;
+            } else {
+                drawHeight = outputHeight;
+                drawWidth = outputHeight * sourceRatio;
+                drawX = (outputWidth - drawWidth) / 2;
+                drawY = 0;
+            }
+
+            context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+
+            const targetMaximumSize = 700 * 1024;
+            let quality = 0.88;
+            let compressedBlob = await canvasToBlob(canvas, "image/webp", quality);
+
+            while (compressedBlob.size > targetMaximumSize && quality > 0.44) {
+                quality = Math.max(0.44, quality - 0.07);
+                compressedBlob = await canvasToBlob(canvas, "image/webp", quality);
+                if (quality === 0.44) break;
+            }
+
+            const baseName = file.name.replace(/\.[^/.]+$/, "").replace(/[^a-zA-Z0-9_-]/g, "_");
+            const compressedFile = new File(
+                [compressedBlob],
+                `${baseName || "advertisement"}.webp`,
+                { type: "image/webp", lastModified: Date.now() }
+            );
+
+            const compressionRatio = file.size > 0
+                ? Math.max(0, Math.round((1 - compressedFile.size / file.size) * 100))
+                : 0;
+
+            return {
+                file: compressedFile,
+                originalSize: file.size,
+                compressedSize: compressedFile.size,
+                originalWidth,
+                originalHeight,
+                outputWidth,
+                outputHeight,
+                compressionQuality: Number(quality.toFixed(2)),
+                compressionRatio
+            };
+        }
+
+        let selectedPreviewObjectUrl = "";
+        let preparedImageResult = null;
         let editingAdvertisementId = null;
+
+        function clearObjectPreview() {
+            if (selectedPreviewObjectUrl) {
+                URL.revokeObjectURL(selectedPreviewObjectUrl);
+                selectedPreviewObjectUrl = "";
+            }
+        }
+
+        function showPreviewMeta(items) {
+            const meta = document.getElementById("ad-preview-meta");
+            meta.innerHTML = items.map(item => `<span class="ad-meta-chip">${escapeHtml(item)}</span>`).join("");
+        }
+
+        function resetFilePreview() {
+            clearObjectPreview();
+            preparedImageResult = null;
+            document.getElementById("ad-file-information").classList.add("hidden");
+            document.getElementById("ad-preview-shell").classList.add("hidden");
+            document.getElementById("ad-preview-meta").innerHTML = "";
+            document.getElementById("ad-aspect-warning").classList.add("hidden");
+            document.getElementById("ad-aspect-warning").textContent = "";
+        }
+
+        async function prepareSelectedAdvertisementFile() {
+            const fileInput = document.getElementById("ad-file-input");
+            const file = fileInput.files[0];
+            if (!file) {
+                resetFilePreview();
+                return;
+            }
+
+            const displayType = getSelectedAdvertisementType();
+            const mediaType = detectMediaType(file);
+            const infoBox = document.getElementById("ad-file-information");
+            const previewShell = document.getElementById("ad-preview-shell");
+            const previewFrame = document.getElementById("ad-preview-frame");
+            const warning = document.getElementById("ad-aspect-warning");
+
+            clearObjectPreview();
+            preparedImageResult = null;
+            infoBox.classList.remove("hidden");
+            previewShell.classList.remove("hidden");
+            updatePreviewFrameType();
+
+            document.getElementById("ad-file-name").textContent = file.name;
+            document.getElementById("ad-file-details").textContent = `${mediaType.toUpperCase()} • Original ${formatFileSize(file.size)}`;
+            warning.classList.add("hidden");
+            warning.textContent = "";
+
+            selectedPreviewObjectUrl = URL.createObjectURL(file);
+
+            if (mediaType === "video") {
+                previewFrame.innerHTML = `<video src="${selectedPreviewObjectUrl}" controls muted playsinline></video>`;
+                showPreviewMeta([
+                    "Video",
+                    formatFileSize(file.size),
+                    displayType === "fullscreen" ? "Full Screen" : "Banner"
+                ]);
+                lucide.createIcons();
+                return;
+            }
+
+            previewFrame.innerHTML = `
+                <div class="text-center text-white px-4">
+                    <div class="w-8 h-8 rounded-full border-2 border-white/30 border-t-white animate-spin mx-auto mb-3"></div>
+                    <p class="text-xs font-semibold">Compressing preview...</p>
+                </div>
+            `;
+
+            try {
+                preparedImageResult = await compressAdvertisementImage(file, displayType);
+                clearObjectPreview();
+                selectedPreviewObjectUrl = URL.createObjectURL(preparedImageResult.file);
+                previewFrame.innerHTML = `<img src="${selectedPreviewObjectUrl}" alt="Advertisement preview">`;
+
+                const warningText = validateAdvertisementAspectRatio(
+                    preparedImageResult.originalWidth,
+                    preparedImageResult.originalHeight,
+                    displayType
+                );
+
+                if (warningText) {
+                    warning.textContent = warningText;
+                    warning.classList.remove("hidden");
+                }
+
+                document.getElementById("ad-file-details").textContent =
+                    `${preparedImageResult.originalWidth} × ${preparedImageResult.originalHeight} • ${formatFileSize(preparedImageResult.originalSize)} → ${formatFileSize(preparedImageResult.compressedSize)}`;
+
+                showPreviewMeta([
+                    `${preparedImageResult.outputWidth} × ${preparedImageResult.outputHeight}`,
+                    "WebP",
+                    `${preparedImageResult.compressionRatio}% smaller`,
+                    displayType === "fullscreen" ? "Full Screen" : "Banner"
+                ]);
+            } catch (error) {
+                previewFrame.innerHTML = `<div class="text-xs text-rose-300 p-4 text-center">${escapeHtml(error.message)}</div>`;
+                preparedImageResult = null;
+            }
+
+            lucide.createIcons();
+        }
+
+        function setUploadProgress(progress) {
+            const wrap = document.getElementById("ad-upload-progress-wrap");
+            const bar = document.getElementById("ad-upload-progress-bar");
+            const text = document.getElementById("ad-upload-progress-text");
+
+            if (progress === null) {
+                wrap.classList.add("hidden");
+                bar.style.width = "0%";
+                text.textContent = "0%";
+                return;
+            }
+
+            wrap.classList.remove("hidden");
+            bar.style.width = `${progress}%`;
+            text.textContent = `${progress}%`;
+        }
+
+        document.getElementById("ad-file-input").addEventListener("change", prepareSelectedAdvertisementFile);
+
+        document.querySelectorAll('input[name="ad-display-type"]').forEach((radio) => {
+            radio.addEventListener("change", async () => {
+                updatePreviewFrameType();
+                if (document.getElementById("ad-file-input").files[0]) {
+                    await prepareSelectedAdvertisementFile();
+                }
+            });
+        });
 
         window.startEditAdvertisement = function(adId) {
             const ad = cachedAdvertisementsData[adId];
             if (!ad) return;
 
             editingAdvertisementId = adId;
+            document.getElementById("ad-title-input").value = ad.description || "";
+            document.getElementById("ad-website-input").value = ad.websiteUrl || "";
+            document.getElementById("ad-file-input").value = "";
+            setSelectedAdvertisementType(ad.displayType || "banner");
+            resetFilePreview();
 
-            document.getElementById('ad-title-input').value = ad.description || '';
-            document.getElementById('ad-website-input').value = ad.websiteUrl || '';
-            document.getElementById('ad-file-input').value = '';
-
-            const saveBtn = document.getElementById('ad-save-btn');
+            const saveBtn = document.getElementById("ad-save-btn");
+            const cancelBtn = document.getElementById("ad-cancel-btn");
             saveBtn.innerHTML = `<i data-lucide="save" class="w-4 h-4"></i> Update Advertisement`;
+            cancelBtn.classList.remove("hidden");
 
+            document.getElementById("view-advertisements-panel").scrollIntoView({ behavior: "smooth", block: "start" });
             lucide.createIcons();
         };
 
         window.cancelEditAdvertisement = function() {
             editingAdvertisementId = null;
+            document.getElementById("ad-title-input").value = "";
+            document.getElementById("ad-website-input").value = "";
+            document.getElementById("ad-file-input").value = "";
+            setSelectedAdvertisementType("banner");
+            resetFilePreview();
+            setUploadProgress(null);
 
-            document.getElementById('ad-title-input').value = '';
-            document.getElementById('ad-website-input').value = '';
-            document.getElementById('ad-file-input').value = '';
-
-            const saveBtn = document.getElementById('ad-save-btn');
+            const saveBtn = document.getElementById("ad-save-btn");
+            const cancelBtn = document.getElementById("ad-cancel-btn");
+            saveBtn.disabled = false;
             saveBtn.innerHTML = `<i data-lucide="save" class="w-4 h-4"></i> Save Advertisement`;
-
+            cancelBtn.classList.add("hidden");
             lucide.createIcons();
         };
 
         window.uploadAdvertisementFile = async function() {
-            const titleInput = document.getElementById('ad-title-input');
+            const titleInput = document.getElementById("ad-title-input");
             const websiteInput = document.getElementById("ad-website-input");
-            const fileInput = document.getElementById('ad-file-input');
-            const saveBtn = document.getElementById('ad-save-btn');
+            const fileInput = document.getElementById("ad-file-input");
+            const saveBtn = document.getElementById("ad-save-btn");
 
             const description = titleInput.value.trim();
-            const websiteUrl = websiteInput.value.trim();
-            const file = fileInput.files[0];
+            let websiteUrl = "";
+            try {
+                websiteUrl = normalizeWebsiteUrl(websiteInput.value);
+            } catch (error) {
+                alert(error.message);
+                return;
+            }
+            const displayType = getSelectedAdvertisementType();
+            const selectedFile = fileInput.files[0];
 
             if (!description) {
-                alert('Please enter advertisement description.');
+                alert("Please enter advertisement description.");
                 return;
             }
 
-            if (websiteUrl && !websiteUrl.startsWith("http")) {
-                alert("Please enter full website URL, example: https://example.com");
-                return;
-            }
-
-            if (!editingAdvertisementId && !file) {
-                alert('Please select image/video file.');
+            if (!editingAdvertisementId && !selectedFile) {
+                alert("Please select an image or video file.");
                 return;
             }
 
             saveBtn.disabled = true;
-            saveBtn.innerHTML = editingAdvertisementId ? 'Updating...' : 'Uploading 0%...';
+            setUploadProgress(selectedFile ? 0 : null);
+            saveBtn.innerHTML = editingAdvertisementId ? "Updating..." : "Preparing upload...";
 
             try {
                 const adPayload = {
-                    description: description,
-                    websiteUrl: websiteUrl,
+                    description,
+                    websiteUrl,
+                    displayType,
                     active: true,
                     updatedAt: Date.now()
                 };
 
-                if (file) {
-                    const mediaType = detectMediaType(file);
-                    const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-                    const filePath = `advertisements/${Date.now()}-${safeFileName}`;
-                    const fileRef = storageRef(storage, filePath);
+                if (selectedFile) {
+                    const mediaType = detectMediaType(selectedFile);
+                    let uploadFile = selectedFile;
+                    let compressionData = null;
 
-                    const uploadTask = uploadBytesResumable(fileRef, file);
+                    if (mediaType === "image") {
+                        compressionData = preparedImageResult || await compressAdvertisementImage(selectedFile, displayType);
+                        uploadFile = compressionData.file;
+                    }
+
+                    const extension = mediaType === "image"
+                        ? "webp"
+                        : (selectedFile.name.split(".").pop() || "mp4").toLowerCase();
+
+                    const safeBaseName = selectedFile.name
+                        .replace(/\.[^/.]+$/, "")
+                        .replace(/[^a-zA-Z0-9_-]/g, "_") || "advertisement";
+
+                    const filePath = `advertisements/${displayType}/${Date.now()}-${safeBaseName}.${extension}`;
+                    const fileRef = storageRef(storage, filePath);
+                    const uploadTask = uploadBytesResumable(fileRef, uploadFile, {
+                        contentType: uploadFile.type
+                    });
 
                     await new Promise((resolve, reject) => {
                         uploadTask.on(
-                            'state_changed',
+                            "state_changed",
                             (snapshot) => {
                                 const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-                                saveBtn.innerHTML = `${editingAdvertisementId ? 'Updating' : 'Uploading'} ${progress}%...`;
+                                setUploadProgress(progress);
+                                saveBtn.innerHTML = `${editingAdvertisementId ? "Updating" : "Uploading"} ${progress}%...`;
                             },
                             reject,
                             resolve
@@ -531,26 +1081,50 @@
 
                     const downloadURL = await getDownloadURL(fileRef);
 
-                    adPayload.mediaUrl = downloadURL;
-                    adPayload.mediaType = mediaType;
+                    Object.assign(adPayload, {
+                        mediaUrl: downloadURL,
+                        mediaType,
+                        storagePath: filePath,
+                        originalFileName: selectedFile.name,
+                        uploadedFileName: uploadFile.name,
+                        originalSize: selectedFile.size,
+                        uploadedSize: uploadFile.size,
+                        compressionStatus: mediaType === "image" ? "completed" : "not-applicable"
+                    });
+
+                    if (compressionData) {
+                        Object.assign(adPayload, {
+                            originalWidth: compressionData.originalWidth,
+                            originalHeight: compressionData.originalHeight,
+                            outputWidth: compressionData.outputWidth,
+                            outputHeight: compressionData.outputHeight,
+                            compressedSize: compressionData.compressedSize,
+                            compressionRatio: compressionData.compressionRatio,
+                            compressionQuality: compressionData.compressionQuality,
+                            outputFormat: "webp"
+                        });
+                    }
                 }
 
                 if (editingAdvertisementId) {
                     await update(ref(database, `AGCS/Advertisements/${editingAdvertisementId}`), adPayload);
-                    alert('Advertisement updated successfully.');
+                    alert("Advertisement updated successfully.");
                 } else {
                     adPayload.createdAt = Date.now();
-                    await push(ref(database, 'AGCS/Advertisements'), adPayload);
-                    alert('Advertisement uploaded successfully.');
+                    await push(ref(database, "AGCS/Advertisements"), adPayload);
+                    alert("Advertisement uploaded successfully.");
                 }
 
                 cancelEditAdvertisement();
-
             } catch (error) {
-                alert('Advertisement save failed: ' + error.message);
+                alert("Advertisement save failed: " + error.message);
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = editingAdvertisementId
+                    ? `<i data-lucide="save" class="w-4 h-4"></i> Update Advertisement`
+                    : `<i data-lucide="save" class="w-4 h-4"></i> Save Advertisement`;
+                setUploadProgress(null);
+                lucide.createIcons();
             }
-
-            saveBtn.disabled = false;
         };
 
         window.deleteAdvertisement = function(adId) {
@@ -560,8 +1134,8 @@
         };
 
         window.renderAdvertisementsList = function() {
-            const adsList = document.getElementById('advertisements-list');
-            adsList.innerHTML = '';
+            const adsList = document.getElementById("advertisements-list");
+            adsList.innerHTML = "";
 
             const adsData = cachedAdvertisementsData || {};
             const adIds = Object.keys(adsData);
@@ -574,30 +1148,67 @@
             adIds
                 .sort((a, b) => (adsData[b].createdAt || 0) - (adsData[a].createdAt || 0))
                 .forEach((adId) => {
-                    const ad = adsData[adId];
-                    const url = ad.mediaUrl || '';
-                    const type = ad.mediaType || 'image';
+                    const ad = adsData[adId] || {};
+                    const url = ad.mediaUrl || "";
+                    const mediaType = ad.mediaType || "image";
+                    const displayType = ad.displayType || "banner";
                     const website = ad.websiteUrl || "";
+                    const badgeClass = displayType === "fullscreen"
+                        ? "bg-violet-50 text-violet-600 border-violet-100"
+                        : "bg-blue-50 text-blue-600 border-blue-100";
 
-                    const mediaHtml = type === 'video'
-                        ? `<video src="${url}" class="w-full h-full object-cover" controls muted playsinline></video>`
-                        : `<img src="${url}" alt="${ad.description || 'Advertisement'}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=&quot;text-xs text-slate-300 p-4 text-center&quot;>Unable to load media</div>'" />`;
+                    const mediaHtml = mediaType === "video"
+                        ? `<video src="${escapeHtml(url)}" class="w-full h-full object-cover" controls muted playsinline></video>`
+                        : `<img src="${escapeHtml(url)}" alt="${escapeHtml(ad.description || "Advertisement")}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<div class=&quot;text-xs text-slate-300 p-4 text-center&quot;>Unable to load media</div>'">`;
 
-                    const websiteHtml = website
-                        ? `<a href="${website}" target="_blank" class="block text-xs font-bold text-blue-600 hover:text-blue-700 truncate">${website}</a>`
-                        : `<p class="text-xs text-slate-400">No website URL added</p>`;
+                    const dimensions = ad.outputWidth && ad.outputHeight
+                        ? `${ad.outputWidth} × ${ad.outputHeight}`
+                        : "Dimensions unavailable";
 
-                    const card = document.createElement('div');
-                    card.className = 'border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm';
+                    const sizeText = ad.uploadedSize
+                        ? formatFileSize(ad.uploadedSize)
+                        : "Size unavailable";
+
+                    const compressionText = ad.compressionStatus === "completed"
+                        ? `${ad.compressionRatio || 0}% compressed`
+                        : mediaType === "video" ? "Original video" : "Legacy image";
+
+                    const card = document.createElement("div");
+                    card.className = "border border-slate-200 rounded-2xl overflow-hidden bg-white shadow-sm hover:shadow-md transition";
                     card.innerHTML = `
-                        <div class="h-40 bg-slate-900 overflow-hidden flex items-center justify-center">
+                        <div class="relative h-40 bg-slate-900 overflow-hidden flex items-center justify-center">
                             ${mediaHtml}
+                            <span class="absolute left-3 top-3 px-2.5 py-1 rounded-full border text-[10px] font-black uppercase tracking-wider ${badgeClass}">
+                                ${displayType === "fullscreen" ? "Full Screen" : "Banner"}
+                            </span>
                         </div>
 
                         <div class="p-4 space-y-3">
                             <div>
-                                <h4 class="font-bold text-sm text-slate-900 truncate">${ad.description || 'Untitled Advertisement'}</h4>
-                                ${websiteHtml}
+                                <h4 class="font-bold text-sm text-slate-900 line-clamp-2">${escapeHtml(ad.description || "Untitled Advertisement")}</h4>
+                                ${website
+                                    ? `<a href="${escapeHtml(website)}" target="_blank" rel="noopener noreferrer" class="block mt-1 text-xs font-bold text-blue-600 hover:text-blue-700 truncate">${escapeHtml(website)}</a>`
+                                    : `<p class="mt-1 text-xs text-slate-400">No website URL added</p>`
+                                }
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-2 text-[10px]">
+                                <div class="rounded-lg bg-slate-50 border border-slate-100 px-2.5 py-2">
+                                    <p class="text-slate-400 font-bold uppercase">Media</p>
+                                    <p class="text-slate-700 font-black mt-0.5">${mediaType.toUpperCase()}</p>
+                                </div>
+                                <div class="rounded-lg bg-slate-50 border border-slate-100 px-2.5 py-2">
+                                    <p class="text-slate-400 font-bold uppercase">Size</p>
+                                    <p class="text-slate-700 font-black mt-0.5">${escapeHtml(sizeText)}</p>
+                                </div>
+                                <div class="rounded-lg bg-slate-50 border border-slate-100 px-2.5 py-2">
+                                    <p class="text-slate-400 font-bold uppercase">Dimensions</p>
+                                    <p class="text-slate-700 font-black mt-0.5">${escapeHtml(dimensions)}</p>
+                                </div>
+                                <div class="rounded-lg bg-slate-50 border border-slate-100 px-2.5 py-2">
+                                    <p class="text-slate-400 font-bold uppercase">Compression</p>
+                                    <p class="text-slate-700 font-black mt-0.5">${escapeHtml(compressionText)}</p>
+                                </div>
                             </div>
 
                             <div class="grid grid-cols-2 gap-2">
