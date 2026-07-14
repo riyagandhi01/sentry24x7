@@ -145,7 +145,7 @@
 
 </style>
 </head>
-<body class="bg-brand-bg text-slate-700 h-screen w-screen flex flex-col overflow-hidden antialiased selection:bg-blue-500 selection:text-white">
+<body style="visibility:hidden" class="bg-brand-bg text-slate-700 h-screen w-screen flex flex-col overflow-hidden antialiased selection:bg-blue-500 selection:text-white">
 
     <header class="h-16 bg-white border-b border-slate-100 flex items-center justify-between px-8 shrink-0 w-full z-40">
         <a href="dashboard.html" class="flex items-center group hover:opacity-95 transition">
@@ -177,7 +177,7 @@
             </div>
             
             <div class="w-full pt-4 border-t border-slate-100">
-                <button onclick="window.location.href='index.html'" class="w-full flex items-center gap-3.5 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl text-sm font-bold text-left transition">
+                <button onclick="logoutAdmin()" class="w-full flex items-center gap-3.5 px-4 py-3 text-rose-500 hover:bg-rose-50 rounded-xl text-sm font-bold text-left transition">
                     <i data-lucide="log-out" class="w-5 h-5"></i> Logout
                 </button>
             </div>
@@ -447,6 +447,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getDatabase, ref, update, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getStorage, ref as storageRef, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
@@ -462,8 +463,30 @@
         };
 
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
         const database = getDatabase(app);
         const storage = getStorage(app);
+
+        let dashboardAuthorized = false;
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.replace("/index.html");
+                return;
+            }
+
+            dashboardAuthorized = true;
+            document.body.style.visibility = "visible";
+            startRealtimeListeners();
+        });
+
+        window.logoutAdmin = async function () {
+            try {
+                await signOut(auth);
+            } finally {
+                window.location.replace("/index.html");
+            }
+        };
 
         const SOCIETIES_ROOT_PATH = "AGCS";
         let cachedSocietiesList = [];
@@ -1239,20 +1262,27 @@
             });
         }
 
-        const rootDbReference = ref(database, SOCIETIES_ROOT_PATH);
+        let realtimeListenersStarted = false;
 
-        onValue(rootDbReference, (snapshot) => {
-            const rawData = snapshot.val();
-            cachedSocietiesList = buildSocietiesList(rawData);
+        function startRealtimeListeners() {
+            if (realtimeListenersStarted || !dashboardAuthorized) return;
+            realtimeListenersStarted = true;
 
-            renderDashboardOverview(cachedSocietiesList);
-            renderSocietiesTable(cachedSocietiesList, searchInputEl ? searchInputEl.value : "");
-        });
+            const rootDbReference = ref(database, SOCIETIES_ROOT_PATH);
 
-        onValue(ref(database, 'AGCS/Advertisements'), (snapshot) => {
-            cachedAdvertisementsData = snapshot.val() || {};
-            renderAdvertisementsList();
-        });
+            onValue(rootDbReference, (snapshot) => {
+                const rawData = snapshot.val();
+                cachedSocietiesList = buildSocietiesList(rawData);
+
+                renderDashboardOverview(cachedSocietiesList);
+                renderSocietiesTable(cachedSocietiesList, searchInputEl ? searchInputEl.value : "");
+            });
+
+            onValue(ref(database, 'AGCS/Advertisements'), (snapshot) => {
+                cachedAdvertisementsData = snapshot.val() || {};
+                renderAdvertisementsList();
+            });
+        }
     </script>
 </body>
 </html>
