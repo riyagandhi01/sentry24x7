@@ -728,36 +728,39 @@
                 align-items: flex-start;
             }
         }
-       .problem-premium-map {
-            max-width: 1180px;
+        .problem-premium-map {
+            max-width: 1120px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 390px 360px 390px;
+            grid-template-columns: 330px 330px 330px;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 24px;
         }
 
         .problem-side {
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 18px;
         }
 
         .problem-card {
             position: relative;
-            min-height: 130px;
+            min-height: 104px;
             display: grid;
-            grid-template-columns: 90px 48px 1fr;
+            grid-template-columns: 68px 38px 1fr;
             align-items: center;
-            gap: 14px;
-            padding: 18px;
-            border-radius: 24px;
-            background: rgba(255,255,255,.92);
+            gap: 12px;
+            padding: 15px 16px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.92);
             border: 1px solid #dbeafe;
-            box-shadow: 0 20px 55px rgba(37,99,235,.11);
+            box-shadow: 0 18px 50px rgba(37, 99, 235, 0.10);
             backdrop-filter: blur(18px);
-            transition: all .35s ease;
+            transition:
+                transform 0.35s ease,
+                border-color 0.35s ease,
+                box-shadow 0.35s ease;
             overflow: hidden;
         }
 
@@ -765,62 +768,65 @@
             content: "";
             position: absolute;
             left: 0;
-            top: 22px;
-            bottom: 22px;
+            top: 18px;
+            bottom: 18px;
             width: 4px;
             border-radius: 999px;
-            background: #2563EB;
-            opacity: .95;
+            background: #2563eb;
+            opacity: 0.95;
         }
 
         .problem-card:hover {
             transform: translateY(-8px);
-            border-color: rgba(37,99,235,.45);
-            box-shadow: 0 30px 75px rgba(37,99,235,.18);
+            border-color: rgba(37, 99, 235, 0.45);
+            box-shadow: 0 28px 70px rgba(37, 99, 235, 0.18);
         }
 
         .problem-img {
             position: relative;
-            width: 78px;
-            height: 78px;
-            border-radius: 22px;
-            background: #eff6ff;
+            width: 62px;
+            height: 62px;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #eff6ff, #ffffff);
             border: 1px solid #dbeafe;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: visible;
         }
 
         .problem-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 22px;
+            border-radius: 18px;
         }
 
         .problem-img span {
             position: absolute;
-            right: -8px;
-            bottom: -8px;
-            width: 28px;
-            height: 28px;
+            right: -7px;
+            bottom: -7px;
+            width: 24px;
+            height: 24px;
             border-radius: 999px;
             background: #ef4444;
             color: white;
-            font-size: 22px;
+            font-size: 17px;
             font-weight: 900;
-            line-height: 25px;
-            text-align: center;
-            box-shadow: 0 8px 18px rgba(239,68,68,.30);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            box-shadow: 0 8px 18px rgba(239, 68, 68, 0.30);
         }
 
         .problem-number {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
             background: #eff6ff;
-            color: #2563EB;
-            font-size: 18px;
+            color: #2563eb;
+            font-size: 14px;
             font-weight: 950;
             display: flex;
             align-items: center;
@@ -828,23 +834,23 @@
         }
 
         .problem-card h3 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 950;
-            color: #0F172A;
+            color: #0f172a;
             line-height: 1.2;
         }
 
         .problem-card p {
-            margin-top: 8px;
-            font-size: 13px;
+            margin-top: 6px;
+            font-size: 12px;
             font-weight: 600;
-            color: #475569;
-            line-height: 1.55;
+            color: #334155;
+            line-height: 1.5;
         }
 
         .problem-center-area {
             position: relative;
-            height: 520px;
+            height: 420px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -861,17 +867,17 @@
 
         .problem-connector-svg path {
             fill: none;
-            stroke: rgba(37,99,235,.48);
-            stroke-width: 1.7;
-            stroke-dasharray: 7 8;
+            stroke: rgba(37, 99, 235, 0.42);
+            stroke-width: 1.6;
+            stroke-dasharray: 7 9;
             animation: problemDash 7s linear infinite;
         }
 
         .problem-connector-svg circle {
-            fill: #2563EB;
+            fill: #2563eb;
             stroke: white;
-            stroke-width: 5;
-            filter: drop-shadow(0 8px 14px rgba(37,99,235,.28));
+            stroke-width: 4;
+            filter: drop-shadow(0 8px 14px rgba(37, 99, 235, 0.28));
         }
 
         .problem-center-ring {
@@ -881,73 +887,70 @@
         }
 
         .ring-one {
-            width: 250px;
-            height: 250px;
-            border: 1px dashed rgba(37,99,235,.32);
+            width: 230px;
+            height: 230px;
+            border: 1px dashed rgba(37, 99, 235, 0.32);
         }
 
         .ring-two {
-            width: 190px;
-            height: 190px;
-            border: 1px solid rgba(37,99,235,.18);
-            background: rgba(37,99,235,.025);
+            width: 170px;
+            height: 170px;
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            background: rgba(37, 99, 235, 0.025);
         }
 
         .ring-three {
-            width: 140px;
-            height: 140px;
-            border: 1px solid rgba(37,99,235,.35);
-            box-shadow: 0 24px 70px rgba(37,99,235,.12);
+            width: 122px;
+            height: 122px;
+            border: 1px solid rgba(37, 99, 235, 0.35);
+            box-shadow: 0 24px 70px rgba(37, 99, 235, 0.12);
         }
 
         .problem-center-core {
             position: relative;
             z-index: 4;
-            width: 118px;
-            height: 118px;
+            width: 102px;
+            height: 102px;
             border-radius: 999px;
             background: linear-gradient(180deg, #ffffff, #eff6ff);
             border: 1px solid #bfdbfe;
-            box-shadow: 0 28px 75px rgba(37,99,235,.22);
+            box-shadow: 0 26px 70px rgba(37, 99, 235, 0.20);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .problem-lock {
-            width: 74px;
-            height: 74px;
-            border-radius: 24px;
-            background: linear-gradient(135deg, #2563EB, #60a5fa);
+            width: 62px;
+            height: 62px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
             color: white;
-            font-size: 34px;
+            font-size: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
             transform: rotate(45deg);
-            box-shadow: 0 20px 45px rgba(37,99,235,.32);
-        }
-
-        .problem-lock span,
-        .problem-lock {
+            box-shadow: 0 20px 45px rgba(37, 99, 235, 0.32);
+            text-shadow: 0 2px 8px rgba(15, 23, 42, 0.25);
             line-height: 1;
         }
 
-        .problem-lock {
-            text-shadow: 0 2px 8px rgba(15,23,42,.25);
+        .problem-lock span {
+            line-height: 1;
         }
 
         .problem-bottom-card {
-            max-width: 980px;
-            margin: 44px auto 0;
-            padding: 26px;
-            border-radius: 28px;
-            background: rgba(255,255,255,.82);
+            max-width: 900px;
+            margin: 30px auto 0;
+            padding: 18px 24px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.88);
             border: 1px solid #bfdbfe;
-            box-shadow: 0 24px 70px rgba(37,99,235,.12);
+            box-shadow: 0 18px 50px rgba(37, 99, 235, 0.10);
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
             backdrop-filter: blur(18px);
             position: relative;
             overflow: hidden;
@@ -956,47 +959,47 @@
         .problem-bottom-card::after {
             content: "✓";
             position: absolute;
-            right: 54px;
+            right: 48px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 130px;
+            font-size: 92px;
             font-weight: 950;
-            color: rgba(37,99,235,.055);
+            color: rgba(37, 99, 235, 0.05);
             line-height: 1;
         }
 
         .problem-bottom-icon {
-            width: 96px;
-            height: 96px;
-            border-radius: 28px;
-            background: linear-gradient(135deg, #2563EB, #60a5fa);
+            width: 68px;
+            height: 68px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 44px;
-            box-shadow: 0 22px 50px rgba(37,99,235,.28);
-            flex: 0 0 96px;
+            font-size: 30px;
+            box-shadow: 0 18px 40px rgba(37, 99, 235, 0.26);
+            flex: 0 0 68px;
         }
 
         .problem-bottom-card h3 {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 950;
-            color: #0F172A;
+            color: #0f172a;
             line-height: 1.25;
             position: relative;
             z-index: 2;
         }
 
         .problem-bottom-card h3 span {
-            color: #2563EB;
+            color: #2563eb;
         }
 
         .problem-bottom-card p {
-            margin-top: 8px;
-            font-size: 15px;
+            margin-top: 5px;
+            font-size: 13px;
             font-weight: 600;
-            color: #64748B;
+            color: #64748b;
             position: relative;
             z-index: 2;
         }
@@ -1009,35 +1012,46 @@
 
         @media (max-width: 1279px) {
             .problem-premium-map {
-                grid-template-columns: 1fr;
-                max-width: 760px;
-                gap: 20px;
-            }
-
-            .problem-side {
-                gap: 20px;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: 900px;
+                gap: 18px;
             }
 
             .problem-center-area {
                 display: none;
             }
+
+            .problem-side {
+                gap: 18px;
+            }
         }
 
         @media (max-width: 768px) {
+            .problem-premium-map {
+                grid-template-columns: 1fr;
+            }
+
             .problem-card {
-                grid-template-columns: 74px 42px 1fr;
-                padding: 16px;
+                grid-template-columns: 62px 36px 1fr;
+                padding: 14px;
             }
 
             .problem-img {
-                width: 68px;
-                height: 68px;
+                width: 58px;
+                height: 58px;
+            }
+
+            .problem-number {
+                width: 34px;
+                height: 34px;
+                font-size: 13px;
             }
 
             .problem-bottom-card {
                 flex-direction: column;
                 text-align: center;
                 align-items: center;
+                margin-top: 24px;
             }
 
             .problem-bottom-card::after {
@@ -2329,6 +2343,398 @@
             color: #ffffff;
             background: linear-gradient(135deg, #dc2626, #f87171);
         }
+        .comparison-shell {
+            max-width: 1120px;
+            margin: 0 auto;
+            border-radius: 30px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid #dbeafe;
+            box-shadow:
+                0 30px 80px rgba(37, 99, 235, 0.12),
+                0 8px 24px rgba(15, 23, 42, 0.04);
+            backdrop-filter: blur(18px);
+        }
+
+        .comparison-highlight-strip {
+            min-height: 84px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background:
+                radial-gradient(circle at top right, rgba(96, 165, 250, 0.26), transparent 35%),
+                linear-gradient(135deg, #eff6ff, #ffffff);
+            border-bottom: 1px solid #dbeafe;
+        }
+
+        .comparison-highlight-strip > div:first-child {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .comparison-highlight-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 14px 30px rgba(37, 99, 235, 0.25);
+            flex-shrink: 0;
+        }
+
+        .comparison-highlight-icon i {
+            width: 23px;
+            height: 23px;
+        }
+
+        .comparison-highlight-label {
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #2563eb;
+        }
+
+        .comparison-highlight-strip h3 {
+            margin-top: 3px;
+            font-size: 18px;
+            font-weight: 950;
+            color: #0f172a;
+        }
+
+        .comparison-highlight-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border-radius: 999px;
+            border: 1px solid #bbf7d0;
+            background: #f0fdf4;
+            color: #15803d;
+            font-size: 11px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .comparison-table-wrap {
+            width: 100%;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr 1fr;
+            border-bottom: 1px solid #e2e8f0;
+            transition:
+                background-color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .comparison-row:not(.comparison-header-row):hover {
+            background: #f8fbff;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comparison-cell {
+            min-height: 84px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .comparison-header-row .comparison-cell.comparison-header-row .comparison-cell {
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 950;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .comparison-feature-header {
+            color: #475569;
+            background: #f8fafc;
+        }
+
+        .comparison-other-header {
+            color: #64748b;
+            background: #f8fafc;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .comparison-sentry-header {
+            color: white;
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+        }
+
+        .comparison-feature-cell {
+            gap: 14px;
+        }
+
+        .comparison-feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            background: linear-gradient(180deg, #eff6ff, #ffffff);
+            border: 1px solid #dbeafe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition:
+                transform 0.3s ease,
+                background-color 0.3s ease,
+                color 0.3s ease;
+        }
+
+        .comparison-row:hover .comparison-feature-icon {
+            transform: translateY(-3px) rotate(-3deg);
+            background: #2563eb;
+            color: white;
+        }
+
+        .comparison-feature-icon i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .comparison-feature-cell h4 {
+            font-size: 14px;
+            font-weight: 950;
+            color: #0f172a;
+            line-height: 1.25;
+        }
+
+        .comparison-feature-cell p {
+            margin-top: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        .comparison-other-cell,
+        .comparison-sentry-cell {
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .comparison-other-cell {
+            color: #64748b;
+            border-left: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+            background: rgba(248, 250, 252, 0.65);
+        }
+
+        .comparison-sentry-cell {
+            color: #1d4ed8;
+            font-weight: 900;
+            background:
+                linear-gradient(90deg, rgba(239, 246, 255, 0.8), rgba(219, 234, 254, 0.55));
+        }
+
+        .comparison-status-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .comparison-status-icon i {
+            width: 15px;
+            height: 15px;
+            stroke-width: 3;
+        }
+
+        .comparison-status-no {
+            background: #fff1f2;
+            color: #e11d48;
+            border: 1px solid #ffe4e6;
+        }
+
+        .comparison-status-basic {
+            background: #fff7ed;
+            color: #ea580c;
+            border: 1px solid #fed7aa;
+        }
+
+        .comparison-status-yes {
+            background: #ecfdf5;
+            color: #059669;
+            border: 1px solid #a7f3d0;
+        }
+
+        .comparison-bottom-strip {
+            min-height: 92px;
+            padding: 18px 24px;
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr 1px 1fr;
+            align-items: center;
+            gap: 20px;
+            background: linear-gradient(180deg, #ffffff, #eff6ff);
+            border-top: 1px solid #dbeafe;
+        }
+
+        .comparison-bottom-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 13px;
+        }
+
+        .comparison-bottom-item > span {
+            width: 40px;
+            height: 40px;
+            border-radius: 13px;
+            background: white;
+            border: 1px solid #bfdbfe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.08);
+            flex-shrink: 0;
+        }
+
+        .comparison-bottom-item i {
+            width: 19px;
+            height: 19px;
+        }
+
+        .comparison-bottom-item strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 950;
+            color: #0f172a;
+        }
+
+        .comparison-bottom-item p {
+            margin-top: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .comparison-bottom-divider {
+            width: 1px;
+            height: 48px;
+            background: linear-gradient(
+                180deg,
+                transparent,
+                #bfdbfe,
+                transparent
+            );
+        }
+
+        @media (max-width: 900px) {
+            .comparison-row {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-header-row {
+                display: none;
+            }
+
+            .comparison-cell {
+                min-height: auto;
+                padding: 15px 18px;
+            }
+
+            .comparison-feature-cell {
+                background: #f8fafc;
+                border-bottom: 1px solid #e2e8f0;
+            }
+
+            .comparison-other-cell,
+            .comparison-sentry-cell {
+                border-left: none;
+                border-right: none;
+            }
+
+            .comparison-other-cell::before {
+                content: "Other Apps";
+                width: 90px;
+                flex-shrink: 0;
+                font-size: 10px;
+                font-weight: 900;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #94a3b8;
+            }
+
+            .comparison-sentry-cell::before {
+                content: "Sentry24x7";
+                width: 90px;
+                flex-shrink: 0;
+                font-size: 10px;
+                font-weight: 900;
+                text-transform: uppercase;
+                letter-spacing: 0.08em;
+                color: #2563eb;
+            }
+
+            .comparison-bottom-strip {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .comparison-bottom-divider {
+                width: 100%;
+                height: 1px;
+            }
+
+            .comparison-bottom-item {
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .comparison-highlight-strip {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .comparison-highlight-badge {
+                align-self: flex-start;
+            }
+
+            .comparison-shell {
+                border-radius: 22px;
+            }
+
+            .comparison-feature-cell {
+                align-items: flex-start;
+            }
+
+            .comparison-other-cell,
+            .comparison-sentry-cell {
+                align-items: flex-start;
+                flex-wrap: wrap;
+            }
+
+            .comparison-other-cell::before,
+            .comparison-sentry-cell::before {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+        }
 
     </style>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -2421,7 +2827,7 @@
 
                     <div class="space-y-4">
                         <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-brand-navy leading-none drop-shadow-[0_2px_8px_rgba(255,255,255,0.85)]">
-                            Sentry <span class="text-blue-800">24x7</span>
+                            Sentry<span class="text-blue-800">24x7</span>
                         </h1>
 
                         <h2 class="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-800 leading-tight drop-shadow-[0_2px_8px_rgba(255,255,255,0.85)]">
@@ -2474,7 +2880,7 @@
             </div>
         </div>
 
-    <section id="problems" class="snap-section scroll-mt-24 py-16 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+    <section id="problems" class="snap-section scroll-mt-24 py-12 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
 
         <div class="absolute inset-0 pointer-events-none">
             <div class="absolute top-8 left-0 w-52 h-52 bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)] bg-[length:14px_14px] opacity-30"></div>
@@ -2483,12 +2889,12 @@
             <div class="absolute -bottom-28 -left-24 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto relative z-10">
-            <div class="text-center max-w-4xl mx-auto mb-12">
-                <h2 class="mt-2 mb-2 text-2xl md:text-4xl font-black tracking-tight text-brand-navy">
-                    Why Traditional Gate Management <span class="text-brand-blue">Fails</span>
-                </h2>
-            </div>
+        <div class="text-center max-w-4xl mx-auto mb-10">
+            <h2 class="text-2xl md:text-4xl font-black tracking-tight text-brand-navy">
+                Why Traditional Gate Management
+                <span class="text-brand-blue">Fails</span>
+            </h2>
+        </div>
 
             <div class="problem-premium-map">
 
@@ -2987,158 +3393,265 @@
     </section>
 
     <!-- COMPARISON SECTION -->
-    <section id="comparison" class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+    <section id="comparison" class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden"
+>
+    <!-- Background decoration -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute -top-28 -right-20 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-28 -left-20 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
 
-        <div class="absolute -top-28 -right-20 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-28 -left-20 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
-
-        <div class="max-w-6xl 2xl:max-w-[1600px] mx-auto relative z-10 space-y-10">
-            
-
-                <h2 class="text-3xl md:text-4xl font-black tracking-tight">
-                    <span class="text-brand-navy">Why</span>
-                    <span class="text-brand-blue">Sentry24x7</span>
-                    <span class="text-brand-navy">Beats Other Apps</span>
-                </h2>
-
-                <p class="text-sm text-brand-muted">
-                    More automation, stronger security controls, offline resilience and role-based management.
-                </p>
+            <div class="absolute top-12 left-0 w-44 h-44 opacity-25
+                        bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)]
+                        bg-[length:14px_14px]">
             </div>
 
-            <div class="bg-white rounded-[2rem] border border-blue-100 shadow-2xl shadow-blue-100/40 overflow-hidden">
+            <div class="absolute bottom-12 right-0 w-44 h-44 opacity-20
+                        bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)]
+                        bg-[length:14px_14px]">
+            </div>
+        </div>
 
-                <!-- Header -->
-                <div class="grid grid-cols-3 bg-gradient-to-r from-blue-700 via-brand-blue to-blue-500 text-white overflow-hidden">
+        <div class="max-w-6xl 2xl:max-w-[1500px] mx-auto relative z-10">
 
-                    <div class="py-6 p-5 font-black uppercase tracking-wider text-m md:text-sm text-center">
+            <!-- Section heading -->
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <!-- <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+                            bg-white border border-blue-100 text-brand-blue
+                            text-[11px] font-black uppercase tracking-[0.18em]
+                            shadow-sm"> -->
+                    <!-- <span class="w-2 h-2 rounded-full bg-brand-blue animate-pulse"></span>
+                    Platform Comparison -->
+                <!-- </span> -->
+
+                <h2 class="mt-4 text-3xl md:text-4xl font-black tracking-tight text-brand-navy">
+                    Why <span class="text-brand-blue">Sentry24x7</span>
+                    Beats Other Apps
+                </h2>
+            </div>
+
+            <!-- Comparison shell -->
+            <div class="comparison-shell">
+
+                <!-- Top highlight strip -->
+                <div class="comparison-highlight-strip">
+                    <div>
+                        <span class="comparison-highlight-icon">
+                            <i data-lucide="shield-check"></i>
+                        </span>
+
+                        <div>
+                            <p class="comparison-highlight-label">Designed for societies</p>
+                            <h3>One platform. Complete gate intelligence.</h3>
+                        </div>
+                    </div>
+
+                    <div class="comparison-highlight-badge">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Enterprise Ready
+                    </div>
+                </div>
+
+                <!-- Desktop table -->
+                <div class="comparison-table-wrap">
+
+                    <!-- Header -->
+                <div class="comparison-row comparison-header-row">
+
+                    <div class="comparison-cell comparison-feature-header">
                         Feature
                     </div>
 
-                    <div class="py-6 p-5 font-black uppercase tracking-wider text-m md:text-sm text-center border-x border-blue-400/30">
+                    <div class="comparison-cell comparison-other-header">
                         Other Apps
                     </div>
 
-                    <div class="py-6 p-5 font-black uppercase tracking-wider text-m md:text-sm text-center bg-blue-700">
-                        Sentry24x7
+                    <div class="comparison-cell comparison-sentry-header">
+                        <span>Sentry24x7</span>
+                    </div>
+
+                    </div>
+
+                    <!-- Alarm System -->
+                    <div class="comparison-row">
+                        <div class="comparison-cell comparison-feature-cell">
+                            <span class="comparison-feature-icon">
+                                <i data-lucide="bell-ring"></i>
+                            </span>
+
+                            <div>
+                                <h4>Alarm System</h4>
+                                <p>Instant security and emergency notifications</p>
+                            </div>
+                        </div>
+
+                        <div class="comparison-cell comparison-other-cell">
+                            <span class="comparison-status-icon comparison-status-no">
+                                <i data-lucide="x"></i>
+                            </span>
+                            <span>Not Available</span>
+                        </div>
+
+                        <div class="comparison-cell comparison-sentry-cell">
+                            <span class="comparison-status-icon comparison-status-yes">
+                                <i data-lucide="check"></i>
+                            </span>
+                            <span>Instant Alerts</span>
+                        </div>
+                    </div>
+
+                    <!-- Visitor Entry -->
+                    <div class="comparison-row">
+                        <div class="comparison-cell comparison-feature-cell">
+                            <span class="comparison-feature-icon">
+                                <i data-lucide="user-check"></i>
+                            </span>
+
+                            <div>
+                                <h4>Pre-Approved Visitor Entry</h4>
+                                <p>Faster visitor access with resident approval</p>
+                            </div>
+                        </div>
+
+                        <div class="comparison-cell comparison-other-cell">
+                            <span class="comparison-status-icon comparison-status-basic">
+                                <i data-lucide="minus"></i>
+                            </span>
+                            <span>Basic Visitor Pass</span>
+                        </div>
+
+                        <div class="comparison-cell comparison-sentry-cell">
+                            <span class="comparison-status-icon comparison-status-yes">
+                                <i data-lucide="check"></i>
+                            </span>
+                            <span>App Streamlined Entry</span>
+                        </div>
+                    </div>
+
+                    <!-- Role Based Access -->
+                    <div class="comparison-row">
+                        <div class="comparison-cell comparison-feature-cell">
+                            <span class="comparison-feature-icon">
+                                <i data-lucide="users-round"></i>
+                            </span>
+
+                            <div>
+                                <h4>Role-Based Access</h4>
+                                <p>Controlled permissions for every system role</p>
+                            </div>
+                        </div>
+
+                        <div class="comparison-cell comparison-other-cell">
+                            <span class="comparison-status-icon comparison-status-no">
+                                <i data-lucide="x"></i>
+                            </span>
+                            <span>Not Available</span>
+                        </div>
+
+                        <div class="comparison-cell comparison-sentry-cell">
+                            <span class="comparison-status-icon comparison-status-yes">
+                                <i data-lucide="check"></i>
+                            </span>
+                            <span>Guard / Resident / Admin Roles</span>
+                        </div>
+                    </div>
+
+                    <!-- Time Based Gate Blocking -->
+                    <div class="comparison-row">
+                        <div class="comparison-cell comparison-feature-cell">
+                            <span class="comparison-feature-icon">
+                                <i data-lucide="clock-3"></i>
+                            </span>
+
+                            <div>
+                                <h4>Time-Based Gate Blocking</h4>
+                                <p>Automated access restrictions by schedule</p>
+                            </div>
+                        </div>
+
+                        <div class="comparison-cell comparison-other-cell">
+                            <span class="comparison-status-icon comparison-status-no">
+                                <i data-lucide="x"></i>
+                            </span>
+                            <span>Not Available</span>
+                        </div>
+
+                        <div class="comparison-cell comparison-sentry-cell">
+                            <span class="comparison-status-icon comparison-status-yes">
+                                <i data-lucide="check"></i>
+                            </span>
+                            <span>Scheduled Gate Blocking</span>
+                        </div>
+                    </div>
+
+                    <!-- Offline Mode -->
+                    <div class="comparison-row">
+                        <div class="comparison-cell comparison-feature-cell">
+                            <span class="comparison-feature-icon">
+                                <i data-lucide="cloud-off"></i>
+                            </span>
+
+                            <div>
+                                <h4>Offline Mode</h4>
+                                <p>Continuous gate operation without internet</p>
+                            </div>
+                        </div>
+
+                        <div class="comparison-cell comparison-other-cell">
+                            <span class="comparison-status-icon comparison-status-no">
+                                <i data-lucide="x"></i>
+                            </span>
+                            <span>Not Available</span>
+                        </div>
+
+                        <div class="comparison-cell comparison-sentry-cell">
+                            <span class="comparison-status-icon comparison-status-yes">
+                                <i data-lucide="check"></i>
+                            </span>
+                            <span>Works Without Internet</span>
+                        </div>
                     </div>
 
                 </div>
 
-                <!-- Rows -->
-                <div class="divide-y divide-slate-200 text-lg">
-
-                    <!-- Alarm -->
-                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
-                        <div class="py-6 p-5 font-bold text-brand-navy">
-                            Alarm System
-                        </div>
-
-                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
-                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
-                                ✕
-                            </span>
-                            Not Available
-                        </div>
-
-                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
-                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
-                                ✓
-                            </span>
-                            Instant Alerts
+                <!-- Bottom value strip -->
+                <div class="comparison-bottom-strip">
+                    <div class="comparison-bottom-item">
+                        <span>
+                            <i data-lucide="radio-tower"></i>
+                        </span>
+                        <div>
+                            <strong>RFID Automation</strong>
+                            <p>Faster and secure vehicle access</p>
                         </div>
                     </div>
 
-                    <!-- Visitor -->
-                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
-                        <div class="py-6 p-5 font-bold text-brand-navy">
-                            Pre-Approved Visitor Entry
-                        </div>
+                    <div class="comparison-bottom-divider"></div>
 
-                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
-                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
-                                ✓
-                            </span>
-                            Basic Visitor Pass
-                        </div>
-
-                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
-                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
-                                ✓
-                            </span>
-                            App Streamlined Entry
+                    <div class="comparison-bottom-item">
+                        <span>
+                            <i data-lucide="shield-check"></i>
+                        </span>
+                        <div>
+                            <strong>Complete Visibility</strong>
+                            <p>Monitor gates, users and activities</p>
                         </div>
                     </div>
 
-                    <!-- Role -->
-                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
-                        <div class="py-6 p-5 font-bold text-brand-navy">
-                            Role-Based Access
-                        </div>
+                    <div class="comparison-bottom-divider"></div>
 
-                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
-                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
-                                ✕
-                            </span>
-                            Not Available
-                        </div>
-
-                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
-                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
-                                ✓
-                            </span>
-                            Guard / Resident / Admin Roles
+                    <div class="comparison-bottom-item">
+                        <span>
+                            <i data-lucide="cloud-cog"></i>
+                        </span>
+                        <div>
+                            <strong>Offline Resilience</strong>
+                            <p>Auto sync after connectivity returns</p>
                         </div>
                     </div>
-
-                    <!-- Gate Blocking -->
-                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
-                        <div class="py-6 p-5 font-bold text-brand-navy">
-                            Time-Based Gate Blocking
-                        </div>
-
-                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
-                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
-                                ✕
-                            </span>
-                            Not Available
-                        </div>
-
-                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
-                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
-                                ✓
-                            </span>
-                            Scheduled Gate Blocking
-                        </div>
-                    </div>
-
-                    <!-- Offline -->
-                    <div class="grid grid-cols-3 hover:bg-slate-50 transition">
-                        <div class="py-6 p-5 font-bold text-brand-navy">
-                            Offline Mode
-                        </div>
-
-                        <div class="py-6 p-5 border-x border-slate-200 flex items-center gap-2 text-slate-500">
-                            <span class="w-6 h-6 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center font-black">
-                                ✕
-                            </span>
-                            Not Available
-                        </div>
-
-                        <div class="py-6 p-5 bg-gradient-to-r from-blue-50 to-blue-100/70 flex items-center gap-2 text-blue-700 font-bold">
-                            <span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-black">
-                                ✓
-                            </span>
-                            Works Without Internet
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
-
         </div>
-
     </section>
     <!-- FAQ SECTION -->
     <section id="faq"  class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
@@ -3846,9 +4359,7 @@
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 SayVM Technologies Private Limited. All Rights Reserved.</p>
-        <span></span>
-        <p>Designed with <b>♥</b> in India</p>
+        <p>© 2026 SayVM Technologies Private Limited. All Rights Reserved.</p>       
     </div>
 </footer>
 <!-- ================= END FOOTER ================= -->
