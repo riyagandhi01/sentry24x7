@@ -1147,73 +1147,728 @@
         @keyframes sentryRotateGlow {
             to { transform: rotate(360deg); }
         }
-        .faq-card {
-            background: #ffffff;
-            border: 1px solid #dbeafe;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.08);
-            transition: all .25s ease;
+        .faq-section-container {
+            width: 100%;
+            max-width: 1180px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
 
-        .faq-card:hover {
+        .faq-section-header {
+            max-width: 760px;
+            margin: 0 auto 42px;
+            text-align: center;
+        }
+
+        .faq-section-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid #dbeafe;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.08);
+            color: #2563eb;
+            font-size: 10px;
+            font-weight: 950;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            backdrop-filter: blur(14px);
+        }
+
+        .faq-section-badge-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #2563eb;
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.10);
+            animation: faqBadgePulse 2s ease-in-out infinite;
+        }
+
+        .faq-section-header h2 {
+            margin-top: 18px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 950;
+            line-height: 1.08;
+            letter-spacing: -0.04em;
+            color: #0f172a;
+        }
+
+        .faq-section-header h2 span {
+            color: #2563eb;
+        }
+
+        .faq-section-header p {
+            margin: 16px auto 0;
+            max-width: 690px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.75;
+        }
+
+        .faq-premium-shell {
+            width: 100%;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 1px solid #dbeafe;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow:
+                0 30px 90px rgba(37, 99, 235, 0.12),
+                0 10px 28px rgba(15, 23, 42, 0.04);
+            backdrop-filter: blur(20px);
+        }
+
+        .faq-shell-topbar {
+            min-height: 88px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid #dbeafe;
+            background:
+                radial-gradient(circle at top right, rgba(96, 165, 250, 0.25), transparent 38%),
+                linear-gradient(135deg, #eff6ff, #ffffff);
+        }
+
+        .faq-shell-topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .faq-shell-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+            box-shadow: 0 15px 32px rgba(37, 99, 235, 0.26);
+            flex-shrink: 0;
+        }
+
+        .faq-shell-icon i {
+            width: 23px;
+            height: 23px;
+        }
+
+        .faq-shell-topbar-left p {
+            color: #2563eb;
+            font-size: 10px;
+            font-weight: 950;
+            text-transform: uppercase;
+            letter-spacing: 0.13em;
+        }
+
+        .faq-shell-topbar-left h3 {
+            margin-top: 3px;
+            color: #0f172a;
+            font-size: 17px;
+            font-weight: 950;
+        }
+
+        .faq-shell-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border-radius: 999px;
+            border: 1px solid #bbf7d0;
+            background: #f0fdf4;
+            color: #15803d;
+            font-size: 10px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .faq-shell-status span {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.10);
+        }
+
+        .faq-list {
+            width: 100%;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            width: 100%;
+            min-width: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.035);
+            transition:
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.3s ease,
+                background-color 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #bfdbfe;
+            box-shadow: 0 16px 38px rgba(37, 99, 235, 0.09);
+            transform: translateY(-2px);
+        }
+
+        .faq-item.active {
             border-color: #93c5fd;
-            box-shadow: 0 16px 40px rgba(37, 99, 235, 0.14);
+            background:
+                radial-gradient(circle at top right, rgba(219, 234, 254, 0.48), transparent 36%),
+                #ffffff;
+            box-shadow:
+                0 20px 50px rgba(37, 99, 235, 0.13),
+                inset 4px 0 0 #2563eb;
         }
 
         .faq-question {
             width: 100%;
-            padding: 18px 22px;
-            display: flex;
+            min-height: 86px;
+            padding: 16px 18px;
+            border: 0;
+            background: transparent;
+            display: grid;
+            grid-template-columns: 52px minmax(0, 1fr) 42px;
             align-items: center;
-            justify-content: space-between;
             gap: 16px;
+            cursor: pointer;
             text-align: left;
-            font-size: 15px;
-            font-weight: 800;
-            color: #0F172A;
-            background: white;
+            color: inherit;
         }
 
-        .faq-question span:first-child {
-            flex: 1;
-        }
-
-        .faq-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 999px;
-            background: #eff6ff;
-            color: #2563EB;
+        .faq-number {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 900;
-            flex-shrink: 0;
-            transition: transform .25s ease;
+            background: linear-gradient(180deg, #eff6ff, #ffffff);
+            border: 1px solid #dbeafe;
+            color: #2563eb;
+            font-size: 13px;
+            font-weight: 950;
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.08);
+            transition:
+                background 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease;
         }
 
-        .faq-answer {
+        .faq-item.active .faq-number {
+            color: white;
+            background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+            border-color: transparent;
+            transform: scale(1.04);
+        }
+
+        .faq-question-content {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .faq-category {
+            color: #2563eb;
+            font-size: 9px;
+            font-weight: 950;
+            text-transform: uppercase;
+            letter-spacing: 0.13em;
+        }
+
+        .faq-question-title {
+            color: #0f172a;
+            font-size: 15px;
+            font-weight: 900;
+            line-height: 1.42;
+        }
+
+        .faq-toggle-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #dbeafe;
+            background: #eff6ff;
+            color: #2563eb;
+            flex-shrink: 0;
+            transition:
+                transform 0.35s ease,
+                background-color 0.35s ease,
+                color 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+        .faq-toggle-icon i {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2.6;
+        }
+
+        .faq-item.active .faq-toggle-icon {
+            transform: rotate(180deg);
+            color: white;
+            background: #2563eb;
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+        }
+
+        .faq-answer-wrap {
+            width: 100%;
             max-height: 0;
             overflow: hidden;
-            padding: 0 22px;
-            color: #64748B;
-            font-size: 14px;
-            line-height: 1.7;
-            background: linear-gradient(180deg, #ffffff, #f8fbff);
-            transition: max-height .3s ease, padding .3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transition:
+                max-height 0.48s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.28s ease,
+                visibility 0.28s ease;
         }
 
-        .faq-card.active .faq-answer {
-            max-height: 260px;
-            padding: 0 22px 18px 22px;
-            border-top: 1px solid #e2e8f0;
+        .faq-item.active .faq-answer-wrap {
+            max-height: 700px;
+            opacity: 1;
+            visibility: visible;
         }
 
-        .faq-card.active .faq-icon {
-            transform: rotate(180deg);
-            background: #2563EB;
+        .faq-answer-inner {
+            position: relative;
+            margin: 0 18px 18px;
+            padding: 18px 20px;
+            border-radius: 16px;
+            border: 1px solid #dbeafe;
+            background:
+                radial-gradient(circle at right top, rgba(191, 219, 254, 0.32), transparent 34%),
+                linear-gradient(180deg, #f8fbff, #eff6ff);
+            overflow: hidden;
+        }
+
+        .faq-answer-accent {
+            position: absolute;
+            left: 0;
+            top: 14px;
+            bottom: 14px;
+            width: 4px;
+            border-radius: 999px;
+            background: linear-gradient(180deg, #2563eb, #60a5fa);
+        }
+
+        .faq-answer-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+        }
+
+        .faq-answer-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            background: white;
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.08);
+            flex-shrink: 0;
+        }
+
+        .faq-answer-icon i {
+            width: 17px;
+            height: 17px;
+        }
+
+        .faq-answer-content p {
+            color: #475569;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.75;
+        }
+
+        .faq-answer-heading {
+            color: #0f172a !important;
+            font-weight: 850 !important;
+        }
+
+        .faq-answer-list {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 18px;
+        }
+
+        .faq-answer-list li {
+            position: relative;
+            padding-left: 18px;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 650;
+            line-height: 1.5;
+        }
+
+        .faq-answer-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: #2563eb;
+            font-weight: 950;
+        }
+
+        .faq-answer-footer {
+            margin-top: 12px;
+        }
+
+        .faq-extended-panel {
+            width: 100%;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-extended-panel.is-visible {
+            display: flex;
+            animation: faqExtendedReveal 0.5s ease both;
+        }
+
+        .faq-see-more-wrap {
+            padding: 22px 22px 26px;
+            display: grid;
+            grid-template-columns: minmax(30px, 1fr) auto minmax(30px, 1fr);
+            align-items: center;
+            gap: 18px;
+        }
+
+        .faq-see-more-line {
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(37, 99, 235, 0.28),
+                transparent
+            );
+        }
+
+        .faq-expand-button {
+            min-width: 300px;
+            padding: 11px 13px;
+            border: 1px solid #bfdbfe;
+            border-radius: 18px;
+            display: grid;
+            grid-template-columns: 42px 1fr 36px;
+            align-items: center;
+            gap: 11px;
+            background:
+                radial-gradient(circle at top right, rgba(191, 219, 254, 0.38), transparent 38%),
+                #ffffff;
+            color: #0f172a;
+            cursor: pointer;
+            box-shadow: 0 14px 34px rgba(37, 99, 235, 0.10);
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease;
+        }
+
+        .faq-expand-button:hover {
+            transform: translateY(-4px);
+            border-color: #60a5fa;
+            box-shadow: 0 22px 48px rgba(37, 99, 235, 0.16);
+        }
+
+        .faq-expand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
+            background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
+        }
+
+        .faq-expand-icon i {
+            width: 19px;
+            height: 19px;
+        }
+
+        .faq-expand-content {
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .faq-expand-content strong {
+            color: #0f172a;
+            font-size: 12px;
+            font-weight: 950;
+        }
+
+        .faq-expand-content small {
+            color: #64748b;
+            font-size: 9px;
+            font-weight: 650;
+        }
+
+        .faq-expand-arrow {
+            width: 34px;
+            height: 34px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            background: #eff6ff;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-expand-button:hover .faq-expand-arrow {
+            transform: translateY(3px);
+        }
+
+        .faq-expand-arrow i {
+            width: 16px;
+            height: 16px;
+        }
+
+        .faq-see-more-wrap.is-hidden {
+            display: none;
+        }
+
+        .faq-support-strip {
+            margin: 22px auto 0;
+            min-height: 86px;
+            padding: 16px 20px;
+            border-radius: 22px;
+            border: 1px solid #dbeafe;
+            background: rgba(255, 255, 255, 0.88);
+            box-shadow: 0 18px 50px rgba(37, 99, 235, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            backdrop-filter: blur(16px);
+        }
+
+        .faq-support-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .faq-support-item > span {
+            width: 46px;
+            height: 46px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #2563eb;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            flex-shrink: 0;
+        }
+
+        .faq-support-item i {
+            width: 21px;
+            height: 21px;
+        }
+
+        .faq-support-item strong {
+            display: block;
+            color: #0f172a;
+            font-size: 13px;
+            font-weight: 950;
+        }
+
+        .faq-support-item p {
+            margin-top: 3px;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .faq-support-button {
+            min-height: 42px;
+            padding: 0 17px;
+            border-radius: 13px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            color: white;
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            font-size: 11px;
+            font-weight: 900;
+            text-decoration: none;
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.22);
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease,
+                background-color 0.3s ease;
+        }
+
+        .faq-support-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 38px rgba(37, 99, 235, 0.28);
+        }
+
+        .faq-support-button i {
+            width: 15px;
+            height: 15px;
+        }
+
+        @keyframes faqBadgePulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+            }
+
+            50% {
+                box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.02);
+            }
+        }
+
+        @keyframes faqExtendedReveal {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .faq-section-header {
+                margin-bottom: 30px;
+            }
+
+            .faq-shell-topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .faq-shell-status {
+                align-self: flex-start;
+            }
+
+            .faq-list {
+                padding: 12px;
+                gap: 10px;
+            }
+
+            .faq-question {
+                min-height: 82px;
+                padding: 14px;
+                grid-template-columns: 42px minmax(0, 1fr) 36px;
+                gap: 11px;
+            }
+
+            .faq-number {
+                width: 40px;
+                height: 40px;
+                border-radius: 13px;
+                font-size: 11px;
+            }
+
+            .faq-question-title {
+                font-size: 13px;
+            }
+
+            .faq-toggle-icon {
+                width: 34px;
+                height: 34px;
+                border-radius: 11px;
+            }
+
+            .faq-answer-inner {
+                margin: 0 12px 12px;
+                padding: 15px 16px;
+            }
+
+            .faq-answer-content {
+                flex-direction: column;
+            }
+
+            .faq-answer-list {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-see-more-wrap {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-see-more-line {
+                display: none;
+            }
+
+            .faq-expand-button {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .faq-support-strip {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .faq-support-button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .faq-question {
+                grid-template-columns: 38px minmax(0, 1fr) 32px;
+                padding: 12px;
+                gap: 9px;
+            }
+
+            .faq-number {
+                width: 36px;
+                height: 36px;
+            }
+
+            .faq-toggle-icon {
+                width: 31px;
+                height: 31px;
+            }
+
+            .faq-category {
+                font-size: 8px;
+            }
+
+            .faq-question-title {
+                font-size: 12px;
+            }
+
+            .faq-shell-topbar {
+                padding: 16px;
+            }
+
+            .faq-shell-topbar-left {
+                align-items: flex-start;
+            }
         }
         .problem-core-card {
             height: 100%;
@@ -3739,231 +4394,871 @@
         </div>
     </section>
     <!-- FAQ SECTION -->
-    <section id="faq"  class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+    <section
+        id="faq"
+        class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden"
+    >
+        <!-- Decorative background -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute -top-28 -right-20 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-28 -left-20 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
 
-        <div class="absolute -top-28 -right-20 w-80 h-80 bg-blue-200/40 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-28 -left-20 w-80 h-80 bg-cyan-200/30 rounded-full blur-3xl"></div>
+            <div
+                class="absolute top-14 left-0 w-48 h-48 opacity-25
+                    bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)]
+                    bg-[length:14px_14px]"
+            ></div>
 
-        <div class="max-w-6xl 2xl:max-w-[1600px] mx-auto relative z-10 space-y-10">
-        <div class="text-center max-w-2xl mx-auto space-y-3">
-            <h2 class="text-3xl font-extrabold tracking-tight text-brand-navy">Frequently Asked Queries</h2>
-            <p class="text-brand-muted text-sm">Everything you need to know about the Sentry24x7 smart gate security ecosystem.</p>
+            <div
+                class="absolute bottom-16 right-0 w-48 h-48 opacity-20
+                    bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)]
+                    bg-[length:14px_14px]"
+            ></div>
         </div>
 
-        <div class="w-full max-w-5xl mx-auto space-y-4">
-            
-            <div class="faq-card bg-brand-cardBg border border-brand-border rounded-2xl overflow-hidden transition">
-                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                    <span>1. How does vehicle access control work?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                </button>
-                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                    Sentry24x7 uses RFID-based vehicle identification to automate entry and exit. Authorized vehicles are verified instantly, while unauthorized or blacklisted vehicles can be blocked automatically.
-                </div>
+        <div class="faq-section-container">
+
+            <!-- Header -->
+            <div class="faq-section-header">
+               
+                <h2>
+                    Frequently Asked
+                    <span>Questions</span>
+                </h2>
+
+              
             </div>
 
-            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                    <span>2. Can administrators block vehicles remotely?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                </button>
-                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                    Yes. Authorized administrators can instantly block or unblock vehicles from the web dashboard. Blocked vehicles will be denied access at all connected gates.
+            <!-- FAQ main shell -->
+            <div class="faq-premium-shell">
+
+             
+                  
+
+                <div id="faq-list" class="faq-list">
+
+                    <!-- FAQ 01 -->
+                    <article class="faq-item">
+                        <button
+                            type="button"
+                            class="faq-question"
+                            onclick="togglePremiumFaq(this)"
+                            aria-expanded="false"
+                        >
+                            <span class="faq-number">01</span>
+
+                            <span class="faq-question-content">
+                                <span class="faq-category">Vehicle Access</span>
+                                <span class="faq-question-title">
+                                    How does vehicle access control work?
+                                </span>
+                            </span>
+
+                            <span class="faq-toggle-icon">
+                                <i data-lucide="chevron-down"></i>
+                            </span>
+                        </button>
+
+                        <div class="faq-answer-wrap">
+                            <div class="faq-answer-inner">
+                                <div class="faq-answer-accent"></div>
+
+                                <div class="faq-answer-content">
+                                    <span class="faq-answer-icon">
+                                        <i data-lucide="radio-tower"></i>
+                                    </span>
+
+                                    <p>
+                                        Sentry24x7 uses RFID-based vehicle identification to automate
+                                        entry and exit. Authorized vehicles are verified instantly,
+                                        while unauthorized or blacklisted vehicles can be blocked automatically.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- FAQ 02 -->
+                    <article class="faq-item">
+                        <button
+                            type="button"
+                            class="faq-question"
+                            onclick="togglePremiumFaq(this)"
+                            aria-expanded="false"
+                        >
+                            <span class="faq-number">02</span>
+
+                            <span class="faq-question-content">
+                                <span class="faq-category">Remote Control</span>
+                                <span class="faq-question-title">
+                                    Can administrators block vehicles remotely?
+                                </span>
+                            </span>
+
+                            <span class="faq-toggle-icon">
+                                <i data-lucide="chevron-down"></i>
+                            </span>
+                        </button>
+
+                        <div class="faq-answer-wrap">
+                            <div class="faq-answer-inner">
+                                <div class="faq-answer-accent"></div>
+
+                                <div class="faq-answer-content">
+                                    <span class="faq-answer-icon">
+                                        <i data-lucide="lock-keyhole"></i>
+                                    </span>
+
+                                    <p>
+                                        Yes. Authorized administrators can instantly block or unblock
+                                        vehicles from the web dashboard. Blocked vehicles will be denied
+                                        access at all connected gates.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- FAQ 03 -->
+                    <article class="faq-item">
+                        <button
+                            type="button"
+                            class="faq-question"
+                            onclick="togglePremiumFaq(this)"
+                            aria-expanded="false"
+                        >
+                            <span class="faq-number">03</span>
+
+                            <span class="faq-question-content">
+                                <span class="faq-category">Access Control</span>
+                                <span class="faq-question-title">
+                                    What is Role-Based Access Control (RBAC)?
+                                </span>
+                            </span>
+
+                            <span class="faq-toggle-icon">
+                                <i data-lucide="chevron-down"></i>
+                            </span>
+                        </button>
+
+                        <div class="faq-answer-wrap">
+                            <div class="faq-answer-inner">
+                                <div class="faq-answer-accent"></div>
+
+                                <div class="faq-answer-content">
+                                    <span class="faq-answer-icon">
+                                        <i data-lucide="users-round"></i>
+                                    </span>
+
+                                    <p>
+                                        Role-Based Access Control ensures that each user only sees and
+                                        accesses features relevant to their responsibilities. Different
+                                        permissions can be assigned to Secretaries, Supervisors,
+                                        Security Guards and Residents.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- FAQ 04 -->
+                    <article class="faq-item">
+                        <button
+                            type="button"
+                            class="faq-question"
+                            onclick="togglePremiumFaq(this)"
+                            aria-expanded="false"
+                        >
+                            <span class="faq-number">04</span>
+
+                            <span class="faq-question-content">
+                                <span class="faq-category">Authentication</span>
+                                <span class="faq-question-title">
+                                    How secure is the login system?
+                                </span>
+                            </span>
+
+                            <span class="faq-toggle-icon">
+                                <i data-lucide="chevron-down"></i>
+                            </span>
+                        </button>
+
+                        <div class="faq-answer-wrap">
+                            <div class="faq-answer-inner">
+                                <div class="faq-answer-accent"></div>
+
+                                <div class="faq-answer-content">
+                                    <span class="faq-answer-icon">
+                                        <i data-lucide="shield-check"></i>
+                                    </span>
+
+                                    <p>
+                                        Sentry24x7 provides secure authentication and user registration
+                                        for all roles, ensuring only authorized users can access the
+                                        platform and its data.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- FAQ 05 -->
+                    <article class="faq-item">
+                        <button
+                            type="button"
+                            class="faq-question"
+                            onclick="togglePremiumFaq(this)"
+                            aria-expanded="false"
+                        >
+                            <span class="faq-number">05</span>
+
+                            <span class="faq-question-content">
+                                <span class="faq-category">Gate Operations</span>
+                                <span class="faq-question-title">
+                                    Can gate operations be managed remotely?
+                                </span>
+                            </span>
+
+                            <span class="faq-toggle-icon">
+                                <i data-lucide="chevron-down"></i>
+                            </span>
+                        </button>
+
+                        <div class="faq-answer-wrap">
+                            <div class="faq-answer-inner">
+                                <div class="faq-answer-accent"></div>
+
+                                <div class="faq-answer-content">
+                                    <span class="faq-answer-icon">
+                                        <i data-lucide="door-open"></i>
+                                    </span>
+
+                                    <p>
+                                        Yes. Secretaries and Supervisors can remotely control gates,
+                                        including blocking, unblocking and managing access permissions
+                                        directly from the dashboard.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Extended FAQs -->
+                    <div id="extended-faq-panel" class="faq-extended-panel">
+
+                        <!-- FAQ 06 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">06</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Automation</span>
+                                    <span class="faq-question-title">
+                                        What is Time-Based Blocking?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="clock-3"></i>
+                                        </span>
+
+                                        <p>
+                                            Time-Based Blocking allows administrators to automatically
+                                            restrict gate access during specific hours, days or schedules
+                                            without requiring manual intervention.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 07 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">07</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Emergency Alerts</span>
+                                    <span class="faq-question-title">
+                                        How do SOS alerts work?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="bell-ring"></i>
+                                        </span>
+
+                                        <p>
+                                            Residents and security personnel can trigger an SOS alert
+                                            through the mobile application. Emergency notifications are
+                                            immediately sent to security staff and authorized users for
+                                            quick response.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 08 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">08</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Notifications</span>
+                                    <span class="faq-question-title">
+                                        Who receives emergency alerts?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="megaphone"></i>
+                                        </span>
+
+                                        <p>
+                                            SOS notifications are instantly delivered to security guards,
+                                            supervisors, administrators and other designated users based
+                                            on the configured alert settings.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 09 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">09</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Offline Operation</span>
+                                    <span class="faq-question-title">
+                                        Does Sentry24x7 work without internet connectivity?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="cloud-off"></i>
+                                        </span>
+
+                                        <p>
+                                            Yes. The system continues to operate in Offline Mode using
+                                            local controllers. Once the internet connection is restored,
+                                            all activity logs and records are automatically synchronized.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 10 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">10</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Reports</span>
+                                    <span class="faq-question-title">
+                                        What reports can be generated?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="file-chart-column"></i>
+                                        </span>
+
+                                        <div>
+                                            <p class="faq-answer-heading">
+                                                Administrators can generate detailed reports for:
+                                            </p>
+
+                                            <ul class="faq-answer-list">
+                                                <li>Visitor entries and exits</li>
+                                                <li>Vehicle movement history</li>
+                                                <li>Security activities</li>
+                                                <li>Gate operations</li>
+                                                <li>SOS incidents</li>
+                                                <li>User activity logs</li>
+                                            </ul>
+
+                                            <p class="faq-answer-footer">
+                                                Reports can be exported for auditing and record-keeping purposes.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 11 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">11</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Live Monitoring</span>
+                                    <span class="faq-question-title">
+                                        Is activity tracking available in real time?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="activity"></i>
+                                        </span>
+
+                                        <p>
+                                            Yes. The platform provides real-time monitoring of vehicles,
+                                            visitors, gate status, user actions and security events
+                                            through a centralized dashboard.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 12 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">12</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Language Support</span>
+                                    <span class="faq-question-title">
+                                        Does the system support multiple languages?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="languages"></i>
+                                        </span>
+
+                                        <p>
+                                            Yes. Sentry24x7 supports multilingual interfaces. Currently,
+                                            guard operations can be managed in English and Marathi,
+                                            making the system easy to use for local security staff.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 13 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">13</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">User Access</span>
+                                    <span class="faq-question-title">
+                                        Can multiple user roles access the platform simultaneously?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="users"></i>
+                                        </span>
+
+                                        <p>
+                                            Yes. Residents, Guards, Supervisors and Secretaries can
+                                            access the system simultaneously according to their assigned
+                                            permissions.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 14 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">14</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Permissions</span>
+                                    <span class="faq-question-title">
+                                        Can access permissions be customized?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="settings-2"></i>
+                                        </span>
+
+                                        <p>
+                                            Absolutely. Administrators can configure custom permissions
+                                            and visibility settings for different user roles to match the
+                                            community's security requirements.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 15 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">15</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Security Features</span>
+                                    <span class="faq-question-title">
+                                        What are the key security features of Sentry24x7?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="shield"></i>
+                                        </span>
+
+                                        <div>
+                                            <p class="faq-answer-heading">
+                                                Key security features include:
+                                            </p>
+
+                                            <ul class="faq-answer-list">
+                                                <li>Secure Authentication</li>
+                                                <li>Role-Based Access Control</li>
+                                                <li>RFID Vehicle Verification</li>
+                                                <li>Gate Control Management</li>
+                                                <li>Time-Based Access Restrictions</li>
+                                                <li>SOS Emergency Alerts</li>
+                                                <li>Offline Operations</li>
+                                                <li>Detailed Audit Reporting</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 16 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">16</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Deployment</span>
+                                    <span class="faq-question-title">
+                                        Is Sentry24x7 suitable for residential societies and gated communities?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="building-2"></i>
+                                        </span>
+
+                                        <p>
+                                            Yes. Sentry24x7 is specifically designed for residential
+                                            societies, apartment complexes, gated communities, townships
+                                            and commercial premises that require advanced security and
+                                            access automation.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 17 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">17</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Audit Trail</span>
+                                    <span class="faq-question-title">
+                                        Can the system maintain a complete audit trail?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="file-check-2"></i>
+                                        </span>
+
+                                        <p>
+                                            Yes. Every important action—including gate operations,
+                                            vehicle entries, user activities and emergency alerts—is
+                                            logged and available for review through detailed reports.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- FAQ 18 -->
+                        <article class="faq-item">
+                            <button
+                                type="button"
+                                class="faq-question"
+                                onclick="togglePremiumFaq(this)"
+                                aria-expanded="false"
+                            >
+                                <span class="faq-number">18</span>
+
+                                <span class="faq-question-content">
+                                    <span class="faq-category">Business Benefits</span>
+                                    <span class="faq-question-title">
+                                        What benefits does Sentry24x7 provide over manual gate management?
+                                    </span>
+                                </span>
+
+                                <span class="faq-toggle-icon">
+                                    <i data-lucide="chevron-down"></i>
+                                </span>
+                            </button>
+
+                            <div class="faq-answer-wrap">
+                                <div class="faq-answer-inner">
+                                    <div class="faq-answer-accent"></div>
+
+                                    <div class="faq-answer-content">
+                                        <span class="faq-answer-icon">
+                                            <i data-lucide="trending-up"></i>
+                                        </span>
+
+                                        <p>
+                                            Sentry24x7 improves security, reduces manual errors, speeds
+                                            up vehicle entry, enables real-time monitoring, automates
+                                            gate operations and provides complete visibility across
+                                            the community.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
                 </div>
+
+                <!-- See more area -->
+                <div id="faq-see-more-wrap" class="faq-see-more-wrap">
+                    <div class="faq-see-more-line"></div>
+
+                    <button
+                        id="faq-expand-button"
+                        type="button"
+                        class="faq-expand-button"
+                        onclick="revealExtraFaqs()"
+                    >
+                        <span class="faq-expand-icon">
+                            <i data-lucide="chevrons-down"></i>
+                        </span>
+
+                        <span class="faq-expand-content">
+                            <strong>See More Questions</strong>
+                            <small>View all Sentry24x7 platform answers</small>
+                        </span>
+
+                        <span class="faq-expand-arrow">
+                            <i data-lucide="arrow-down"></i>
+                        </span>
+                    </button>
+
+                    <div class="faq-see-more-line"></div>
+                </div>
+
             </div>
 
-            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                    <span>3. What is Role-Based Access Control (RBAC)?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                </button>
-                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                    Role-Based Access Control ensures that each user only sees and accesses features relevant to their responsibilities. Different permissions can be assigned to Secretaries, Supervisors, Security Guards, and Residents.
+            <!-- Bottom support strip -->
+            <div class="faq-support-strip">
+                <div class="faq-support-item">
+                    <span>
+                        <i data-lucide="headphones"></i>
+                    </span>
+
+                    <div>
+                        <strong>Need More Help?</strong>
+                        <p>Our team can assist with technical and deployment questions.</p>
+                    </div>
                 </div>
+
+                <a href="#contact" class="faq-support-button">
+                    Contact Support
+                    <i data-lucide="arrow-right"></i>
+                </a>
             </div>
 
-            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                    <span>4. How secure is the login system?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                </button>
-                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                    Sentry24x7 provides secure authentication and user registration for all roles, ensuring only authorized users can access the platform and its data.
-                </div>
-            </div>
-
-            <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                    <span>5. Can gate operations be managed remotely?</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                </button>
-                <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                    Yes. Secretaries and Supervisors can remotely control gates, including blocking, unblocking, and managing access permissions directly from the dashboard.
-                </div>
-            </div>
-
-            <div id="extended-faq-panel" class="hidden space-y-4">
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>6. What is Time-Based Blocking?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Time-Based Blocking allows administrators to automatically restrict gate access during specific hours, days, or schedules without requiring manual intervention.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>7. How do SOS alerts work?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Residents and security personnel can trigger an SOS alert through the mobile application. Emergency notifications are immediately sent to security staff and authorized users for quick response.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>8. Who receives emergency alerts?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        SOS notifications are instantly delivered to security guards, supervisors, administrators, and other designated users based on the configured alert settings.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>9. Does Sentry24x7 work without internet connectivity?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Yes. The system continues to operate in Offline Mode using local controllers. Once the internet connection is restored, all activity logs and records are automatically synchronized.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>10. What reports can be generated?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        <p class="mb-2 font-medium">Administrators can generate detailed reports for:</p>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Visitor entries and exits</li>
-                            <li>Vehicle movement history</li>
-                            <li>Security activities</li>
-                            <li>Gate operations</li>
-                            <li>SOS incidents</li>
-                            <li>User activity logs</li>
-                        </ul>
-                        <p class="mt-2">Reports can be exported for auditing and record-keeping purposes.</p>
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>11. Is activity tracking available in real time?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Yes. The platform provides real-time monitoring of vehicles, visitors, gate status, user actions, and security events through a centralized dashboard.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>12. Does the system support multiple languages?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Yes. Sentry24x7 supports multilingual interfaces. Currently, guard operations can be managed in English and Marathi, making the system easy to use for local security staff.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>13. Can multiple user roles access the platform simultaneously?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Yes. Residents, Guards, Supervisors, and Secretaries can access the system simultaneously according to their assigned permissions.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>14. Can access permissions be customized?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Absolutely. Administrators can configure custom permissions and visibility settings for different user roles to match the community's security requirements.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>15. What are the key security features of Sentry24x7?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        <p class="mb-2 font-medium">Key security features include:</p>
-                        <ul class="list-disc pl-5 space-y-1">
-                            <li>Secure Authentication</li>
-                            <li>Role-Based Access Control</li>
-                            <li>RFID Vehicle Verification</li>
-                            <li>Gate Control Management</li>
-                            <li>Time-Based Access Restrictions</li>
-                            <li>SOS Emergency Alerts</li>
-                            <li>Offline Operations</li>
-                            <li>Detailed Audit Reporting</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>16. Is Sentry24x7 suitable for residential societies and gated communities?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Yes. Sentry24x7 is specifically designed for residential societies, apartment complexes, gated communities, townships, and commercial premises that require advanced security and access automation.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>17. Can the system maintain a complete audit trail?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Yes. Every important action—including gate operations, vehicle entries, user activities, and emergency alerts—is logged and available for review through detailed reports.
-                    </div>
-                </div>
-
-                <div class="bg-brand-cardBg border border-brand-border rounded-xl overflow-hidden transition">
-                    <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between p-5 text-left font-bold text-sm text-brand-navy hover:bg-slate-50/50 transition">
-                        <span>18. What benefits does Sentry24x7 provide over manual gate management?</span>
-                        <i data-lucide="chevron-down" class="w-4 h-4 text-brand-muted transition-transform duration-200"></i>
-                    </button>
-                    <div class="faq-accordion-panel hidden p-5 pt-0 border-t border-brand-border bg-brand-lightBg/50 text-xs text-brand-muted leading-relaxed">
-                        Sentry24x7 improves security, reduces manual errors, speeds up vehicle entry, enables real-time monitoring, automates gate operations, and provides complete visibility across the community.
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="text-center pt-2">
-            <button id="faq-expand-button" onclick="revealExtraFaqs()" class="inline-flex items-center gap-2 bg-white hover:bg-slate-50 text-brand-blue font-bold text-xs px-6 py-3 rounded-xl border border-brand-border shadow-sm transition duration-200">
-                <span>See More Questions</span>
-                <i data-lucide="chevrons-down" class="w-4 h-4"></i>
-            </button>
         </div>
     </section>
-
     <!-- ABOUT US / PREMIUM SPLIT IDENTITY SECTION WITH LARGE LOGO -->
     <section id="about" class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white to-blue-50/30 border-t border-brand-border relative z-10 overflow-hidden">
 
@@ -4664,15 +5959,23 @@
         renderActiveSlideState();
     }
 
-    window.revealExtraFaqs = function() {
-        const extraPanel = document.getElementById('extended-faq-panel');
-        const toggleButton = document.getElementById('faq-expand-button');
+    window.revealExtraFaqs = function () {
+        const extendedPanel = document.getElementById("extended-faq-panel");
+        const seeMoreWrapper = document.getElementById("faq-see-more-wrap");
 
-        extraPanel.classList.remove('hidden');
-        toggleButton.closest('div').classList.add('hidden');
+        if (!extendedPanel) {
+            console.error("Extended FAQ panel was not found.");
+            return;
+        }
+
+        extendedPanel.classList.add("is-visible");
+
+        if (seeMoreWrapper) {
+            seeMoreWrapper.classList.add("is-hidden");
+        }
 
         forceRenderIcons();
-    }
+    };
     // Formats layout to dynamically render 3 portrait items symmetrically in a row 
     function renderActiveSlideState() {
         const activeTabGroups = showcaseDataMatrix[currentActiveTabKey];
@@ -4773,21 +6076,29 @@
     });
         
 
-    window.toggleAccordion = function(buttonElement) {
-        const layoutPanel = buttonElement.nextElementSibling;
-        const chevronVector = buttonElement.querySelector('[data-lucide="chevron-down"]');
-        const toggleState = layoutPanel.classList.contains('hidden');
+    window.togglePremiumFaq = function (buttonElement) {
+        const selectedItem = buttonElement.closest(".faq-item");
 
-        document.querySelectorAll('.faq-accordion-panel').forEach(p => p.classList.add('hidden'));
-        document.querySelectorAll('#faq [data-lucide="chevron-down"]').forEach(chv => chv.style.transform = 'rotate(0deg)');
-        
-        if (toggleState) {
-            layoutPanel.classList.remove('hidden');
-            if (chevronVector) chevronVector.style.transform = 'rotate(180deg)';
-        } else {
-            if (chevronVector) chevronVector.style.transform = 'rotate(0deg)';
+        if (!selectedItem) return;
+
+        const selectedWasOpen = selectedItem.classList.contains("active");
+
+        document.querySelectorAll("#faq .faq-item").forEach((faqItem) => {
+            faqItem.classList.remove("active");
+
+            const faqButton = faqItem.querySelector(".faq-question");
+            if (faqButton) {
+                faqButton.setAttribute("aria-expanded", "false");
+            }
+        });
+
+        if (!selectedWasOpen) {
+            selectedItem.classList.add("active");
+            buttonElement.setAttribute("aria-expanded", "true");
         }
-    }
+
+        forceRenderIcons();
+    };
 
     window.toggleUiModal = function(show) {
         const modal = document.getElementById('custom-auth-modal');
