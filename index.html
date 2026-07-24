@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Sentry24x7 | Smart Society Security & Gate Monitoring Platform</title>
+    <title>Sentry24x7 | Smart Security, Safety & Facility Management Platform</title>
 
     <meta name="description"
         content="Sentry24x7 is an enterprise smart society security platform featuring RFID vehicle access, visitor management, gate automation, SOS alerts, guard patrol management, offline support and real-time monitoring.">
@@ -3476,7 +3476,846 @@
             }
         }
 
-    </style>
+    
+        /* =========================================================
+           OPTION 1: PREMIUM SECURITY RISK DASHBOARD - PROBLEMS SECTION
+           ========================================================= */
+        .risk-dashboard-container {
+            width: 100%;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .risk-dashboard-heading {
+            max-width: 780px;
+            margin: 0 auto 34px;
+            text-align: center;
+        }
+
+        .risk-dashboard-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            border: 1px solid #fecaca;
+            background: rgba(255,255,255,.9);
+            color: #dc2626;
+            font-size: 10px;
+            font-weight: 950;
+            text-transform: uppercase;
+            letter-spacing: .16em;
+            box-shadow: 0 10px 28px rgba(220,38,38,.08);
+            backdrop-filter: blur(14px);
+        }
+
+        .risk-dashboard-badge > span {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #ef4444;
+            box-shadow: 0 0 0 5px rgba(239,68,68,.10);
+            animation: riskBadgePulse 2s ease-in-out infinite;
+        }
+
+        .risk-dashboard-heading h2 {
+            margin-top: 16px;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 950;
+            line-height: 1.08;
+            letter-spacing: -.04em;
+            color: #0f172a;
+        }
+
+        .risk-dashboard-heading h2 span {
+            color: #2563eb;
+        }
+
+        .risk-dashboard-heading p {
+            margin: 14px auto 0;
+            max-width: 720px;
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.75;
+        }
+
+        .risk-dashboard-shell {
+            overflow: hidden;
+            border-radius: 32px;
+            border: 1px solid #dbeafe;
+            background: rgba(255,255,255,.92);
+            box-shadow: 0 32px 90px rgba(37,99,235,.13), 0 10px 30px rgba(15,23,42,.04);
+            backdrop-filter: blur(22px);
+        }
+
+        .risk-dashboard-topbar {
+            min-height: 86px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid #dbeafe;
+            background: radial-gradient(circle at top right, rgba(96,165,250,.23), transparent 38%), linear-gradient(135deg,#eff6ff,#ffffff);
+        }
+
+        .risk-dashboard-topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .risk-dashboard-topbar-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: linear-gradient(135deg,#dc2626,#fb7185);
+            box-shadow: 0 15px 32px rgba(220,38,38,.24);
+            flex-shrink: 0;
+        }
+
+        .risk-dashboard-topbar-icon i { width: 23px; height: 23px; }
+        .risk-dashboard-topbar-left p { color: #dc2626; font-size: 10px; font-weight: 950; text-transform: uppercase; letter-spacing: .13em; }
+        .risk-dashboard-topbar-left h3 { margin-top: 3px; color: #0f172a; font-size: 17px; font-weight: 950; }
+
+        .risk-dashboard-live-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border-radius: 999px;
+            border: 1px solid #bbf7d0;
+            background: #f0fdf4;
+            color: #15803d;
+            font-size: 10px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .risk-dashboard-live-status span {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 0 5px rgba(34,197,94,.10);
+            animation: riskLivePulse 1.8s ease-in-out infinite;
+        }
+
+        .risk-dashboard-layout {
+            position: relative;
+            min-height: 580px;
+            padding: 28px;
+            display: grid;
+            grid-template-columns: minmax(0,1fr) 390px minmax(0,1fr);
+            align-items: center;
+            gap: 24px;
+            background: radial-gradient(circle at center, rgba(219,234,254,.55), transparent 38%), linear-gradient(180deg,#ffffff,#f8fbff);
+        }
+
+        .risk-dashboard-column {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .risk-issue-card {
+            position: relative;
+            min-height: 138px;
+            padding: 18px 44px 18px 16px;
+            display: grid;
+            grid-template-columns: 34px 58px minmax(0,1fr);
+            align-items: center;
+            gap: 12px;
+            border-radius: 22px;
+            border: 1px solid #e2e8f0;
+            background: rgba(255,255,255,.96);
+            box-shadow: 0 16px 42px rgba(15,23,42,.06);
+            transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+            overflow: hidden;
+        }
+
+        .risk-issue-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 18px;
+            bottom: 18px;
+            width: 4px;
+            border-radius: 999px;
+            background: linear-gradient(180deg,#ef4444,#fb7185);
+        }
+
+        .risk-issue-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg,rgba(254,226,226,.58),transparent 55%);
+            opacity: 0;
+            transition: opacity .35s ease;
+            pointer-events: none;
+        }
+
+        .risk-issue-card:hover {
+            transform: translateY(-7px) scale(1.01);
+            border-color: #fca5a5;
+            box-shadow: 0 26px 60px rgba(220,38,38,.13);
+        }
+
+        .risk-issue-card:hover::after { opacity: 1; }
+
+        .risk-issue-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff1f2;
+            color: #dc2626;
+            font-size: 11px;
+            font-weight: 950;
+            position: relative;
+            z-index: 2;
+        }
+
+        .risk-issue-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #fee2e2;
+            background: linear-gradient(180deg,#fff1f2,#ffffff);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+        .risk-issue-icon img { width: 100%; height: 100%; object-fit: cover; }
+        .risk-issue-card:hover .risk-issue-icon { transform: rotate(-3deg) scale(1.06); box-shadow: 0 14px 30px rgba(220,38,38,.14); }
+
+        .risk-issue-copy { position: relative; z-index: 2; min-width: 0; }
+        .risk-issue-category { display: block; color: #dc2626; font-size: 8px; font-weight: 950; text-transform: uppercase; letter-spacing: .12em; }
+        .risk-issue-copy h3 { margin-top: 5px; color: #0f172a; font-size: 14px; font-weight: 950; line-height: 1.25; }
+        .risk-issue-copy p { margin-top: 6px; color: #64748b; font-size: 11.5px; font-weight: 600; line-height: 1.55; }
+
+        .risk-issue-alert {
+            position: absolute;
+            right: 13px;
+            top: 13px;
+            width: 28px;
+            height: 28px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dc2626;
+            background: #fff1f2;
+            border: 1px solid #fecdd3;
+            z-index: 3;
+        }
+
+        .risk-issue-alert i { width: 14px; height: 14px; stroke-width: 2.5; }
+
+        .risk-dashboard-center {
+            min-height: 500px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .risk-dashboard-connectors { position: absolute; inset: -20px; width: calc(100% + 40px); height: calc(100% + 40px); overflow: visible; pointer-events: none; z-index: 0; }
+        .risk-dashboard-connectors path { fill: none; stroke: rgba(37,99,235,.34); stroke-width: 1.6; stroke-dasharray: 7 9; animation: riskDashMove 7s linear infinite; }
+        .risk-dashboard-connectors circle { fill: #2563eb; stroke: white; stroke-width: 3; filter: drop-shadow(0 6px 12px rgba(37,99,235,.30)); }
+
+        .risk-radar-ring { position: absolute; border-radius: 999px; pointer-events: none; }
+        .risk-radar-ring-one { width: 370px; height: 370px; border: 1px dashed rgba(37,99,235,.28); animation: riskOrbit 14s linear infinite; }
+        .risk-radar-ring-two { width: 300px; height: 300px; border: 1px solid rgba(37,99,235,.14); }
+        .risk-radar-ring-three { width: 245px; height: 245px; border: 1px solid rgba(239,68,68,.18); box-shadow: 0 0 0 24px rgba(37,99,235,.025); animation: riskRadarPulse 3.2s ease-in-out infinite; }
+
+        .risk-score-card {
+            position: relative;
+            z-index: 3;
+            width: 280px;
+            padding: 20px;
+            border-radius: 28px;
+            border: 1px solid #bfdbfe;
+            background: rgba(255,255,255,.96);
+            box-shadow: 0 30px 75px rgba(37,99,235,.20);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .risk-score-card::before {
+            content: "";
+            position: absolute;
+            width: 170px;
+            height: 170px;
+            border-radius: 999px;
+            right: -90px;
+            top: -100px;
+            background: rgba(239,68,68,.12);
+            filter: blur(8px);
+        }
+
+        .risk-score-header { display: flex; align-items: center; gap: 11px; text-align: left; position: relative; z-index: 2; }
+        .risk-score-icon { width: 40px; height: 40px; border-radius: 13px; display: flex; align-items: center; justify-content: center; color: white; background: linear-gradient(135deg,#1d4ed8,#60a5fa); box-shadow: 0 12px 25px rgba(37,99,235,.24); flex-shrink: 0; }
+        .risk-score-icon i { width: 19px; height: 19px; }
+        .risk-score-header p { color: #2563eb; font-size: 8px; font-weight: 950; text-transform: uppercase; letter-spacing: .1em; }
+        .risk-score-header h3 { margin-top: 3px; color: #0f172a; font-size: 14px; font-weight: 950; }
+
+        .risk-score-gauge { margin: 20px auto 14px; display: flex; justify-content: center; }
+        .risk-score-circle { width: 144px; height: 144px; border-radius: 999px; display: flex; align-items: center; justify-content: center; background: conic-gradient(#ef4444 0 87%, #fee2e2 87% 100%); box-shadow: 0 20px 50px rgba(239,68,68,.18); animation: riskGaugeGlow 2.5s ease-in-out infinite; }
+        .risk-score-circle-inner { width: 112px; height: 112px; border-radius: 999px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: white; border: 1px solid #fee2e2; }
+        .risk-score-circle-inner strong { color: #dc2626; font-size: 42px; font-weight: 950; line-height: 1; letter-spacing: -.06em; }
+        .risk-score-circle-inner span { margin-top: 4px; color: #94a3b8; font-size: 10px; font-weight: 800; }
+
+        .risk-score-label { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #fff1f2; border: 1px solid #fecdd3; color: #be123c; font-size: 9px; font-weight: 950; text-transform: uppercase; letter-spacing: .08em; }
+        .risk-score-pulse { width: 8px; height: 8px; border-radius: 999px; background: #ef4444; box-shadow: 0 0 0 5px rgba(239,68,68,.10); animation: riskAlertPulse 1.4s ease-in-out infinite; }
+
+        .risk-score-progress { margin-top: 16px; }
+        .risk-score-progress-track { height: 8px; border-radius: 999px; background: #e2e8f0; overflow: hidden; }
+        .risk-score-progress-track span { display: block; width: 87%; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#f59e0b,#ef4444,#be123c); animation: riskProgressIn 1.3s ease both; }
+        .risk-score-progress-labels { margin-top: 5px; display: flex; justify-content: space-between; color: #94a3b8; font-size: 8px; font-weight: 800; text-transform: uppercase; }
+
+        .risk-score-stats { margin-top: 17px; padding-top: 15px; border-top: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+        .risk-score-stats div { min-width: 0; }
+        .risk-score-stats strong { display: block; color: #0f172a; font-size: 13px; font-weight: 950; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .risk-score-stats span { display: block; margin-top: 3px; color: #94a3b8; font-size: 7px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+
+        .risk-dashboard-summary-strip {
+            min-height: 98px;
+            padding: 18px 24px;
+            display: grid;
+            grid-template-columns: 56px minmax(0,1fr) auto;
+            align-items: center;
+            gap: 18px;
+            border-top: 1px solid #dbeafe;
+            background: linear-gradient(180deg,#ffffff,#eff6ff);
+        }
+
+        .risk-dashboard-summary-icon { width: 54px; height: 54px; border-radius: 18px; display: flex; align-items: center; justify-content: center; color: white; background: linear-gradient(135deg,#dc2626,#fb7185); box-shadow: 0 14px 30px rgba(220,38,38,.23); }
+        .risk-dashboard-summary-icon i { width: 24px; height: 24px; }
+        .risk-dashboard-summary-copy p { color: #dc2626; font-size: 9px; font-weight: 950; text-transform: uppercase; letter-spacing: .12em; }
+        .risk-dashboard-summary-copy h3 { margin-top: 5px; color: #0f172a; font-size: 15px; font-weight: 900; line-height: 1.45; }
+        .risk-dashboard-summary-action { min-width: 165px; padding: 12px 16px; border-radius: 16px; text-align: center; border: 1px solid #bfdbfe; background: white; box-shadow: 0 10px 28px rgba(37,99,235,.08); }
+        .risk-dashboard-summary-action span { display: block; color: #2563eb; font-size: 8px; font-weight: 950; text-transform: uppercase; letter-spacing: .12em; }
+        .risk-dashboard-summary-action strong { display: block; margin-top: 4px; color: #0f172a; font-size: 12px; font-weight: 950; }
+
+        @keyframes riskBadgePulse { 0%,100% { box-shadow: 0 0 0 4px rgba(239,68,68,.08); } 50% { box-shadow: 0 0 0 8px rgba(239,68,68,.02); } }
+        @keyframes riskLivePulse { 0%,100% { opacity: .6; } 50% { opacity: 1; } }
+        @keyframes riskDashMove { to { stroke-dashoffset: -90; } }
+        @keyframes riskOrbit { to { transform: rotate(360deg); } }
+        @keyframes riskRadarPulse { 0%,100% { transform: scale(.96); opacity: .9; } 50% { transform: scale(1.06); opacity: .55; } }
+        @keyframes riskGaugeGlow { 0%,100% { box-shadow: 0 20px 50px rgba(239,68,68,.16); } 50% { box-shadow: 0 24px 65px rgba(239,68,68,.28); } }
+        @keyframes riskAlertPulse { 0%,100% { transform: scale(.9); opacity: .7; } 50% { transform: scale(1.12); opacity: 1; } }
+        @keyframes riskProgressIn { from { width: 0; } to { width: 87%; } }
+
+        @media (max-width: 1180px) {
+            .risk-dashboard-layout { grid-template-columns: repeat(2,minmax(0,1fr)); min-height: auto; }
+            .risk-dashboard-center { grid-column: 1 / -1; grid-row: 1; min-height: 430px; }
+            .risk-dashboard-left-column { grid-column: 1; grid-row: 2; }
+            .risk-dashboard-right-column { grid-column: 2; grid-row: 2; }
+            .risk-dashboard-connectors { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .risk-dashboard-heading { margin-bottom: 26px; }
+            .risk-dashboard-topbar { align-items: flex-start; flex-direction: column; }
+            .risk-dashboard-layout { padding: 14px; grid-template-columns: 1fr; gap: 14px; }
+            .risk-dashboard-center, .risk-dashboard-left-column, .risk-dashboard-right-column { grid-column: 1; grid-row: auto; }
+            .risk-dashboard-center { min-height: 390px; }
+            .risk-radar-ring-one { width: 330px; height: 330px; }
+            .risk-radar-ring-two { width: 270px; height: 270px; }
+            .risk-radar-ring-three { width: 220px; height: 220px; }
+            .risk-dashboard-summary-strip { grid-template-columns: 50px minmax(0,1fr); }
+            .risk-dashboard-summary-action { grid-column: 1 / -1; width: 100%; }
+        }
+
+        @media (max-width: 520px) {
+            .risk-dashboard-shell { border-radius: 24px; }
+            .risk-dashboard-topbar { padding: 16px; }
+            .risk-dashboard-topbar-left { align-items: flex-start; }
+            .risk-issue-card { grid-template-columns: 30px 50px minmax(0,1fr); min-height: 132px; padding: 15px 40px 15px 13px; gap: 9px; }
+            .risk-issue-icon { width: 48px; height: 48px; border-radius: 15px; }
+            .risk-issue-copy h3 { font-size: 13px; }
+            .risk-issue-copy p { font-size: 10.5px; }
+            .risk-dashboard-center { min-height: 350px; }
+            .risk-score-card { width: 250px; padding: 17px; }
+            .risk-radar-ring-one { width: 300px; height: 300px; }
+            .risk-radar-ring-two { width: 245px; height: 245px; }
+            .risk-radar-ring-three { width: 205px; height: 205px; }
+            .risk-dashboard-summary-strip { padding: 16px; }
+        }
+
+
+
+        /* =========================================================
+           COMPACT RISK DASHBOARD OVERRIDES
+           Matches the proportions and spacing of the Features section
+           ========================================================= */
+        .risk-dashboard-container {
+            max-width: 1120px;
+        }
+
+        .risk-dashboard-heading {
+            max-width: 720px;
+            margin-bottom: 26px;
+        }
+
+        .risk-dashboard-heading h2 {
+            margin-top: 14px;
+            font-size: clamp(1.9rem, 3.4vw, 2.55rem);
+        }
+
+        .risk-dashboard-heading p {
+            margin-top: 11px;
+            font-size: 13px;
+            line-height: 1.65;
+        }
+
+        .risk-dashboard-shell {
+            border-radius: 28px;
+            box-shadow: 0 24px 70px rgba(37,99,235,.11), 0 8px 22px rgba(15,23,42,.04);
+        }
+
+        .risk-dashboard-topbar {
+            min-height: 72px;
+            padding: 14px 18px;
+        }
+
+        .risk-dashboard-topbar-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+        }
+
+        .risk-dashboard-topbar-icon i {
+            width: 20px;
+            height: 20px;
+        }
+
+        .risk-dashboard-topbar-left h3 {
+            font-size: 15px;
+        }
+
+        .risk-dashboard-live-status {
+            padding: 8px 11px;
+            font-size: 9px;
+        }
+
+        .risk-dashboard-layout {
+            min-height: 490px;
+            padding: 20px;
+            grid-template-columns: minmax(0,1fr) 320px minmax(0,1fr);
+            gap: 18px;
+        }
+
+        .risk-dashboard-column {
+            gap: 14px;
+        }
+
+        .risk-issue-card {
+            min-height: 104px;
+            padding: 13px 38px 13px 13px;
+            grid-template-columns: 30px 50px minmax(0,1fr);
+            gap: 10px;
+            border-radius: 20px;
+            box-shadow: 0 14px 34px rgba(15,23,42,.055);
+        }
+
+        .risk-issue-card::before {
+            top: 15px;
+            bottom: 15px;
+            width: 3px;
+        }
+
+        .risk-issue-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 24px 52px rgba(220,38,38,.11);
+        }
+
+        .risk-issue-number {
+            width: 29px;
+            height: 29px;
+            border-radius: 10px;
+            font-size: 10px;
+        }
+
+        .risk-issue-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+        }
+
+        .risk-issue-copy h3 {
+            margin-top: 4px;
+            font-size: 13px;
+        }
+
+        .risk-issue-copy p {
+            margin-top: 5px;
+            font-size: 10.5px;
+            line-height: 1.45;
+        }
+
+        .risk-issue-alert {
+            right: 10px;
+            top: 10px;
+            width: 25px;
+            height: 25px;
+            border-radius: 9px;
+        }
+
+        .risk-dashboard-center {
+            min-height: 420px;
+        }
+
+        .risk-radar-ring-one {
+            width: 300px;
+            height: 300px;
+        }
+
+        .risk-radar-ring-two {
+            width: 246px;
+            height: 246px;
+        }
+
+        .risk-radar-ring-three {
+            width: 200px;
+            height: 200px;
+            box-shadow: 0 0 0 18px rgba(37,99,235,.022);
+        }
+
+        .risk-score-card {
+            width: 230px;
+            padding: 16px;
+            border-radius: 24px;
+            box-shadow: 0 24px 58px rgba(37,99,235,.17);
+        }
+
+        .risk-score-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+        }
+
+        .risk-score-header h3 {
+            font-size: 13px;
+        }
+
+        .risk-score-gauge {
+            margin: 15px auto 11px;
+        }
+
+        .risk-score-circle {
+            width: 116px;
+            height: 116px;
+        }
+
+        .risk-score-circle-inner {
+            width: 91px;
+            height: 91px;
+        }
+
+        .risk-score-circle-inner strong {
+            font-size: 34px;
+        }
+
+        .risk-score-label {
+            padding: 7px 10px;
+            font-size: 8px;
+        }
+
+        .risk-score-progress {
+            margin-top: 12px;
+        }
+
+        .risk-score-stats {
+            margin-top: 13px;
+            padding-top: 12px;
+            gap: 6px;
+        }
+
+        .risk-score-stats strong {
+            font-size: 12px;
+        }
+
+        .risk-dashboard-summary-strip {
+            min-height: 82px;
+            padding: 14px 18px;
+            grid-template-columns: 48px minmax(0,1fr) auto;
+            gap: 14px;
+        }
+
+        .risk-dashboard-summary-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 15px;
+        }
+
+        .risk-dashboard-summary-copy h3 {
+            margin-top: 4px;
+            font-size: 13px;
+        }
+
+        .risk-dashboard-summary-action {
+            min-width: 145px;
+            padding: 10px 13px;
+            border-radius: 14px;
+        }
+
+        @media (max-width: 1180px) {
+            .risk-dashboard-layout {
+                grid-template-columns: repeat(2,minmax(0,1fr));
+                min-height: auto;
+            }
+
+            .risk-dashboard-center {
+                min-height: 360px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .risk-dashboard-heading {
+                margin-bottom: 22px;
+            }
+
+            .risk-dashboard-layout {
+                padding: 12px;
+                gap: 12px;
+            }
+
+            .risk-dashboard-center {
+                min-height: 330px;
+            }
+
+            .risk-score-card {
+                width: 220px;
+            }
+
+            .risk-radar-ring-one {
+                width: 280px;
+                height: 280px;
+            }
+
+            .risk-radar-ring-two {
+                width: 230px;
+                height: 230px;
+            }
+
+            .risk-radar-ring-three {
+                width: 188px;
+                height: 188px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .risk-issue-card {
+                min-height: 98px;
+                padding: 12px 36px 12px 11px;
+                grid-template-columns: 28px 46px minmax(0,1fr);
+                gap: 8px;
+            }
+
+            .risk-issue-icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 14px;
+            }
+
+            .risk-dashboard-center {
+                min-height: 310px;
+            }
+        }
+    
+
+        /* =========================================================
+           FINAL COLOR BALANCE OVERRIDES - PROBLEMS SECTION
+           Keeps the approved layout while reducing excessive red.
+           ========================================================= */
+        #problems .risk-dashboard-badge {
+            border-color: #bfdbfe;
+            color: #2563eb;
+            box-shadow: 0 10px 28px rgba(37,99,235,.08);
+        }
+
+        #problems .risk-dashboard-badge > span {
+            background: #2563eb;
+            box-shadow: 0 0 0 5px rgba(37,99,235,.10);
+            animation-name: riskBlueBadgePulse;
+        }
+
+        #problems .risk-dashboard-topbar-icon {
+            background: linear-gradient(135deg,#1d4ed8,#60a5fa);
+            box-shadow: 0 15px 32px rgba(37,99,235,.24);
+        }
+
+        #problems .risk-dashboard-topbar-left p {
+            color: #2563eb;
+        }
+
+        #problems .risk-issue-card {
+            --risk-accent: #2563eb;
+            --risk-soft: #eff6ff;
+            --risk-border: #dbeafe;
+            --risk-glow: rgba(37,99,235,.12);
+        }
+
+        #problems .risk-issue-card-1 {
+            --risk-accent: #475569;
+            --risk-soft: #f8fafc;
+            --risk-border: #e2e8f0;
+            --risk-glow: rgba(71,85,105,.11);
+        }
+
+        #problems .risk-issue-card-2 {
+            --risk-accent: #d97706;
+            --risk-soft: #fffbeb;
+            --risk-border: #fde68a;
+            --risk-glow: rgba(217,119,6,.12);
+        }
+
+        #problems .risk-issue-card-3 {
+            --risk-accent: #2563eb;
+            --risk-soft: #eff6ff;
+            --risk-border: #bfdbfe;
+            --risk-glow: rgba(37,99,235,.12);
+        }
+
+        #problems .risk-issue-card-4 {
+            --risk-accent: #dc2626;
+            --risk-soft: #fff7f7;
+            --risk-border: #fecaca;
+            --risk-glow: rgba(220,38,38,.11);
+        }
+
+        #problems .risk-issue-card-5 {
+            --risk-accent: #7c3aed;
+            --risk-soft: #f5f3ff;
+            --risk-border: #ddd6fe;
+            --risk-glow: rgba(124,58,237,.11);
+        }
+
+        #problems .risk-issue-card-6 {
+            --risk-accent: #0891b2;
+            --risk-soft: #ecfeff;
+            --risk-border: #a5f3fc;
+            --risk-glow: rgba(8,145,178,.11);
+        }
+
+        #problems .risk-issue-card::before {
+            background: var(--risk-accent);
+        }
+
+        #problems .risk-issue-card::after {
+            background: linear-gradient(135deg,var(--risk-soft),transparent 58%);
+        }
+
+        #problems .risk-issue-card:hover {
+            border-color: var(--risk-border);
+            box-shadow: 0 24px 56px var(--risk-glow);
+        }
+
+        #problems .risk-issue-number,
+        #problems .risk-issue-alert {
+            color: var(--risk-accent);
+            background: var(--risk-soft);
+            border-color: var(--risk-border);
+        }
+
+        #problems .risk-issue-category {
+            color: var(--risk-accent);
+        }
+
+        #problems .risk-issue-icon {
+            border-color: var(--risk-border);
+            background: linear-gradient(180deg,var(--risk-soft),#ffffff);
+        }
+
+        #problems .risk-issue-card:hover .risk-issue-icon {
+            box-shadow: 0 14px 30px var(--risk-glow);
+        }
+
+        #problems .risk-radar-ring-three {
+            border-color: rgba(37,99,235,.24);
+            box-shadow: 0 0 0 24px rgba(37,99,235,.025);
+        }
+
+        #problems .risk-score-card::before {
+            background: rgba(37,99,235,.11);
+        }
+
+        #problems .risk-score-circle {
+            background: conic-gradient(#2563eb 0 72%, #f59e0b 72% 87%, #dbeafe 87% 100%);
+            box-shadow: 0 20px 50px rgba(37,99,235,.17);
+            animation-name: riskBlueGaugeGlow;
+        }
+
+        #problems .risk-score-circle-inner {
+            border-color: #dbeafe;
+        }
+
+        #problems .risk-score-circle-inner strong {
+            color: #1d4ed8;
+        }
+
+        #problems .risk-score-label {
+            color: #b45309;
+            background: #fffbeb;
+            border-color: #fde68a;
+        }
+
+        #problems .risk-score-pulse {
+            background: #f59e0b;
+            box-shadow: 0 0 0 5px rgba(245,158,11,.12);
+        }
+
+        #problems .risk-score-progress-track span {
+            background: linear-gradient(90deg,#60a5fa,#2563eb,#f59e0b);
+        }
+
+        #problems .risk-dashboard-summary-icon {
+            background: linear-gradient(135deg,#1d4ed8,#60a5fa);
+            box-shadow: 0 14px 30px rgba(37,99,235,.23);
+        }
+
+        #problems .risk-dashboard-summary-copy p {
+            color: #2563eb;
+        }
+
+        @keyframes riskBlueBadgePulse {
+            0%,100% { box-shadow: 0 0 0 4px rgba(37,99,235,.08); }
+            50% { box-shadow: 0 0 0 8px rgba(37,99,235,.02); }
+        }
+
+        @keyframes riskBlueGaugeGlow {
+            0%,100% { box-shadow: 0 20px 50px rgba(37,99,235,.16); }
+            50% { box-shadow: 0 24px 65px rgba(37,99,235,.25); }
+        }
+
+    
+footer{
+background:linear-gradient(135deg,#1E3A8A 0%,#2563EB 55%,#3B82F6 100%) !important;
+color:#fff !important;
+border-top:1px solid rgba(255,255,255,.12);
+}
+footer h1,footer h2,footer h3,footer h4,footer h5,footer h6{color:#fff!important;}
+footer p,footer li,footer span,footer a{color:rgba(255,255,255,.86)!important;}
+footer a:hover{color:#fff!important;}
+
+</style>
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="bg-brand-lightBg text-brand-navy font-sans antialiased selection:bg-brand-blue/10">
@@ -3620,140 +4459,217 @@
             </div>
         </div>
 
-    <section id="problems" class="snap-section scroll-mt-24 py-12 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
+    <section id="problems" class="snap-section scroll-mt-24 py-14 px-4 md:px-6 bg-gradient-to-b from-white via-blue-50/40 to-white border-t border-brand-border relative z-10 overflow-hidden">
 
         <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute top-8 left-0 w-52 h-52 bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)] bg-[length:14px_14px] opacity-30"></div>
-            <div class="absolute bottom-20 right-0 w-52 h-52 bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)] bg-[length:14px_14px] opacity-25"></div>
+            <div class="absolute top-8 left-0 w-52 h-52 bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)] bg-[length:14px_14px] opacity-25"></div>
+            <div class="absolute bottom-20 right-0 w-52 h-52 bg-[radial-gradient(circle,#93c5fd_2px,transparent_2px)] bg-[length:14px_14px] opacity-20"></div>
             <div class="absolute -top-28 -right-24 w-96 h-96 bg-blue-200/40 rounded-full blur-3xl"></div>
             <div class="absolute -bottom-28 -left-24 w-96 h-96 bg-cyan-200/30 rounded-full blur-3xl"></div>
         </div>
 
-        <div class="text-center max-w-4xl mx-auto mb-10">
-            <h2 class="text-2xl md:text-4xl font-black tracking-tight text-brand-navy">
-                Why Traditional Gate Management
-                <span class="text-brand-blue">Fails</span>
-            </h2>
-        </div>
+        <div class="risk-dashboard-container relative z-10">
+            <div class="risk-dashboard-heading">
+                
 
-            <div class="problem-premium-map">
+                <h2>
+                    Why Traditional Security
+                    <span>Fails</span>
+                </h2>
 
-                <div class="problem-side problem-left">
-
-                    <div class="problem-card">
-                        <div class="problem-img">
-                            <img src="images/manual.png" alt="Manual Registers">
-                            <span>×</span>
-                        </div>
-                        <div class="problem-number">01</div>
-                        <div>
-                            <h3>Manual Registers</h3>
-                            <p>Guards rely on paper logs — prone to errors and hard to audit.</p>
-                        </div>
-                    </div>
-
-                    <div class="problem-card">
-                        <div class="problem-img">
-                            <img src="images/slow.png" alt="Slow Visitor Approval">
-                            <span>×</span>
-                        </div>
-                        <div class="problem-number">02</div>
-                        <div>
-                            <h3>Slow Visitor Approval</h3>
-                            <p>Long queues due to manual checks and approvals.</p>
-                        </div>
-                    </div>
-
-                    <div class="problem-card">
-                        <div class="problem-img">
-                            <img src="images/hardware.png" alt="No Hardware Integration">
-                            <span>×</span>
-                        </div>
-                        <div class="problem-number">03</div>
-                        <div>
-                            <h3>No Hardware Integration</h3>
-                            <p>No RFID, no boom barrier — everything is manual.</p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="problem-center-area">
-
-                    <svg class="problem-connector-svg" viewBox="0 0 360 520" preserveAspectRatio="none">
-                        <path d="M0 95 C85 95 85 205 175 220"></path>
-                        <path d="M0 260 C90 260 90 260 175 260"></path>
-                        <path d="M0 425 C85 425 85 315 175 300"></path>
-
-                        <path d="M360 95 C275 95 275 205 185 220"></path>
-                        <path d="M360 260 C270 260 270 260 185 260"></path>
-                        <path d="M360 425 C275 425 275 315 185 300"></path>
-
-                        <circle cx="0" cy="95" r="7"></circle>
-                        <circle cx="0" cy="260" r="7"></circle>
-                        <circle cx="0" cy="425" r="7"></circle>
-                        <circle cx="360" cy="95" r="7"></circle>
-                        <circle cx="360" cy="260" r="7"></circle>
-                        <circle cx="360" cy="425" r="7"></circle>
-                        <circle cx="180" cy="260" r="8"></circle>
-                    </svg>
-
-                    <div class="problem-center-ring ring-one"></div>
-                    <div class="problem-center-ring ring-two"></div>
-                    <div class="problem-center-ring ring-three"></div>
-
-                    <div class="problem-center-core">
-                        <div class="problem-lock">🔒</div>
-                    </div>
-                </div>
-                <div class="problem-side problem-right">
-
-                    <div class="problem-card">
-                        <div class="problem-img">
-                            <img src="images/Unauthorized.png" alt="Unauthorized Entry">
-                            <span>×</span>
-                        </div>
-                        <div class="problem-number">04</div>
-                        <div>
-                            <h3>Unauthorized Entry</h3>
-                            <p>Weak guard checks — easy to mislead and bypass.</p>
-                        </div>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-img">
-                            <img src="images/activity.png" alt="No Activity Records">
-                            <span>×</span>
-                        </div>
-                        <div class="problem-number">05</div>
-                        <div>
-                            <h3>No Activity Records</h3>
-                            <p>No digital logs — visitor and vehicle tracking is impossible.</p>
-                        </div>
-                    </div>
-
-                    <div class="problem-card">
-                        <div class="problem-img">
-                            <img src="images/alert.png" alt="No Emergency Alerts">
-                            <span>×</span>
-                        </div>
-                        <div class="problem-number">06</div>
-                        <div>
-                            <h3>No Emergency Alerts</h3>
-                            <p>No way to notify residents or guards instantly in emergencies.</p>
-                        </div>
-                    </div>
-                </div>
+                <p>
+                    Manual processes, disconnected hardware and missing real-time visibility create
+                    security gaps across residential, commercial and industrial premises.
+                </p>
             </div>
-            <div class="problem-bottom-card">
-                <div class="problem-bottom-icon">🛡️</div>
-                <div>
-                    <h3>
-                        Traditional systems are not just slow — they are <span>risky.</span>
-                    </h3>
-                    <p>
-                        It’s time to switch to a smarter, automated and secure society solution.
-                    </p>
+
+            <!-- <div class="risk-dashboard-shell">
+                <div class="risk-dashboard-topbar">
+                    <div class="risk-dashboard-topbar-left">
+                        <span class="risk-dashboard-topbar-icon">
+                            <i data-lucide="shield-alert"></i>
+                        </span>
+                        <div>
+                            <p>Live Security Assessment</p>
+                            <h3>Traditional Premises Risk Dashboard</h3>
+                        </div>
+                    </div>
+
+                    <div class="risk-dashboard-live-status">
+                        <span></span>
+                        Monitoring Active
+                    </div>
+                </div> -->
+
+                <div class="risk-dashboard-layout">
+                    <div class="risk-dashboard-column risk-dashboard-left-column">
+                        <article class="risk-issue-card risk-issue-card-1">
+                            <span class="risk-issue-number">01</span>
+                            <div class="risk-issue-icon">
+                                <img src="images/manual.png" alt="Manual Registers">
+                            </div>
+                            <div class="risk-issue-copy">
+                                <span class="risk-issue-category">Manual Process</span>
+                                <h3>Paper-Based Registers</h3>
+                                <p>Handwritten records are slow, inaccurate and difficult to audit.</p>
+                            </div>
+                            <span class="risk-issue-alert"><i data-lucide="triangle-alert"></i></span>
+                        </article>
+
+                        <article class="risk-issue-card risk-issue-card-2">
+                            <span class="risk-issue-number">02</span>
+                            <div class="risk-issue-icon">
+                                <img src="images/slow.png" alt="Slow Visitor Approval">
+                            </div>
+                            <div class="risk-issue-copy">
+                                <span class="risk-issue-category">Operational Delay</span>
+                                <h3>Slow Visitor Approval</h3>
+                                <p>Manual calls and checks create queues and delay legitimate visitors.</p>
+                            </div>
+                            <span class="risk-issue-alert"><i data-lucide="timer-off"></i></span>
+                        </article>
+
+                        <article class="risk-issue-card risk-issue-card-3">
+                            <span class="risk-issue-number">03</span>
+                            <div class="risk-issue-icon">
+                                <img src="images/hardware.png" alt="No Hardware Integration">
+                            </div>
+                            <div class="risk-issue-copy">
+                                <span class="risk-issue-category">Disconnected Systems</span>
+                                <h3>No Hardware Integration</h3>
+                                <p>RFID, barriers and controllers operate without one unified platform.</p>
+                            </div>
+                            <span class="risk-issue-alert"><i data-lucide="unplug"></i></span>
+                        </article>
+                    </div>
+
+                    <div class="risk-dashboard-center">
+                        <svg class="risk-dashboard-connectors" viewBox="0 0 430 560" preserveAspectRatio="none" aria-hidden="true">
+                            <path d="M0 95 C120 95 95 185 205 220"></path>
+                            <path d="M0 280 C125 280 115 280 205 280"></path>
+                            <path d="M0 465 C120 465 95 375 205 340"></path>
+                            <path d="M430 95 C310 95 335 185 225 220"></path>
+                            <path d="M430 280 C305 280 315 280 225 280"></path>
+                            <path d="M430 465 C310 465 335 375 225 340"></path>
+                            <circle cx="0" cy="95" r="5"></circle>
+                            <circle cx="0" cy="280" r="5"></circle>
+                            <circle cx="0" cy="465" r="5"></circle>
+                            <circle cx="430" cy="95" r="5"></circle>
+                            <circle cx="430" cy="280" r="5"></circle>
+                            <circle cx="430" cy="465" r="5"></circle>
+                        </svg>
+
+                        <div class="risk-radar-ring risk-radar-ring-one"></div>
+                        <div class="risk-radar-ring risk-radar-ring-two"></div>
+                        <div class="risk-radar-ring risk-radar-ring-three"></div>
+
+                        <div class="risk-score-card">
+                            <div class="risk-score-header">
+                                <span class="risk-score-icon">
+                                    <i data-lucide="radar"></i>
+                                </span>
+                                <div>
+                                    <p>Overall Security Risk</p>
+                                    <h3>Critical Exposure</h3>
+                                </div>
+                            </div>
+
+                            <div class="risk-score-gauge">
+                                <div class="risk-score-circle">
+                                    <div class="risk-score-circle-inner">
+                                        <strong>87</strong>
+                                        <span>/ 100</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="risk-score-label">
+                                <span class="risk-score-pulse"></span>
+                                High Risk Detected
+                            </div>
+
+                            <div class="risk-score-progress">
+                                <div class="risk-score-progress-track">
+                                    <span></span>
+                                </div>
+                                <div class="risk-score-progress-labels">
+                                    <small>Low</small>
+                                    <small>Critical</small>
+                                </div>
+                            </div>
+
+                            <div class="risk-score-stats">
+                                <div>
+                                    <strong>6</strong>
+                                    <span>Active Risks</span>
+                                </div>
+                                <div>
+                                    <strong>0</strong>
+                                    <span>Live Alerts</span>
+                                </div>
+                                <div>
+                                    <strong>Manual</strong>
+                                    <span>Control Mode</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="risk-dashboard-column risk-dashboard-right-column">
+                        <article class="risk-issue-card risk-issue-card-4">
+                            <span class="risk-issue-number">04</span>
+                            <div class="risk-issue-icon">
+                                <img src="images/Unauthorized.png" alt="Unauthorized Entry">
+                            </div>
+                            <div class="risk-issue-copy">
+                                <span class="risk-issue-category">Access Threat</span>
+                                <h3>Unauthorized Entry</h3>
+                                <p>Weak manual verification can be bypassed or manipulated.</p>
+                            </div>
+                            <span class="risk-issue-alert"><i data-lucide="user-x"></i></span>
+                        </article>
+
+                        <article class="risk-issue-card risk-issue-card-5">
+                            <span class="risk-issue-number">05</span>
+                            <div class="risk-issue-icon">
+                                <img src="images/activity.png" alt="No Activity Records">
+                            </div>
+                            <div class="risk-issue-copy">
+                                <span class="risk-issue-category">Visibility Gap</span>
+                                <h3>No Digital Activity Trail</h3>
+                                <p>Visitor, vehicle and guard activities cannot be tracked reliably.</p>
+                            </div>
+                            <span class="risk-issue-alert"><i data-lucide="file-x-2"></i></span>
+                        </article>
+
+                        <article class="risk-issue-card risk-issue-card-6">
+                            <span class="risk-issue-number">06</span>
+                            <div class="risk-issue-icon">
+                                <img src="images/alert.png" alt="No Emergency Alerts">
+                            </div>
+                            <div class="risk-issue-copy">
+                                <span class="risk-issue-category">Emergency Response</span>
+                                <h3>No Instant Alert System</h3>
+                                <p>Residents, employees and guards cannot coordinate emergencies quickly.</p>
+                            </div>
+                            <span class="risk-issue-alert"><i data-lucide="bell-off"></i></span>
+                        </article>
+                    </div>
                 </div>
+
+                <!-- <div class="risk-dashboard-summary-strip">
+                    <div class="risk-dashboard-summary-icon">
+                        <i data-lucide="shield-x"></i>
+                    </div>
+                    <div class="risk-dashboard-summary-copy">
+                        <p>Security Assessment Result</p>
+                        <h3>Traditional security is not only inefficient — it creates measurable operational risk.</h3>
+                    </div>
+                    <div class="risk-dashboard-summary-action">
+                        <span>Recommended</span>
+                        <strong>Automate & Integrate</strong>
+                    </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -5415,9 +6331,7 @@
         <div class="max-w-7xl 2xl:max-w-[1600px] mx-auto space-y-6">
             
             <div class="text-center space-y-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold bg-blue-50 border border-blue-100 text-blue-600 uppercase tracking-widest">
-                    Contact
-                </span>
+                
                 <h2 class="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
                     Need Help? <span class="text-blue-600">Contact Us</span>
                 </h2>
@@ -5450,9 +6364,9 @@
                                 </svg>
                             </div>
                             <div class="space-y-1">
-                                <h4 class="text-base font-bold text-slate-900 tracking-tight">Call Us</h4>
+                                <h4 class="text-base font-bold text-slate-900 tracking-tight">Call</h4>
                                 <p class="text-xs text-slate-600 font-semibold tracking-wide">
-                                    +91-20-25360470
+                                    +91-9226792776
                                 </p>
                             </div>
                         </div>
@@ -5465,7 +6379,7 @@
                                 </svg>
                             </div>
                             <div class="space-y-1">
-                                <h4 class="text-base font-bold text-slate-900 tracking-tight">Email Us</h4>
+                                <h4 class="text-base font-bold text-slate-900 tracking-tight">Email</h4>
                                 <a href="mailto:contact@sayvm.com" class="text-xs text-blue-600 font-bold transition-colors hover:text-blue-700">
                                     contact@sayvm.com
                                 </a>
@@ -5547,10 +6461,7 @@
         <div class="max-w-5xl 2xl:max-w-[1200px] mx-auto w-full relative z-10">
 
             <div id="demo-form-header" class="text-center mb-8">
-                <span class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-50 text-brand-blue text-[11px] font-black uppercase tracking-widest border border-blue-100">
-                    Live Demo
-                </span>
-
+                
                 <h2 class="mt-4 text-3xl md:text-4xl font-black text-brand-navy tracking-tight">
                     Book Your Demo
                 </h2>
