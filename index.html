@@ -2385,48 +2385,83 @@
                 display: none;
             }
         }
+
+        /* =========================================================
+           SAYVM COMPACT REFERENCE-STYLE FOOTER
+           Same visual language as the supplied reference image,
+           with a professional compact height.
+           ========================================================= */
         .sayvm-footer {
             position: relative;
             overflow: hidden;
-            background: linear-gradient(180deg, #f8fbff 0%, #eff6ff 100%);
-            color: #0F172A;
-            border-top: 1px solid #DBEAFE;
+            isolation: isolate;
+            background:
+                radial-gradient(circle at 8% 18%, rgba(147,197,253,.22), transparent 28%),
+                radial-gradient(circle at 92% 12%, rgba(96,165,250,.18), transparent 26%),
+                linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+            color: #0f172a;
+            border-top: 1px solid #dbeafe;
         }
+
+        .sayvm-footer::before,
+        .sayvm-footer::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 180px;
+            height: 150px;
+            pointer-events: none;
+            opacity: .7;
+            background-image: radial-gradient(circle, rgba(96,165,250,.32) 2px, transparent 2px);
+            background-size: 15px 15px;
+            z-index: 0;
+        }
+
+        .sayvm-footer::before { left: -10px; }
+        .sayvm-footer::after { right: -10px; }
 
         .sayvm-footer-inner {
             position: relative;
-            z-index: 5;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 24px 40px 20px;
+            z-index: 4;
+            width: min(100% - 48px, 1480px);
+            margin-inline: auto;
+            padding: 28px 0 62px;
         }
 
         .footer-main {
             display: grid;
-            grid-template-columns: 260px 1px 1fr 1px 320px;
+            grid-template-columns: minmax(210px, .85fr) 1px minmax(420px, 1.7fr) 1px minmax(250px, 1fr);
             align-items: center;
-            gap: 38px;
+            gap: clamp(24px, 3vw, 48px);
+        }
+
+        .footer-brand {
+            min-width: 0;
         }
 
         .footer-brand img {
-            width: 145px;
-            height: auto;
+            display: block;
+            width: 165px;
+            max-height: 88px;
+            object-fit: contain;
         }
 
         .footer-brand p {
-            margin-top: 6px;
-            font-size: 10px;
-            font-weight: 500;
+            margin-top: 5px;
             color: #334155;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .01em;
         }
 
         .footer-divider {
             width: 1px;
-            height: 70px;
-            background: linear-gradient(180deg, transparent, rgba(37,99,235,.45), transparent);
+            height: 92px;
+            background: linear-gradient(180deg, transparent, rgba(37,99,235,.48), transparent);
         }
 
         .footer-center {
+            min-width: 0;
             text-align: center;
         }
 
@@ -2434,175 +2469,252 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 16px;
             flex-wrap: wrap;
+            gap: 12px 16px;
         }
 
         .footer-links a {
+            color: #0f172a;
             font-size: 14px;
-            font-weight: 600;
-            color: #111827;
+            font-weight: 700;
             text-decoration: none;
-            transition: .3s ease;
+            transition: color .25s ease, transform .25s ease;
         }
 
         .footer-links a:hover {
-            color: #2563EB;
+            color: #2563eb;
+            transform: translateY(-1px);
         }
 
-        .footer-links span {
+        .footer-links > span {
             width: 1px;
             height: 18px;
-            background: rgba(37,99,235,.5);
+            background: rgba(37,99,235,.52);
         }
 
         .footer-socials {
             margin-top: 18px;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 11px;
         }
 
         .footer-socials a {
-            width: 19px;
-            height: 19px;
+            width: 38px;
+            height: 38px;
             border-radius: 999px;
-            border: 1px solid rgba(37,99,235,.38);
-            background: rgba(255,255,255,.72);
-            display: flex;
+            border: 1px solid rgba(37,99,235,.34);
+            background: rgba(255,255,255,.82);
+            color: #1d4ed8;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: #2563EB;
-            box-shadow: 0 10px 28px rgba(37,99,235,.08);
-            backdrop-filter: blur(12px);
-            transition: .3s ease;
+            box-shadow: 0 9px 24px rgba(37,99,235,.08);
+            backdrop-filter: blur(10px);
+            transition: color .25s ease, background .25s ease, transform .25s ease, box-shadow .25s ease;
         }
 
         .footer-socials a:hover {
-            background: #2563EB;
-            color: white;
+            color: #ffffff;
+            background: #2563eb;
             transform: translateY(-4px);
+            box-shadow: 0 14px 30px rgba(37,99,235,.22);
         }
 
-        .footer-socials i,
-        .footer-contact i {
-            width: 16px;
-            height: 16px;
+        .footer-socials i {
+            width: 17px;
+            height: 17px;
+            stroke-width: 2.2;
         }
 
         .footer-contact {
             display: flex;
             flex-direction: column;
+            gap: 13px;
+        }
+
+        .footer-contact-row {
+            display: flex;
+            align-items: center;
             gap: 12px;
         }
 
-        .footer-contact div {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .footer-contact span {
-            width: 32px;
-            height: 32px;
+        .footer-contact-row > span {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
             border-radius: 999px;
-            background: rgba(219,234,254,.9);
-            color: #2563EB;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
+            color: #2563eb;
+            background: rgba(219,234,254,.9);
+            border: 1px solid rgba(191,219,254,.9);
         }
 
-        .footer-contact p {
-            font-size: 14px;
-            font-weight: 500;
+        .footer-contact-row i {
+            width: 17px;
+            height: 17px;
+        }
+
+        .footer-contact-row a,
+        .footer-contact-row p {
+            margin: 0;
             color: #111827;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.35;
+            text-decoration: none;
         }
 
-        .footer-bg-dots {
+        .footer-contact-row a:hover { color: #2563eb; }
+
+        .footer-wave-art {
             position: absolute;
-            width: 180px;
-            height: 180px;
-            background-image: radial-gradient(circle, rgba(37,99,235,.18) 2px, transparent 2px);
-            background-size: 15px 15px;
             z-index: 1;
+            left: -4%;
+            right: -4%;
+            bottom: 42px;
+            height: 76px;
+            pointer-events: none;
+            overflow: hidden;
         }
 
-        .footer-dots-left {
-            top: 0;
-            left: 0;
+        .footer-wave-art span {
+            position: absolute;
+            left: -3%;
+            width: 106%;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            transform-origin: center bottom;
         }
 
-        .footer-dots-right {
-            top: 0;
-            right: 0;
+        .footer-wave-art .wave-a {
+            bottom: -44px;
+            height: 90px;
+            background: rgba(147,197,253,.36);
+            transform: rotate(-2deg);
         }
 
-        .footer-waves {
-            display: none;
+        .footer-wave-art .wave-b {
+            bottom: -52px;
+            height: 88px;
+            background: rgba(96,165,250,.30);
+            transform: rotate(2.2deg) scaleX(1.08);
+        }
+
+        .footer-wave-art .wave-c {
+            bottom: -60px;
+            height: 86px;
+            background: rgba(37,99,235,.22);
+            transform: rotate(-1deg) scaleX(1.16);
         }
 
         .footer-bottom {
             position: relative;
-            z-index: 6;
-            min-height: 40px;
-            background: linear-gradient(90deg, #1E40AF, #2563EB, #1E3A8A);
-            border-top: 1px solid rgba(255,255,255,.7);
+            z-index: 5;
+            min-height: 42px;
+            padding: 9px 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 28px;
-            color: white;
+            gap: 26px;
+            text-align: center;
+            background: linear-gradient(90deg, #1e3a8a, #2563eb 52%, #1e40af);
+            border-top: 1px solid rgba(255,255,255,.74);
+            color: rgba(255,255,255,.94);
+            box-shadow: 0 -10px 30px rgba(37,99,235,.10);
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: rgba(255,255,255,.94);
             font-size: 12px;
             font-weight: 500;
         }
 
-        .footer-bottom span {
+        .footer-bottom > span {
             width: 1px;
-            height: 20px;
-            background: rgba(255,255,255,.6);
+            height: 18px;
+            background: rgba(255,255,255,.62);
         }
 
         .footer-bottom b {
-            color: #BFDBFE;
-            font-size: 18px;
+            color: #bfdbfe;
+            font-size: 16px;
+            line-height: 1;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1100px) {
             .sayvm-footer-inner {
-                padding: 32px 24px;
+                width: min(100% - 40px, 900px);
+                padding: 28px 0 66px;
             }
 
             .footer-main {
                 grid-template-columns: 1fr;
+                gap: 18px;
                 text-align: center;
-                gap: 26px;
             }
 
-            .footer-divider {
-                width: 100%;
-                height: 1px;
+            .footer-brand img { margin-inline: auto; }
+            .footer-divider { width: 100%; height: 1px; }
+            .footer-contact { align-items: center; }
+            .footer-contact-row { width: min(100%, 330px); }
+            .footer-wave-art { bottom: 42px; }
+        }
+
+        @media (max-width: 640px) {
+            .sayvm-footer-inner {
+                width: min(100% - 28px, 540px);
+                padding: 26px 0 64px;
             }
 
-            .footer-brand img {
-                margin: 0 auto;
+            .footer-brand img { width: 150px; }
+            .footer-brand p { font-size: 12px; }
+
+            .footer-links {
+                gap: 10px 12px;
             }
 
-            .footer-contact {
-                align-items: center;
+            .footer-links a { font-size: 13px; }
+            .footer-links > span { height: 16px; }
+
+            .footer-socials {
+                margin-top: 15px;
+                gap: 9px;
+            }
+
+            .footer-socials a {
+                width: 36px;
+                height: 36px;
+            }
+
+            .footer-contact-row {
+                justify-content: flex-start;
+            }
+
+            .footer-contact-row a,
+            .footer-contact-row p {
+                font-size: 13px;
+                text-align: left;
+            }
+
+            .footer-wave-art {
+                height: 62px;
+                bottom: 70px;
             }
 
             .footer-bottom {
+                min-height: 70px;
                 flex-direction: column;
-                gap: 4px;
-                padding: 12px;
-                text-align: center;
+                gap: 3px;
+                padding: 11px 14px;
             }
 
-            .footer-bottom span {
-                display: none;
-            }
+            .footer-bottom > span { display: none; }
+            .footer-bottom p { font-size: 11px; }
         }
+
         .workflow-title-line {
             margin-top: 18px;
             display: flex;
@@ -4304,17 +4416,6 @@
             0%,100% { box-shadow: 0 20px 50px rgba(37,99,235,.16); }
             50% { box-shadow: 0 24px 65px rgba(37,99,235,.25); }
         }
-
-    
-footer{
-background:linear-gradient(135deg,#1E3A8A 0%,#2563EB 55%,#3B82F6 100%) !important;
-color:#fff !important;
-border-top:1px solid rgba(255,255,255,.12);
-}
-footer h1,footer h2,footer h3,footer h4,footer h5,footer h6{color:#fff!important;}
-footer p,footer li,footer span,footer a{color:rgba(255,255,255,.86)!important;}
-footer a:hover{color:#fff!important;}
-
 </style>
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -6727,66 +6828,59 @@ footer a:hover{color:#fff!important;}
             </div>
         </div>
     </section>
-<!-- PROFESSIONAL FOOTER -->
-<!-- <footer class="relative overflow-hidden bg-gradient-to-br from-[#1E3A8A] via-[#2563EB] to-[#60A5FA] border-t border-blue-700 text-white">     -->
-    
+<!-- PROFESSIONAL SAYVM FOOTER -->
 <footer class="sayvm-footer">
-    <div class="footer-bg-dots footer-dots-left"></div>
-    <div class="footer-bg-dots footer-dots-right"></div>
-
-    <div class="footer-waves">
-        <div class="wave wave-one"></div>
-        <div class="wave wave-two"></div>
-        <div class="wave wave-three"></div>
+    <div class="footer-wave-art" aria-hidden="true">
+        <span class="wave-a"></span>
+        <span class="wave-b"></span>
+        <span class="wave-c"></span>
     </div>
 
     <div class="sayvm-footer-inner">
-
         <div class="footer-main">
-
             <div class="footer-brand">
                 <img src="images/logo_.png" alt="SayVM Technologies">
-                <p>Sayvm Technologies Private Limited</p>
+                <p>SayVM Technologies Private Limited</p>
             </div>
 
-            <div class="footer-divider"></div>
+            <div class="footer-divider" aria-hidden="true"></div>
 
             <div class="footer-center">
-                <nav class="footer-links">
+                <nav class="footer-links" aria-label="Footer navigation">
                     <a href="#home">Home</a>
-                    <span></span>
+                    <span aria-hidden="true"></span>
                     <a href="#features">Features</a>
-                    <span></span>
+                    <span aria-hidden="true"></span>
                     <a href="#about">About</a>
-                    <span></span>
+                    <span aria-hidden="true"></span>
                     <a href="#comparison">Comparison</a>
-                    <span></span>
+                    <span aria-hidden="true"></span>
                     <a href="#book-demo">Book Demo</a>
                 </nav>
 
-               
+              
             </div>
 
-            <div class="footer-divider"></div>
+            <div class="footer-divider" aria-hidden="true"></div>
 
             <div class="footer-contact">
-                <div>
-                    <span>✉️</span>
-                    <p>contact@sayvm.com</p>
+                <div class="footer-contact-row">
+                    <span><i data-lucide="mail"></i></span>
+                    <a href="mailto:contact@sayvm.com">contact@sayvm.com</a>
                 </div>
 
-                <div>
-                    <span>📍</span>
+                <div class="footer-contact-row">
+                    <span><i data-lucide="map-pin"></i></span>
                     <p>Pune, Maharashtra</p>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 SayVM Technologies Private Limited. All Rights Reserved.</p>       
+        <p>© 2026 SayVM Technologies Private Limited. All Rights Reserved.</p>
+      
+      
     </div>
 </footer>
 <!-- ================= END FOOTER ================= -->
