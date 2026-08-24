@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index,follow">
+<title>Delete Account | Sentry24x7</title>
+<meta name="description" content="Verify and permanently delete your Sentry24x7 account and applicable associated personal data.">
+<link rel="icon" type="image/png" href="../images/favicon.png">
+<style>
+:root{--blue:#2563eb;--blue2:#1d4ed8;--navy:#0f172a;--muted:#64748b;--line:#dbeafe;--soft:#eff6ff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;background:linear-gradient(180deg,#fff 0,#f8fbff 55%,#eff6ff 100%);color:var(--navy);line-height:1.6}
+.header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);border-bottom:1px solid #e2e8f0}
+.nav{max-width:1180px;height:72px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-size:22px;font-weight:900;text-decoration:none;color:#0f172a}.brand span{color:#2563eb}
+.back{font-size:13px;font-weight:800;color:#475569;text-decoration:none}
+.hero{padding:54px 20px 28px;text-align:center}
+.badge{display:inline-flex;padding:7px 12px;border-radius:999px;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.13em}
+.hero h1{margin:16px 0 12px;font-size:clamp(32px,5vw,52px);line-height:1.05}
+.hero p{max-width:720px;margin:auto;color:var(--muted);font-size:15px}
+.wrap{max-width:900px;margin:auto;padding:12px 18px 64px}
+.card{background:#fff;border:1px solid #dbeafe;border-radius:24px;box-shadow:0 20px 60px rgba(37,99,235,.08);padding:28px;margin-top:18px}
+.card h2{margin:0 0 8px;font-size:20px}.card>p{color:#64748b;font-size:13px}
+.notice{display:flex;gap:12px;padding:15px 16px;border:1px solid #bfdbfe;background:#eff6ff;border-radius:15px;color:#475569;font-size:12px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.full{grid-column:1/-1}
+label{display:block;margin-bottom:7px;font-size:12px;font-weight:800;color:#334155}
+input,select,textarea{width:100%;min-height:48px;padding:12px 13px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#0f172a;font:inherit;font-size:14px;outline:none}
+textarea{min-height:105px;resize:vertical}
+.password-wrap{position:relative}.password-wrap input{padding-right:72px}
+.toggle{position:absolute;right:9px;top:50%;transform:translateY(-50%);border:0;background:#eff6ff;color:#2563eb;padding:7px 9px;border-radius:9px;font-size:10px;font-weight:850;cursor:pointer}
+.btn{min-height:48px;border:0;border-radius:12px;padding:0 18px;background:linear-gradient(135deg,#2563eb,#1d4ed8);color:#fff;font-weight:850;font-size:13px;cursor:pointer}
+.btn:disabled{opacity:.6}
+.status{display:none;margin-top:15px;padding:14px 16px;border-radius:14px;font-size:12px;font-weight:700}
+.status.show{display:block}.status.ok{background:#ecfdf5;border:1px solid #a7f3d0;color:#065f46}.status.err{background:#fff1f2;border:1px solid #fecdd3;color:#9f1239}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:17px}.step{padding:13px;border-radius:14px;background:#f8fafc;border:1px solid #e2e8f0}.step b{display:block;font-size:11px}.step span{font-size:10px;color:#64748b}
+.modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,6,23,.64)}.modal.show{display:flex}
+.modal-card{width:min(100%,500px);border-radius:24px;background:#fff;padding:26px}.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+.cancel,.danger{min-height:44px;border-radius:11px;padding:0 15px;font-weight:800;cursor:pointer}.cancel{border:1px solid #cbd5e1;background:#fff}.danger{border:0;background:#dc2626;color:#fff}
+.success{display:none;text-align:center;padding:12px}.success.show{display:block}.footer{border-top:1px solid #dbeafe;background:#eff6ff;text-align:center;padding:20px;color:#64748b;font-size:11px}
+@media(max-width:680px){.nav{height:64px;padding:0 14px}.hero{padding:40px 16px 22px}.wrap{padding:8px 14px 48px}.card{padding:20px}.grid,.steps{grid-template-columns:1fr}.full{grid-column:auto}.modal-actions{flex-direction:column}.cancel,.danger,.btn{width:100%}}
+
+.brand img,.logo img{display:block;width:auto;height:52px;max-width:210px;object-fit:contain}
+@media(max-width:650px){.brand img,.logo img{height:44px;max-width:180px}}
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="nav">
+    <a class="brand" href="../"><img src="../images/sentry_logo.png" alt="Sentry24x7"></a>
+    <a class="back" href="https://sentry24x7.com/#home">← Back to website</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Delete Your Sentry24x7 Account</h1>
+  <p>Verify your account securely with Firebase Authentication, then permanently delete your login account and applicable associated personal data.</p>
+</section>
+
+<main class="wrap">
+  <section class="card">
+    <h2>Verify & Delete Account</h2>
+    <p>Your password is sent only to Firebase Authentication for verification. Sentry24x7 does not store or compare your password in the Realtime Database.</p>
+
+    <div class="notice">
+      <span>🔒</span>
+      <div><strong>Security verification required.</strong><br>We verify the society, selected user role, registered email and Firebase Authentication credentials before allowing deletion.</div>
+    </div>
+
+    <form id="delete-form">
+      <div class="grid">
+        <div>
+          <label for="society">Society Name *</label>
+          <input id="society" required placeholder="Enter registered society name">
+        </div>
+
+        <div>
+          <label for="role">User Role *</label>
+          <select id="role" required>
+            <option value="">Select role</option>
+            
+            <option value="supervisor">Supervisor</option>
+            <option value="guard">Security Guard</option>
+            <option value="resident">Resident</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="email">Registered Email *</label>
+          <input id="email" type="email" required placeholder="name@example.com">
+        </div>
+
+        <div>
+          <label for="password">Password *</label>
+          <div class="password-wrap">
+            <input id="password" type="password" required placeholder="Enter account password">
+            <button type="button" class="toggle" id="toggle-password">Show</button>
+          </div>
+        </div>
+
+        <div class="full">
+          <label for="reason">Reason for deletion (optional)</label>
+          <textarea id="reason" maxlength="500"></textarea>
+        </div>
+
+        <div class="full">
+          <button class="btn" id="verify-btn" type="submit">Verify & Delete Account</button>
+        </div>
+      </div>
+    </form>
+
+    <div id="status" class="status"></div>
+
+    <div id="success-panel" class="success">
+      <h2>✓ Account deletion completed</h2>
+      <p><strong>Your Sentry24x7 account deletion request has been completed successfully.</strong></p>
+      <p>Your Firebase Authentication account and matching personal account record have been deleted.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>What will happen?</h2>
+    <div class="steps">
+      <div class="step"><b>1. Verify</b><span>Firebase login, society and role are checked.</span></div>
+      <div class="step"><b>2. Confirm</b><span>You explicitly approve permanent deletion.</span></div>
+      <div class="step"><b>3. Delete</b><span>Matching database record and Auth account are removed.</span></div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="confirm-modal">
+  <div class="modal-card">
+    <h3>Are you sure you want to permanently delete your Sentry24x7 account and associated personal data?</h3>
+    <p>This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button type="button" class="cancel" id="cancel-delete">Cancel</button>
+      <button type="button" class="danger" id="confirm-delete">Permanently Delete Account</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer"><b>Sentry24x7</b> · SAYVM TECHNOLOGIES PRIVATE LIMITED · contact@sentry24x7.com</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  deleteUser,
+  reauthenticateWithCredential,
+  EmailAuthProvider
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  remove,
+  update
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCparp66XdLP-ld75ywK-9H59RfuKxe_fQ",
+  authDomain: "agcs-8edd6.firebaseapp.com",
+  databaseURL: "https://agcs-8edd6-default-rtdb.firebaseio.com",
+  projectId: "agcs-8edd6",
+  storageBucket: "agcs-8edd6.firebasestorage.app",
+  messagingSenderId: "760361319648",
+  appId: "1:760361319648:web:b2f76976e8e2bd00e42485",
+  measurementId: "G-JL3PRJ4ZZ8"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const $ = id => document.getElementById(id);
+const norm = v => String(v ?? "").trim().toLowerCase();
+const emailKey = email => norm(email).replace(/\./g, "_");
+let verified = null;
+
+function setStatus(type, message) {
+  $("status").className = "status show " + type;
+  $("status").textContent = message;
+}
+
+function getProfile(node) {
+  return node?.Profile || node?.profile || null;
+}
+
+function resolveSociety(root, name) {
+  const wanted = norm(name);
+
+  for (const [id, node] of Object.entries(root || {})) {
+    if (id === "Advertisements") continue;
+
+    const profile = getProfile(node);
+    const storedName = norm(
+      profile?.societyName ||
+      profile?.societyname ||
+      profile?.name ||
+      id
+    );
+
+    if (norm(id) === wanted || storedName === wanted) {
+      return { id, node, profile };
+    }
+  }
+
+  return null;
+}
+
+function findByEmail(collection, key, email, emailField) {
+  if (!collection) return null;
+
+  if (collection[key] && norm(collection[key]?.[emailField]) === norm(email)) {
+    return { key, record: collection[key] };
+  }
+
+  for (const [recordKey, record] of Object.entries(collection)) {
+    if (norm(record?.[emailField]) === norm(email)) {
+      return { key: recordKey, record };
+    }
+  }
+
+  return null;
+}
+
+function findAccount(society, email, role) {
+  const key = emailKey(email);
+
+  if (role === "resident") {
+    const hit = findByEmail(
+      society.node?.Residents,
+      key,
+      email,
+      "residentEmail"
+    );
+
+    return hit
+      ? { type: "resident", path: `Residents/${hit.key}`, record: hit.record }
+      : null;
+  }
+
+  if (role === "supervisor") {
+    const hit = findByEmail(
+      society.node?.["Society Supervisor"],
+      key,
+      email,
+      "societySupervisorEmail"
+    );
+
+    return hit
+      ? { type: "supervisor", path: `Society Supervisor/${hit.key}`, record: hit.record }
+      : null;
+  }
+
+  if (role === "guard") {
+    const hit = findByEmail(
+      society.node?.["Gate Operator"],
+      key,
+      email,
+      "gateOperatorEmail"
+    );
+
+    return hit
+      ? { type: "guard", path: `Gate Operator/${hit.key}`, record: hit.record }
+      : null;
+  }
+
+  if (role === "secretary") {
+    if (society.profile && norm(society.profile.email) === norm(email)) {
+      return { type: "secretary", path: "Profile", record: society.profile };
+    }
+
+    return null;
+  }
+
+  return null;
+}
+
+async function deleteDatabaseRecord(society, account) {
+  if (account.type !== "secretary") {
+    await remove(ref(db, `AGCS/${society.id}/${account.path}`));
+    return;
+  }
+
+  // Never delete the whole society Profile.
+  const personalFields = [
+    "email",
+    "secretaryName",
+    "contact",
+    "phone",
+    "mobile",
+    "uid",
+    "userId",
+    "authUid",
+    "firebaseUid"
+  ];
+
+  const patch = {};
+
+  for (const field of personalFields) {
+    if (Object.prototype.hasOwnProperty.call(society.profile || {}, field)) {
+      patch[field] = null;
+    }
+  }
+
+  if (Object.keys(patch).length) {
+    await update(ref(db, `AGCS/${society.id}/Profile`), patch);
+  }
+}
+
+$("toggle-password").addEventListener("click", () => {
+  const p = $("password");
+  p.type = p.type === "password" ? "text" : "password";
+  $("toggle-password").textContent = p.type === "password" ? "Show" : "Hide";
+});
+
+$("delete-form").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  verified = null;
+  $("verify-btn").disabled = true;
+  $("verify-btn").textContent = "Verifying account...";
+
+  try {
+    const societyName = $("society").value.trim();
+    const role = $("role").value;
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    const reason = $("reason").value.trim();
+
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+
+    if (norm(credential.user.email) !== norm(email)) {
+      throw new Error("Authenticated email does not match the entered email.");
+    }
+
+    const snapshot = await get(ref(db, "AGCS"));
+
+    if (!snapshot.exists()) {
+      throw new Error("Sentry24x7 database could not be loaded.");
+    }
+
+    const society = resolveSociety(snapshot.val(), societyName);
+
+    if (!society) {
+      throw new Error("The entered society was not found in the Sentry24x7 database.");
+    }
+
+    const account = findAccount(society, email, role);
+
+    if (!account) {
+      throw new Error(
+        "Firebase login is valid, but this email was not found under the selected society and role."
+      );
+    }
+
+    verified = {
+      society,
+      account,
+      email,
+      password,
+      role,
+      reason,
+      uid: credential.user.uid
+    };
+
+    setStatus(
+      "ok",
+      "Account verified successfully. Please confirm permanent deletion."
+    );
+
+    $("confirm-modal").classList.add("show");
+  } catch (error) {
+    console.error("Verification error:", error);
+
+    let message = error.message || "Unable to verify account.";
+
+    if (
+      error.code === "auth/invalid-credential" ||
+      error.code === "auth/wrong-password" ||
+      error.code === "auth/user-not-found"
+    ) {
+      message = "Invalid registered email or password.";
+    } else if (error.code === "auth/too-many-requests") {
+      message = "Too many attempts. Please try again later.";
+    } else if (error.code === "auth/network-request-failed") {
+      message = "Unable to reach Firebase. Check your internet connection.";
+    }
+
+    setStatus("err", message);
+
+    try {
+      await signOut(auth);
+    } catch (_) {}
+  } finally {
+    $("verify-btn").disabled = false;
+    $("verify-btn").textContent = "Verify & Delete Account";
+  }
+});
+
+$("cancel-delete").addEventListener("click", async () => {
+  $("confirm-modal").classList.remove("show");
+  verified = null;
+
+  try {
+    await signOut(auth);
+  } catch (_) {}
+});
+
+$("confirm-delete").addEventListener("click", async () => {
+  if (!verified || !auth.currentUser) {
+    $("confirm-modal").classList.remove("show");
+    setStatus("err", "Verification expired. Please verify your account again.");
+    return;
+  }
+
+  $("confirm-delete").disabled = true;
+  $("confirm-delete").textContent = "Deleting securely...";
+
+  try {
+    await reauthenticateWithCredential(
+      auth.currentUser,
+      EmailAuthProvider.credential(verified.email, verified.password)
+    );
+
+    // Re-read immediately before destructive action.
+    const societySnapshot = await get(
+      ref(db, `AGCS/${verified.society.id}`)
+    );
+
+    if (!societySnapshot.exists()) {
+      throw new Error("Society record no longer exists.");
+    }
+
+    const freshSociety = {
+      id: verified.society.id,
+      node: societySnapshot.val(),
+      profile: getProfile(societySnapshot.val())
+    };
+
+    const freshAccount = findAccount(
+      freshSociety,
+      verified.email,
+      verified.role
+    );
+
+    if (!freshAccount) {
+      throw new Error(
+        "The account record could not be verified again before deletion."
+      );
+    }
+
+    // Database first. If Firebase RTDB rules block this, Auth stays intact.
+    await deleteDatabaseRecord(freshSociety, freshAccount);
+
+    // Delete the signed-in Firebase Authentication account.
+    await deleteUser(auth.currentUser);
+
+    $("confirm-modal").classList.remove("show");
+    $("delete-form").style.display = "none";
+    $("status").className = "status";
+    $("success-panel").classList.add("show");
+    verified = null;
+  } catch (error) {
+    console.error("Deletion error:", error);
+
+    $("confirm-modal").classList.remove("show");
+
+    let message = error.message || "Account deletion failed.";
+
+    if (
+      error.code === "PERMISSION_DENIED" ||
+      String(error.message || "").includes("PERMISSION_DENIED")
+    ) {
+      message =
+        "Firebase Realtime Database rules blocked deletion. The Firebase Authentication account was not deleted.";
+    }
+
+    setStatus("err", message);
+  } finally {
+    $("confirm-delete").disabled = false;
+    $("confirm-delete").textContent = "Permanently Delete Account";
+  }
+});
+</script>
+</body>
+</html>

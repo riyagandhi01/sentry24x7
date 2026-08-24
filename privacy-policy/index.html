@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index,follow">
+<title>Privacy Policy | Sentry24x7</title>
+<meta name="description" content="Privacy Policy for the Sentry24x7 mobile application and related services operated by SAYVM TECHNOLOGIES PRIVATE LIMITED.">
+<link rel="icon" type="image/png" href="../images/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --blue:#2563eb;
+  --blue-dark:#1d4ed8;
+  --navy:#0f172a;
+  --text:#334155;
+  --muted:#64748b;
+  --line:#dbeafe;
+  --soft:#eff6ff;
+  --white:#ffffff;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--navy);
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 55%,#eff6ff 100%);
+  line-height:1.72;
+}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.site-header{
+  position:sticky;
+  top:0;
+  z-index:30;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid #e2e8f0;
+}
+.nav{
+  max-width:1180px;
+  height:72px;
+  margin:0 auto;
+  padding:0 22px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:21px;
+  font-weight:900;
+  color:var(--navy);
+  letter-spacing:-.03em;
+}
+.brand img{
+  width:auto;
+  height:52px;
+  max-width:210px;
+  object-fit:contain;
+}
+.brand span{color:var(--blue)}
+.back-link{
+  font-size:13px;
+  font-weight:800;
+  color:#475569;
+}
+
+.hero{
+  padding:64px 20px 34px;
+  text-align:center;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid #bfdbfe;
+  background:var(--soft);
+  color:var(--blue-dark);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.hero h1{
+  margin:18px 0 12px;
+  font-size:clamp(36px,5vw,58px);
+  line-height:1.03;
+  letter-spacing:-.045em;
+}
+.hero p{
+  max-width:780px;
+  margin:0 auto;
+  color:var(--muted);
+  font-size:15px;
+}
+.updated{
+  display:inline-block;
+  margin-top:14px;
+  color:#475569;
+  font-size:12px;
+  font-weight:700;
+}
+
+.layout{
+  width:min(1180px,calc(100% - 32px));
+  margin:0 auto;
+  padding:10px 0 72px;
+  display:grid;
+  grid-template-columns:250px minmax(0,1fr);
+  gap:24px;
+  align-items:start;
+}
+
+.toc{
+  position:sticky;
+  top:96px;
+  background:rgba(255,255,255,.94);
+  border:1px solid #dbeafe;
+  border-radius:20px;
+  padding:18px;
+  box-shadow:0 16px 45px rgba(37,99,235,.07);
+}
+.toc h3{
+  margin:0 0 12px;
+  font-size:13px;
+}
+.toc a{
+  display:block;
+  padding:8px 10px;
+  margin:2px 0;
+  border-radius:10px;
+  color:#475569;
+  font-size:11px;
+  font-weight:700;
+}
+.toc a:hover{
+  background:#eff6ff;
+  color:#1d4ed8;
+  text-decoration:none;
+}
+
+.content{
+  min-width:0;
+}
+.policy-card{
+  background:rgba(255,255,255,.96);
+  border:1px solid #dbeafe;
+  border-radius:24px;
+  padding:30px;
+  margin-bottom:18px;
+  box-shadow:0 18px 55px rgba(37,99,235,.075);
+}
+.policy-card h2{
+  margin:0 0 12px;
+  font-size:21px;
+  letter-spacing:-.025em;
+}
+.policy-card h3{
+  margin:20px 0 7px;
+  font-size:15px;
+}
+.policy-card p{
+  margin:10px 0;
+  color:var(--text);
+  font-size:14px;
+}
+.policy-card ul{
+  margin:10px 0 0;
+  padding-left:21px;
+}
+.policy-card li{
+  margin:7px 0;
+  color:var(--text);
+  font-size:14px;
+}
+.callout{
+  margin-top:16px;
+  padding:16px 18px;
+  border-radius:16px;
+  border:1px solid #bfdbfe;
+  background:#eff6ff;
+  color:#334155;
+  font-size:13px;
+}
+.callout strong{
+  color:#0f172a;
+}
+.no-sale{
+  border-color:#bbf7d0;
+  background:#ecfdf5;
+  color:#065f46;
+}
+.no-sale strong{color:#065f46}
+
+.contact-box{
+  display:grid;
+  gap:8px;
+  padding:18px;
+  border-radius:16px;
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+}
+.contact-box strong{
+  color:#0f172a;
+}
+.footer{
+  border-top:1px solid #dbeafe;
+  background:#eff6ff;
+  text-align:center;
+  padding:22px 18px;
+  color:#64748b;
+  font-size:11px;
+}
+.footer strong{color:#0f172a}
+
+@media(max-width:900px){
+  .layout{
+    grid-template-columns:1fr;
+  }
+  .toc{
+    position:relative;
+    top:auto;
+  }
+}
+@media(max-width:680px){
+  .nav{
+    height:64px;
+    padding:0 14px;
+  }
+  .brand{
+    font-size:18px;
+  }
+  .brand img{
+    width:auto;
+    height:44px;
+    max-width:180px;
+  }
+  .back-link{
+    font-size:11px;
+  }
+  .hero{
+    padding:44px 16px 24px;
+  }
+  .layout{
+    width:min(100% - 24px,1180px);
+    padding-bottom:48px;
+  }
+  .policy-card{
+    padding:20px;
+    border-radius:19px;
+  }
+  .policy-card h2{
+    font-size:18px;
+  }
+  .policy-card p,
+  .policy-card li{
+    font-size:13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <a class="brand" href="https://sentry24x7.com/#home" aria-label="Sentry24x7 Home"><img src="../images/sentry_logo.png" alt="Sentry24x7"></a>
+    <a class="back-link" href="https://sentry24x7.com/#home">← Back to Website</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Privacy Policy</h1>
+  <p>
+    SAYVM TECHNOLOGIES PRIVATE LIMITED ("SAYVM", "we", "our", or "us")
+    operates the <strong>Sentry24x7</strong> mobile application and related services.
+    This Privacy Policy explains what information Sentry24x7 collects and processes,
+    why we use it, how it is stored and protected, and the choices available to users.
+  </p>
+  <span class="updated">Last Updated: 24 August 2026</span>
+</section>
+
+<div class="layout">
+
+  <aside class="toc">
+    <h3>Privacy Policy Contents</h3>
+    <a href="#information">1. Information We Collect</a>
+    <a href="#location">2. Location Information</a>
+    <a href="#media">3. Camera, Microphone & Media</a>
+    <a href="#hardware">4. Bluetooth & USB</a>
+    <a href="#use">5. How We Use Information</a>
+    <a href="#firebase">6. Firebase & Data Storage</a>
+    <a href="#sharing">7. Sharing & Sale</a>
+    <a href="#notifications">8. Notifications</a>
+    <a href="#security">9. Data Security</a>
+    <a href="#retention">10. Data Retention</a>
+    <a href="#deletion">11. Account & Data Deletion</a>
+    <a href="#choices">12. User Choices & Permissions</a>
+    <a href="#children">13. Children's Privacy</a>
+    <a href="#third-party">14. Third-Party Services</a>
+    <a href="#changes">15. Changes to This Policy</a>
+    <a href="#contact">16. Contact Us</a>
+  </aside>
+
+  <main class="content">
+
+    <section class="policy-card" id="information">
+      <h2>1. Information We Collect</h2>
+      <p>The information collected depends on the user's role and the Sentry24x7 features being used.</p>
+
+      <h3>Account and Profile Information</h3>
+      <p>When a user registers for or uses Sentry24x7, we may collect:</p>
+      <ul>
+        <li>Name</li>
+        <li>Email address</li>
+        <li>Mobile number</li>
+        <li>User role</li>
+        <li>Society or organization information</li>
+        <li>Account verification and approval information</li>
+      </ul>
+      <p>
+        Users may be required to verify their email address. Account or society registration
+        may also require approval by an authorized society administrator or Sentry24x7 administrator.
+      </p>
+
+      <h3>Society and Security Management Information</h3>
+      <p>Depending on the features used, Sentry24x7 may process information related to:</p>
+      <ul>
+        <li>Societies</li>
+        <li>Residents</li>
+        <li>Secretaries and administrators</li>
+        <li>Supervisors</li>
+        <li>Security guards</li>
+        <li>Visitors</li>
+        <li>Vehicles</li>
+        <li>Gates</li>
+        <li>Patrol routes and checkpoints</li>
+        <li>Security incidents and reports</li>
+        <li>Access and movement records</li>
+        <li>Patrol records</li>
+      </ul>
+    </section>
+
+    <section class="policy-card" id="location">
+      <h2>2. Location Information</h2>
+      <p>Sentry24x7 may collect <strong>precise location information</strong> when location-based functionality is used.</p>
+      <p>For <strong>Guard Patrol Tracking</strong>, location information is used to:</p>
+      <ul>
+        <li>Track an active security patrol</li>
+        <li>Monitor patrol progress</li>
+        <li>Record the guard's position during an active patrol</li>
+        <li>Verify movement relative to assigned patrol routes and checkpoints</li>
+        <li>Detect when a guard moves outside the assigned patrol route</li>
+        <li>Generate patrol-related alerts and operational records</li>
+      </ul>
+
+      <h3>Background Location</h3>
+      <p>
+        During an active Guard Patrol, Sentry24x7 may collect precise location information
+        <strong>even when the app is closed, running in the background, or not actively in use</strong>.
+      </p>
+      <p>
+        Background location is used to maintain continuity of the active patrol, monitor patrol progress,
+        record the guard's position and detect deviations from the assigned patrol route.
+      </p>
+      <div class="callout">
+        <strong>Important:</strong> Background location is used for Guard Patrol Tracking and is
+        <strong>not used for advertising purposes</strong>.
+      </div>
+      <p>
+        Users can manage location permissions through their Android device settings.
+        Restricting location permissions may prevent Guard Patrol Tracking or related features from operating correctly.
+      </p>
+    </section>
+
+    <section class="policy-card" id="media">
+      <h2>3. Camera, Microphone and Media</h2>
+      <p>Sentry24x7 may request access to the device's camera and microphone when users use features requiring:</p>
+      <ul>
+        <li>Photos</li>
+        <li>Video</li>
+        <li>Audio</li>
+        <li>QR-code scanning</li>
+        <li>Incident reporting</li>
+        <li>Other supported media functionality</li>
+      </ul>
+      <p>Camera and microphone access is used only for application functionality requiring those capabilities.</p>
+    </section>
+
+    <section class="policy-card" id="hardware">
+      <h2>4. Bluetooth and USB</h2>
+      <p>
+        Sentry24x7 may use Bluetooth and supported USB functionality to communicate with compatible
+        security, gate-control, FASTag or related hardware.
+      </p>
+      <p>These capabilities are used to provide supported Sentry24x7 hardware functionality.</p>
+    </section>
+
+    <section class="policy-card" id="use">
+      <h2>5. How We Use Information</h2>
+      <p>We may use information collected through Sentry24x7 to:</p>
+      <ul>
+        <li>Register, authenticate and verify users</li>
+        <li>Manage user accounts</li>
+        <li>Register and manage societies</li>
+        <li>Provide role-based access</li>
+        <li>Manage residents, visitors and vehicles</li>
+        <li>Provide security and gate-management functionality</li>
+        <li>Operate Guard Patrol Tracking</li>
+        <li>Monitor patrol routes and checkpoints</li>
+        <li>Generate security and patrol alerts</li>
+        <li>Generate reports and operational records</li>
+        <li>Deliver application notifications</li>
+        <li>Provide application functionality</li>
+        <li>Maintain application and account security</li>
+        <li>Diagnose technical issues</li>
+        <li>Prevent misuse</li>
+        <li>Provide customer and technical support</li>
+      </ul>
+      <div class="callout">
+        We do not use Guard Patrol background location for advertising purposes.
+      </div>
+    </section>
+
+    <section class="policy-card" id="firebase">
+      <h2>6. Firebase and Data Storage</h2>
+      <p>Sentry24x7 currently uses <strong>Google Firebase</strong> for application functionality and data storage.</p>
+      <p>Firebase services used by the application may include functionality related to:</p>
+      <ul>
+        <li>User authentication</li>
+        <li>Database storage</li>
+        <li>File or media storage</li>
+        <li>Cloud functionality</li>
+        <li>Push notifications</li>
+      </ul>
+      <p>
+        Information processed through Firebase may be processed by Google according to the
+        applicable Firebase and Google privacy and security practices.
+      </p>
+    </section>
+
+    <section class="policy-card" id="sharing">
+      <h2>7. Sharing and Sale of Personal Information</h2>
+      <div class="callout no-sale">
+        <strong>Sentry24x7 does not sell users' personal information.</strong>
+      </div>
+      <p>Information may be shared or made accessible where reasonably necessary:</p>
+      <ul>
+        <li>To provide Sentry24x7 functionality</li>
+        <li>To authorized users or society administrators according to their roles and permissions</li>
+        <li>To service providers necessary to operate the application</li>
+        <li>To maintain security and prevent misuse</li>
+        <li>To comply with applicable legal or regulatory obligations</li>
+        <li>In response to valid lawful requests from authorized authorities</li>
+      </ul>
+      <p>Access to information within Sentry24x7 is controlled according to applicable user roles and society permissions.</p>
+    </section>
+
+    <section class="policy-card" id="notifications">
+      <h2>8. Notifications</h2>
+      <p>
+        Sentry24x7 may send notifications related to application functionality, including security events,
+        patrol activities, alerts, account activity and other relevant service information.
+      </p>
+      <p>Users can manage notification permissions through their Android device settings.</p>
+    </section>
+
+    <section class="policy-card" id="security">
+      <h2>9. Data Security</h2>
+      <p>
+        We take reasonable technical and organizational measures intended to protect information processed
+        through Sentry24x7 against unauthorized access, alteration, disclosure, loss or misuse.
+      </p>
+      <p>
+        However, no application, electronic transmission or storage system can be guaranteed to be completely secure.
+      </p>
+      <p>Users are responsible for maintaining the confidentiality of their account credentials.</p>
+    </section>
+
+    <section class="policy-card" id="retention">
+      <h2>10. Data Retention</h2>
+      <p>
+        We retain information for as long as reasonably necessary to provide Sentry24x7 services and for
+        legitimate operational, security, contractual, fraud-prevention, legal or regulatory purposes.
+      </p>
+      <p>Retention periods may vary depending on the type of information and its purpose.</p>
+      <p>When information is no longer required, it may be deleted or anonymized where appropriate.</p>
+      <p>
+        Certain security, access, patrol, transaction or operational records may need to be retained after an account
+        is deleted where retention is reasonably necessary for security, legal, regulatory, fraud-prevention or legitimate record-keeping purposes.
+      </p>
+    </section>
+
+    <section class="policy-card" id="deletion">
+      <h2>11. Account and Data Deletion</h2>
+      <p>Users may request deletion of their Sentry24x7 account and associated personal information.</p>
+      <p>
+        Account deletion can be initiated from the Sentry24x7 application or through:
+        <a href="../delete-account/"><strong>https://sentry24x7.com/delete-account</strong></a>
+      </p>
+      <p>Users may be required to verify their identity and account ownership before a deletion request is processed.</p>
+      <p>
+        After successful verification and confirmation, the user's account and associated personal information will be deleted
+        or anonymized as appropriate, except for information that must or may legitimately be retained for security, legal,
+        regulatory, fraud-prevention, contractual or record-keeping purposes.
+      </p>
+      <p>
+        Any information retained after account deletion will be retained only for the applicable purpose and for as long as reasonably necessary.
+      </p>
+      <p>
+        For assistance with account deletion, users may contact:
+        <a href="mailto:contact@sentry24x7.com"><strong>contact@sentry24x7.com</strong></a>
+      </p>
+    </section>
+
+    <section class="policy-card" id="choices">
+      <h2>12. User Choices and Permissions</h2>
+      <p>Depending on the user's role, device and features being used, Sentry24x7 may request permissions including:</p>
+      <ul>
+        <li>Precise location</li>
+        <li>Background location</li>
+        <li>Camera</li>
+        <li>Microphone</li>
+        <li>Bluetooth</li>
+        <li>Notifications</li>
+      </ul>
+      <p>Users can review or modify application permissions through their Android device settings.</p>
+      <p>Disabling a permission may prevent the corresponding Sentry24x7 feature from operating correctly.</p>
+    </section>
+
+    <section class="policy-card" id="children">
+      <h2>13. Children's Privacy</h2>
+      <p>
+        Sentry24x7 is intended for society management, residents, security personnel, supervisors,
+        administrators and other authorized users.
+      </p>
+      <p>Sentry24x7 is <strong>not designed or directed specifically toward children</strong>.</p>
+      <p>
+        If we become aware that personal information has been collected from a child in circumstances where
+        applicable law requires parental or guardian consent and such consent has not been obtained,
+        we will take appropriate steps to address the information.
+      </p>
+    </section>
+
+    <section class="policy-card" id="third-party">
+      <h2>14. Third-Party Services</h2>
+      <p>
+        Sentry24x7 uses third-party services necessary to provide application functionality,
+        including Google Firebase and other Google services.
+      </p>
+      <p>
+        These service providers may process information in accordance with their applicable privacy policies,
+        terms and agreements.
+      </p>
+    </section>
+
+    <section class="policy-card" id="changes">
+      <h2>15. Changes to This Privacy Policy</h2>
+      <p>
+        We may update this Privacy Policy when Sentry24x7 features, data practices, third-party services,
+        security practices or applicable requirements change.
+      </p>
+      <p>
+        When this Privacy Policy is updated, the revised version will be published on this page and the
+        <strong>Last Updated</strong> date will be changed accordingly.
+      </p>
+      <p>Users are encouraged to review this Privacy Policy periodically.</p>
+    </section>
+
+    <section class="policy-card" id="contact">
+      <h2>16. Contact Us</h2>
+      <p>For questions regarding this Privacy Policy, privacy-related concerns or requests regarding personal information, contact:</p>
+
+      <div class="contact-box">
+        <strong>SAYVM TECHNOLOGIES PRIVATE LIMITED</strong>
+        <span>Sentry24x7</span>
+        <span>Email: <a href="mailto:contact@sentry24x7.com">contact@sentry24x7.com</a></span>
+        <span>Website: <a href="https://sentry24x7.com/">https://sentry24x7.com/</a></span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <strong>Sentry24x7</strong> · SAYVM TECHNOLOGIES PRIVATE LIMITED · Privacy & Data Protection
+</footer>
+
+</body>
+</html>
