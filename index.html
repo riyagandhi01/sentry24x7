@@ -6640,26 +6640,33 @@
                         method="POST"
                         id="contact-form" class="space-y-5 flex-grow flex flex-col justify-between">
                         <input type="hidden" name="form_type" value="contact">
+
+                        <!-- Anti-spam fields: invisible to genuine users -->
+                        <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+                            <label for="contact-website">Website</label>
+                            <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+                        <input type="hidden" id="contact-form-started-at" name="form_started_at" value="">
                         
                         <div class="grid sm:grid-cols-2 gap-5">
                             <div class="space-y-1.5">
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Full Name</label>
-                                <input type="text" name="Full_Name" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
+                                <input type="text" name="Full_Name" required minlength="2" maxlength="80" autocomplete="name" class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
                             </div>
                             <div class="space-y-1.5">
                                 <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Email Address</label>
-                                <input type="email" name="Email" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
+                                <input type="email" name="Email" required maxlength="120" autocomplete="email" class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
                             </div>
                         </div>
                         
                         <div class="space-y-1.5">
                             <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Mobile Number</label>
-                            <input type="text" name="Mobile_Number" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
+                            <input type="text" name="Mobile_Number" required inputmode="numeric" maxlength="16" autocomplete="tel" class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 shadow-sm">
                         </div>
                         
                         <div class="space-y-1.5">
                             <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Message</label>
-                            <textarea name="Message" rows="4" required class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 resize-none shadow-sm"></textarea>
+                            <textarea name="Message" rows="4" required minlength="10" maxlength="1200" class="w-full text-xs p-3.5 bg-slate-50/50 border border-slate-200 rounded-xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/5 focus:outline-none transition-all duration-200 resize-none shadow-sm"></textarea>
                         </div>
                         
                         <div class="flex justify-center pt-4">
@@ -6719,6 +6726,13 @@
 
                     <input type="hidden" name="_subject" value="New Live System Demo Sandbox Booking Request">
 
+                    <!-- Anti-spam fields: invisible to genuine users -->
+                    <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;">
+                        <label for="demo-website">Website</label>
+                        <input type="text" id="demo-website" name="website" tabindex="-1" autocomplete="off">
+                    </div>
+                    <input type="hidden" id="demo-form-started-at" name="form_started_at" value="">
+
                     <div class="grid md:grid-cols-2 gap-5">
 
                         <div>
@@ -6729,6 +6743,9 @@
                                 type="text"
                                 name="Contact_Name"
                                 required
+                                minlength="2"
+                                maxlength="80"
+                                autocomplete="name"
                                 placeholder="Enter your full name"
                                 class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
                         </div>
@@ -6741,6 +6758,9 @@
                                 type="tel"
                                 name="Mobile_Number"
                                 required
+                                inputmode="numeric"
+                                maxlength="16"
+                                autocomplete="tel"
                                 placeholder="Enter mobile number"
                                 class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
                         </div>
@@ -6757,6 +6777,8 @@
                                 type="email"
                                 name="Email_ID"
                                 required
+                                maxlength="120"
+                                autocomplete="email"
                                 placeholder="Enter email address"
                                 class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
                         </div>
@@ -6769,6 +6791,8 @@
                                 type="text"
                                 name="Society_Complex_Name"
                                 required
+                                minlength="2"
+                                maxlength="120"
                                 placeholder="Enter society name"
                                 class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
                         </div>
@@ -6785,6 +6809,8 @@
                                 type="text"
                                 name="Target_City_Location"
                                 required
+                                minlength="3"
+                                maxlength="180"
                                 placeholder="Enter Address"
                                 class="w-full h-12 px-4 text-sm bg-slate-50 border border-slate-200 rounded-xl text-slate-800 placeholder:text-slate-400 focus:bg-white focus:border-brand-blue focus:ring-4 focus:ring-blue-100 focus:outline-none transition">
                         </div>
@@ -7294,12 +7320,204 @@
         if (event.target === this) closeSubmissionResult();
     });
 
+    // =========================================================
+    // CONTACT / DEMO FORM ANTI-SPAM & VALIDATION LAYER
+    // No Firebase database is used here.
+    // Existing Google Apps Script form action URLs are preserved.
+    // =========================================================
+    const SENTRY_FORM_SECURITY = {
+        minFillTimeMs: 3500,
+        cooldownMs: 60000,
+        duplicateWindowMs: 30 * 60 * 1000,
+        maxLinksInMessage: 2
+    };
+
+    const sentryNormalize = (value) => String(value ?? "").trim();
+
+    function sentrySetFormStartTimes() {
+        const now = Date.now();
+        const contactStarted = document.getElementById("contact-form-started-at");
+        const demoStarted = document.getElementById("demo-form-started-at");
+        if (contactStarted && !contactStarted.value) contactStarted.value = String(now);
+        if (demoStarted && !demoStarted.value) demoStarted.value = String(now);
+    }
+
+    function sentryValidName(value) {
+        const name = sentryNormalize(value);
+        return name.length >= 2 && name.length <= 80 && /^[A-Za-z\u00C0-\u024F\u0900-\u097F .'-]+$/u.test(name);
+    }
+
+    function sentryValidEmail(value) {
+        const email = sentryNormalize(value).toLowerCase();
+        return email.length <= 120 && /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    }
+
+    function sentryValidMobile(value) {
+        const digits = sentryNormalize(value).replace(/\D/g, "");
+        const normalized = digits.startsWith("91") && digits.length === 12 ? digits.slice(2) : digits;
+        return /^[6-9]\d{9}$/.test(normalized);
+    }
+
+    function sentryCountLinks(value) {
+        const matches = String(value || "").match(/(?:https?:\/\/|www\.)/gi);
+        return matches ? matches.length : 0;
+    }
+
+    function sentrySimpleFingerprint(values) {
+        let hash = 2166136261;
+        const input = values.join("|").toLowerCase();
+        for (let i = 0; i < input.length; i++) {
+            hash ^= input.charCodeAt(i);
+            hash = Math.imul(hash, 16777619);
+        }
+        return (hash >>> 0).toString(36);
+    }
+
+    function sentryRateLimitKey(formType) {
+        return `sentry24x7_${formType}_last_submit`;
+    }
+
+    function sentryDuplicateKey(formType) {
+        return `sentry24x7_${formType}_last_payload`;
+    }
+
+    function sentryCheckCooldown(formType) {
+        try {
+            const last = Number(localStorage.getItem(sentryRateLimitKey(formType)) || 0);
+            const remaining = SENTRY_FORM_SECURITY.cooldownMs - (Date.now() - last);
+            if (remaining > 0) {
+                return `Please wait ${Math.ceil(remaining / 1000)} seconds before submitting another request.`;
+            }
+        } catch (_) {}
+        return "";
+    }
+
+    function sentryCheckDuplicate(formType, fingerprint) {
+        try {
+            const raw = localStorage.getItem(sentryDuplicateKey(formType));
+            if (!raw) return "";
+            const saved = JSON.parse(raw);
+            if (saved && saved.fingerprint === fingerprint && (Date.now() - Number(saved.time || 0)) < SENTRY_FORM_SECURITY.duplicateWindowMs) {
+                return "This same request was already submitted recently. Please wait before sending it again.";
+            }
+        } catch (_) {}
+        return "";
+    }
+
+    function sentryMarkSubmitted(formType, fingerprint) {
+        try {
+            const now = Date.now();
+            localStorage.setItem(sentryRateLimitKey(formType), String(now));
+            localStorage.setItem(sentryDuplicateKey(formType), JSON.stringify({ fingerprint, time: now }));
+        } catch (_) {}
+    }
+
+    function sentryCheckTiming(form) {
+        const started = Number(form.querySelector('[name="form_started_at"]')?.value || 0);
+        if (!started || (Date.now() - started) < SENTRY_FORM_SECURITY.minFillTimeMs) {
+            return "Please take a moment to review the form before submitting.";
+        }
+        return "";
+    }
+
+    function sentryHoneypotTriggered(form) {
+        return Boolean(sentryNormalize(form.querySelector('[name="website"]')?.value));
+    }
+
+    function sentryRejectSubmission(message, title = "Please Check Your Details") {
+        showSubmissionResult({
+            type: "error",
+            eyebrow: "Submission Protected",
+            title,
+            message
+        });
+    }
+
+    function sentryValidateContactForm(form) {
+        if (sentryHoneypotTriggered(form)) return { ok: false, silent: true };
+        const timingError = sentryCheckTiming(form);
+        if (timingError) return { ok: false, message: timingError };
+
+        const data = new FormData(form);
+        const name = sentryNormalize(data.get("Full_Name"));
+        const email = sentryNormalize(data.get("Email"));
+        const mobile = sentryNormalize(data.get("Mobile_Number"));
+        const message = sentryNormalize(data.get("Message"));
+
+        if (!sentryValidName(name)) return { ok: false, message: "Please enter a valid full name using letters and spaces only." };
+        if (!sentryValidEmail(email)) return { ok: false, message: "Please enter a valid email address." };
+        if (!sentryValidMobile(mobile)) return { ok: false, message: "Please enter a valid 10-digit Indian mobile number." };
+        if (message.length < 10 || message.length > 1200) return { ok: false, message: "Please enter a meaningful message between 10 and 1200 characters." };
+        if (sentryCountLinks(message) > SENTRY_FORM_SECURITY.maxLinksInMessage) return { ok: false, message: "Too many links were detected in the message. Please remove unnecessary links and try again." };
+
+        const fingerprint = sentrySimpleFingerprint([name, email, mobile, message]);
+        const cooldownError = sentryCheckCooldown("contact");
+        if (cooldownError) return { ok: false, message: cooldownError };
+        const duplicateError = sentryCheckDuplicate("contact", fingerprint);
+        if (duplicateError) return { ok: false, message: duplicateError };
+        return { ok: true, fingerprint };
+    }
+
+    function sentryValidateDemoForm(form) {
+        if (sentryHoneypotTriggered(form)) return { ok: false, silent: true };
+        const timingError = sentryCheckTiming(form);
+        if (timingError) return { ok: false, message: timingError };
+
+        const data = new FormData(form);
+        const name = sentryNormalize(data.get("Contact_Name"));
+        const mobile = sentryNormalize(data.get("Mobile_Number"));
+        const email = sentryNormalize(data.get("Email_ID"));
+        const society = sentryNormalize(data.get("Society_Complex_Name"));
+        const location = sentryNormalize(data.get("Target_City_Location"));
+        const requestedDate = sentryNormalize(data.get("Requested_Booking_Date"));
+
+        if (!sentryValidName(name)) return { ok: false, message: "Please enter a valid full name using letters and spaces only." };
+        if (!sentryValidMobile(mobile)) return { ok: false, message: "Please enter a valid 10-digit Indian mobile number." };
+        if (!sentryValidEmail(email)) return { ok: false, message: "Please enter a valid email address." };
+        if (society.length < 2 || society.length > 120) return { ok: false, message: "Please enter a valid society or complex name." };
+        if (location.length < 3 || location.length > 180) return { ok: false, message: "Please enter a valid address/location." };
+        if (!requestedDate) return { ok: false, message: "Please select a preferred demo date." };
+
+        const chosen = new Date(`${requestedDate}T00:00:00`);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const latest = new Date(today);
+        latest.setDate(latest.getDate() + 180);
+        if (Number.isNaN(chosen.getTime()) || chosen < today || chosen > latest) {
+            return { ok: false, message: "Please choose a demo date from today up to the next 180 days." };
+        }
+
+        const fingerprint = sentrySimpleFingerprint([name, mobile, email, society, location, requestedDate]);
+        const cooldownError = sentryCheckCooldown("demo");
+        if (cooldownError) return { ok: false, message: cooldownError };
+        const duplicateError = sentryCheckDuplicate("demo", fingerprint);
+        if (duplicateError) return { ok: false, message: duplicateError };
+        return { ok: true, fingerprint };
+    }
+
+    sentrySetFormStartTimes();
+
+    const sentryDemoDateInput = document.querySelector('#demo-form input[name="Requested_Booking_Date"]');
+    if (sentryDemoDateInput) {
+        const now = new Date();
+        const yyyy = now.getFullYear();
+        const mm = String(now.getMonth() + 1).padStart(2, "0");
+        const dd = String(now.getDate()).padStart(2, "0");
+        sentryDemoDateInput.min = `${yyyy}-${mm}-${dd}`;
+    }
+
     document.getElementById("contact-form")?.addEventListener("submit", async function (event) {
         event.preventDefault();
 
         const form = this;
         const submitBtn = document.getElementById("contact-submit-btn");
         const originalHtml = submitBtn.innerHTML;
+
+        const securityCheck = sentryValidateContactForm(form);
+        if (!securityCheck.ok) {
+            if (!securityCheck.silent) sentryRejectSubmission(securityCheck.message);
+            return;
+        }
 
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
@@ -7314,7 +7532,10 @@
                 mode: "no-cors"
             });
 
+            sentryMarkSubmitted("contact", securityCheck.fingerprint);
             form.reset();
+            const contactStartedAt = document.getElementById("contact-form-started-at");
+            if (contactStartedAt) contactStartedAt.value = String(Date.now());
             showSubmissionResult({
                 type: "success",
                 eyebrow: "Message Delivered",
@@ -7342,6 +7563,12 @@
         const submitBtn = document.getElementById("demo-submit-btn");
         const originalText = submitBtn.textContent;
 
+        const securityCheck = sentryValidateDemoForm(form);
+        if (!securityCheck.ok) {
+            if (!securityCheck.silent) sentryRejectSubmission(securityCheck.message);
+            return;
+        }
+
         submitBtn.disabled = true;
         submitBtn.innerHTML = `
             <span class="inline-flex items-center justify-center gap-2">
@@ -7357,7 +7584,10 @@
                 mode: "no-cors"
             });
 
+            sentryMarkSubmitted("demo", securityCheck.fingerprint);
             form.reset();
+            const demoStartedAt = document.getElementById("demo-form-started-at");
+            if (demoStartedAt) demoStartedAt.value = String(Date.now());
             showSubmissionResult({
                 type: "success",
                 eyebrow: "Demo Request Confirmed",
