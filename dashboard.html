@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentry24x7 - Societies Management Console</title>
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -469,8 +470,28 @@
 
         let dashboardAuthorized = false;
 
-        onAuthStateChanged(auth, (user) => {
+        const ALLOWED_ADMIN_EMAILS = [
+            "contact@sentry24x7.com"
+        ];
+
+        onAuthStateChanged(auth, async (user) => {
+
             if (!user) {
+                window.location.replace("/index.html");
+                return;
+            }
+
+            const userEmail = (user.email || "").toLowerCase().trim();
+
+            const isAllowedAdmin = ALLOWED_ADMIN_EMAILS
+                .map(email => email.toLowerCase().trim())
+                .includes(userEmail);
+
+            if (!isAllowedAdmin) {
+                await signOut(auth);
+
+                alert("Access denied. This account is not authorized for the Sentry24x7 administration dashboard.");
+
                 window.location.replace("/index.html");
                 return;
             }
@@ -492,7 +513,6 @@
         let cachedSocietiesList = [];
         let cachedAdvertisementsData = {};
         const searchInput = document.getElementById('dashboard-search-input');
-
         lucide.createIcons();
 
         function getProfileFromNode(node) {
